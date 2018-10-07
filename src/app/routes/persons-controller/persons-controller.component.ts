@@ -7,6 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PersonsControllerComponent implements OnInit {
 
+  listOfRoutes = [{
+    route: "list",
+    text: "Список пользователей."
+  },
+  {
+    route:"add",
+    text:"Добавить пользователя."
+  }]
   constructor() { }
 
   ngOnInit() {

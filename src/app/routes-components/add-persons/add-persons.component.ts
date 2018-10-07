@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { Person } from '../../enteties/person';
 
 @Component({
   selector: 'app-add-persons',
@@ -6,10 +7,22 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-persons.component.css']
 })
 export class AddPersonsComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit() {
-  }
+	
+	@Output()
+	public currentPerson: Person;
+	
+	public calendarLanguage: any;
+	public yearRange: string;
+	
+	public constructor() {
+		this.currentPerson    = new Person();
+	}
+	
+	public ngOnInit(): void {
+	}
+	
+	public diagnostic() {
+		return JSON.stringify(this.currentPerson);
+	}
 
 }

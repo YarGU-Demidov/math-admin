@@ -1,18 +1,19 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule }   from '@angular/forms';
-import { NgModule } from '@angular/core';
-import {MatSidenavModule} from '@angular/material/sidenav';
-import {MatListModule} from '@angular/material/list';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserModule } from "@angular/platform-browser";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { NgModule } from "@angular/core";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatListModule } from "@angular/material/list";
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { MatInputModule } from "@angular/material/input";
 
-import { AppComponent } from './components/app-component/app.component';
-import { HomeViewComponent } from './components/home-view/home-view.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { PersonsControllerComponent } from './routes/persons-controller/persons-controller.component';
-import { ListPersonsComponent } from './routes-components/list-persons/list-persons.component';
-import { AddPersonsComponent } from './routes-components/add-persons/add-persons.component';
-import { AppRoutingModule } from './app-routing.module';
-import { GlobalSidebarComponent } from './components/global-sidebar/global-sidebar.component';
+import { AppComponent } from "./components/app-component/app.component";
+import { HomeViewComponent } from "./components/home-view/home-view.component";
+import { NavbarComponent } from "./navbar/navbar.component";
+import { PersonsControllerComponent } from "./routes/persons-controller/persons-controller.component";
+import { ListPersonsComponent } from "./routes-components/list-persons/list-persons.component";
+import { AddPersonsComponent } from "./routes-components/add-persons/add-persons.component";
+import { AppRoutingModule } from "./app-routing.module";
+import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
 
 @NgModule({
   declarations: [
@@ -30,9 +31,11 @@ import { GlobalSidebarComponent } from './components/global-sidebar/global-sideb
     AppRoutingModule,
     MatSidenavModule,
     BrowserAnimationsModule,
-    MatListModule
+    MatListModule,
+    MatInputModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

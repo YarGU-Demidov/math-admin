@@ -2,84 +2,35 @@
 	{{ diagnostic() }}
 </div>
 <div class="person-creation-form">
-	<form #personForm="ngForm">
+	<form [formGroup]="addPersonReactiveForm">
 		<div>
-			<label for="person-name">Name</label>
-			<input
-				required
-				pInputText
-				[(ngModel)]="currentPerson.name"
-				type="text"
-				placeholder="Person name"
-				name="name"
-				id="person-name"
-				#personName="ngModel">
+			<mat-form-field>
+				<input matInput placeholder="Имя" formControlName="name" type="text" name="name" id="person-name">
+			</mat-form-field>
 		</div>
 		<div>
-			<label for="person-surname">Surname</label>
-			<input
-				required
-				pInputText
-				[(ngModel)]="currentPerson.surname"
-				type="text"
-				placeholder="Person surname"
-				name="surname"
-				id="person-surname"
-				#personSurname="ngModel">
+			<mat-form-field>
+				<input required matInput placeholder="Фамилия" formControlName="surname" type="text" name="surname" id="person-surname">
+			</mat-form-field>
 		</div>
 		<div>
-			<label for="person-middlename">Middlename</label>
-			<input
-				pInputText
-				[(ngModel)]="currentPerson.middleName"
-				type="text"
-				placeholder="Person middlename"
-				name="middlename"
-				id="person-middlename"
-				#personMiddlename="ngModel">
+			<mat-form-field>
+				<input matInput placeholder="Отчество" formControlName="middlename" type="text" name="middlename" id="person-middlename">
+			</mat-form-field>
 		</div>
 		<div>
-			<label for="person-email">Email</label>
-			<input
-				pInputText
-				type="email"
-				placeholder="Person email"
-				name="email"
-				id="person-email"
-				[(ngModel)]="currentPerson.email"
-				#personEmail="ngModel">
+				<mat-form-field>
+					<input matInput placeholder="Почта" formControlName="email" type="email" name="email" id="person-email">
+					<mat-error *ngIf="addPersonReactiveForm.controls['email'].invalid">
+						Please enter a valid email address
+					</mat-error>
+				</mat-form-field>
 		</div>
 		<div>
-			<label for="person-phone">Phone</label>
-			<input
-				required
-				[(ngModel)]="currentPerson.phone"
-				placeholder="Person phone"
-				mask="+7 (999) 999-99-99"
-				name="phone"
-				id="person-phone"
-				#personPhone="ngModel">
-		</div>
-		<div>
-			<label for="person-add-phone">Additional Phone</label>
-			<input
-				[(ngModel)]="currentPerson.additionalPhone"
-				placeholder="Person additional phone"
-				mask="+7 (999) 999-99-99"
-				name="add-phone"
-				id="person-add-phone"
-				#personAdditionalPhone="ngModel">
-		</div>
-		<div>
-			<label for="person-add-birthday">Birthday</label>
-			<input
-				required
-				[(ngModel)]="currentPerson.birthday"
-				placeholder="Person Birthday"
-				name="person-add-birthday"
-				id="person-add-birthday"
-				dateFormat="dd.mm.yy"
-				#personBirthday="ngModel">
+			<mat-form-field>
+				<span matPrefix>+7 &nbsp;</span>
+				<input matInput placeholder="Телефон" formControlName="phone" name="tel" id="person-phone" mask="+7 (999) 999-99-99">
+			</mat-form-field>
 		</div>
 	</form>
 </div>

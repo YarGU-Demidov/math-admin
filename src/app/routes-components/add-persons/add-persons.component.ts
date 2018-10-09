@@ -6,7 +6,6 @@ import {
   Validators,
   FormGroup
 } from "@angular/forms";
-import { JsonPipe } from "@angular/common";
 
 @Component({
   selector: "app-add-persons",
@@ -19,41 +18,60 @@ export class AddPersonsComponent implements OnInit {
 
   addPersonReactiveForm: FormGroup;
 
-  public constructor(private fb: FormBuilder) {
-    this.currentPerson = new Person();
-  }
+  public phoneMask = [
+    "+",
+    "7",
+    "(",
+    /[1-9]/,
+    /\d/,
+    /\d/,
+    ")",
+    " ",
+    /\d/,
+    /\d/,
+    /\d/,
+    " ",
+    /\d/,
+    /\d/,
+    " ",
+    /\d/,
+    /\d/
+  ];
+
+  public constructor(private fb: FormBuilder) {}
 
   public ngOnInit(): void {
     this.initForm();
   }
   initForm() {
     this.addPersonReactiveForm = this.fb.group({
-      name: ["", [Validators.required, Validators.pattern(/[А-я]/)]],
-      surname: ["", [Validators.required, Validators.pattern(/[А-я]/)]],
-      middlename: ["", [Validators.pattern(/[А-я]/)]],
+      name: ["", Validators.required],
+      surname: ["", Validators.required],
+      middlename: [""],
       email: ["", [Validators.required, Validators.email]],
-      phone: ["", [Validators.required]]
+      phone: ["", [Validators.required]],
+      additionalPhone: [""],
+      birthday: new FormControl(new Date().toISOString(), Validators.required)
     });
-  }
-
-  public diagnostic() {
-    return JSON.stringify(this.addPersonReactiveForm.controls["name"].value);
   }
   onSubmit() {
     const controls = this.addPersonReactiveForm.controls;
 
-    /** Проверяем форму на валидность */
     if (this.addPersonReactiveForm.invalid) {
-      /** Если форма не валидна, то помечаем все контролы как touched*/
       Object.keys(controls).forEach(controlName =>
         controls[controlName].markAsTouched()
       );
-
-      /** Прерываем выполнение метода*/
       return;
     }
+    const person = new Person();
 
-    /** TODO: Обработка данных формы */
-    console.log(this.addPersonReactiveForm.value);
+    person.name = controls.name.value;
+    person.surname = controls.surname.value;
+    person.middleName = controls.middlename.value;
+    person.email = controls.email.value;
+    person.phone = controls.phone.value;
+    person.additionalPhone = controls.phone.value;
+    person.birthday = controls.birthday.value;
+    console.log(person);
   }
 }

@@ -5,6 +5,9 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { MatInputModule } from "@angular/material/input";
+import { MatDatepickerModule } from "@angular/material";
+import { TextMaskModule } from "angular2-text-mask";
+import { MatMomentDateModule } from "@angular/material-moment-adapter";
 
 import { AppComponent } from "./components/app-component/app.component";
 import { HomeViewComponent } from "./components/home-view/home-view.component";
@@ -33,7 +36,10 @@ import { GlobalSidebarComponent } from "./components/global-sidebar/global-sideb
     BrowserAnimationsModule,
     MatListModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TextMaskModule,
+    MatDatepickerModule,
+    MatMomentDateModule
   ],
   providers: [],
   bootstrap: [AppComponent]

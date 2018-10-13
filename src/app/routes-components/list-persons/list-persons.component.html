@@ -1,3 +1,28 @@
-<p>
-  list-persons works!
-</p>
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+<ng-container *ngFor="let column of allColumns" [matColumnDef]="column.key">
+    <mat-header-cell *matHeaderCellDef>{{ column.header }}</mat-header-cell>
+    <mat-cell *matCellDef="let person">
+    <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+        <input matInput [formControl]="person.validator.controls[column.key]" [readonly]="!person.editing" [(ngModel)]="person.currentData[column.key]">
+    </mat-form-field>
+    </mat-cell>
+  </ng-container>
+  <!-- колонка с кнопками-->
+  <ng-container matColumnDef="actionsColumn">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+    <mat-cell *matCellDef="let row">
+      <button mat-button *ngIf="!row.editing" id="1" color="primary" focusable="false" (click)="row.startEdit()">
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button mat-button *ngIf="row.editing" id="2" color="primary" focusable="false" (click)="confirmEdit(row)">
+        <mat-icon>check</mat-icon>
+      </button>
+      <button mat-button color="warn" id="3" focusable="false" (click)="cancelOrDelete(row)">
+        <mat-icon>cancel</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+</mat-table>

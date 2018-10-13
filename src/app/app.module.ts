@@ -1,14 +1,19 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { MatInputModule } from "@angular/material/input";
-import { MatDatepickerModule } from "@angular/material";
 import { TextMaskModule } from "angular2-text-mask";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
-
+import {
+  MatDatepickerModule,
+  MatIconModule,
+  MatButtonModule,
+  MatInputModule,
+  MatTableModule
+} from "@angular/material";
 import { AppComponent } from "./components/app-component/app.component";
 import { HomeViewComponent } from "./components/home-view/home-view.component";
 import { NavbarComponent } from "./navbar/navbar.component";
@@ -30,7 +35,12 @@ import { GlobalSidebarComponent } from "./components/global-sidebar/global-sideb
   ],
   imports: [
     BrowserModule,
+    CommonModule,
     FormsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatInputModule,
+    MatTableModule,
     AppRoutingModule,
     MatSidenavModule,
     BrowserAnimationsModule,

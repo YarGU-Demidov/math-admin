@@ -6,6 +6,9 @@ import {
   Validators,
   FormGroup
 } from "@angular/forms";
+import { PhoneNumberParserService } from "src/app/services/phone-number-parser/phone-number-parser.service";
+import { PersonDataProviderService } from "src/app/services/persons-data-provider/person-data-provider.service";
+import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
 
 @Component({
   selector: "app-add-persons",
@@ -38,21 +41,17 @@ export class AddPersonsComponent implements OnInit {
     /\d/
   ];
 
-  public constructor(private fb: FormBuilder) {}
+  public constructor(
+    private personValidatorService: PersonValidatorService,
+    private phoneParser: PhoneNumberParserService,
+    private personsProvider: PersonDataProviderService
+  ) {}
 
   public ngOnInit(): void {
     this.initForm();
   }
   initForm() {
-    this.addPersonReactiveForm = this.fb.group({
-      name: ["", Validators.required],
-      surname: ["", Validators.required],
-      middlename: [""],
-      email: ["", [Validators.required, Validators.email]],
-      phone: ["", [Validators.required]],
-      additionalPhone: [""],
-      birthday: new FormControl(new Date().toISOString(), Validators.required)
-    });
+    this.addPersonReactiveForm = this.personValidatorService.getRowValidator();
   }
   onSubmit() {
     const controls = this.addPersonReactiveForm.controls;
@@ -69,9 +68,11 @@ export class AddPersonsComponent implements OnInit {
     person.surname = controls.surname.value;
     person.middleName = controls.middlename.value;
     person.email = controls.email.value;
-    person.phone = controls.phone.value;
-    person.additionalPhone = controls.phone.value;
+    person.phone = this.phoneParser.parse(controls.phone.value);
+    person.additionalPhone = this.phoneParser.parse(controls.phone.value);
     person.birthday = controls.birthday.value;
-    console.log(person);
+
+    this.personsProvider.addPreson(person);
+    console.log(this.personsProvider.getPersons());
   }
 }

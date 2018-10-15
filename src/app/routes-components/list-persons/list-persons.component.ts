@@ -1,12 +1,10 @@
-import { Component, Input, Output, EventEmitter, OnInit } from "@angular/core";
-import {
-  TableDataSource,
-  ValidatorService,
-  TableElement
-} from "angular4-material-table";
+import { Component, Input, OnInit } from "@angular/core";
+import { TableDataSource, TableElement } from "angular4-material-table";
 import { PersonDataProviderService } from "src/app/services/persons-data-provider/person-data-provider.service";
 import { Person } from "src/app/enteties/person";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
+import phoneMask from "../../constants/masks/phone-mask";
+import { MergePhoneWithMaskService } from "src/app/services/merge-phone-with-mask/merge-phone-with-mask.service";
 
 @Component({
   selector: "app-list-persons",
@@ -24,33 +22,14 @@ export class ListPersonsComponent implements OnInit {
     "birthday",
     "actionsColumn"
   ];
-  allColumns: { key: string; header: string }[] = [
-    { key: "name", header: "Имя" },
-    { key: "surname", header: "Фамилия" },
-    { key: "middlename", header: "Отчество" },
-    {
-      key: "email",
-      header: "Почта"
-    },
-    {
-      key: "phone",
-      header: "Телефон"
-    },
-    {
-      key: "additionalPhone",
-      header: "Доп. телефон"
-    },
-    {
-      key: "birthday",
-      header: "День рождения"
-    }
-  ];
   dataSource: TableDataSource<Person>;
   @Input()
   personsList: Person[];
+  phoneMask = phoneMask;
 
   constructor(
     private personValidator: PersonValidatorService,
+    private mergePhoneWithMaskService: MergePhoneWithMaskService,
     private personsProvider: PersonDataProviderService
   ) {}
 
@@ -69,15 +48,25 @@ export class ListPersonsComponent implements OnInit {
     this.updateDataSource();
   }
   private updateDataSource() {
-    this.personsList = this.personsProvider.getPersons();
+    const personsList = this.personsProvider.getPersons();
+    personsList.forEach((person: Person) => {
+      if (person.phone !== null)
+        person.phone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
+          person.phone
+        );
+      person.additionalPhone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
+        person.additionalPhone
+      );
+    });
+    this.personsList = personsList;
     this.dataSource.updateDatasource(this.personsList);
   }
   ngOnInit() {
-    this.personsList = this.personsProvider.getPersons();
     this.dataSource = new TableDataSource<any>(
-      this.personsList,
+      [],
       Person,
       this.personValidator
     );
+    this.updateDataSource();
   }
 }

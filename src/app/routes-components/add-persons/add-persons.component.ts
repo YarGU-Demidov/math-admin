@@ -1,14 +1,9 @@
-import { Component, OnInit, Output } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Person } from "../../enteties/person";
-import {
-  FormControl,
-  FormBuilder,
-  Validators,
-  FormGroup
-} from "@angular/forms";
-import { PhoneNumberParserService } from "src/app/services/phone-number-parser/phone-number-parser.service";
+import { FormGroup } from "@angular/forms";
 import { PersonDataProviderService } from "src/app/services/persons-data-provider/person-data-provider.service";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
+import phoneMask from "../../constants/masks/phone-mask";
 
 @Component({
   selector: "app-add-persons",
@@ -16,34 +11,12 @@ import { PersonValidatorService } from "src/app/services/person-validator/person
   styleUrls: ["./add-persons.component.css"]
 })
 export class AddPersonsComponent implements OnInit {
-  @Output()
-  public currentPerson: Person;
-
   addPersonReactiveForm: FormGroup;
 
-  public phoneMask = [
-    "+",
-    "7",
-    "(",
-    /[1-9]/,
-    /\d/,
-    /\d/,
-    ")",
-    " ",
-    /\d/,
-    /\d/,
-    /\d/,
-    " ",
-    /\d/,
-    /\d/,
-    " ",
-    /\d/,
-    /\d/
-  ];
+  public phoneMask = phoneMask;
 
   public constructor(
     private personValidatorService: PersonValidatorService,
-    private phoneParser: PhoneNumberParserService,
     private personsProvider: PersonDataProviderService
   ) {}
 
@@ -68,8 +41,8 @@ export class AddPersonsComponent implements OnInit {
     person.surname = controls.surname.value;
     person.middleName = controls.middlename.value;
     person.email = controls.email.value;
-    person.phone = this.phoneParser.parse(controls.phone.value);
-    person.additionalPhone = this.phoneParser.parse(controls.phone.value);
+    person.phone = controls.phone.value.replace(/[^0-9+]+/g, "");
+    person.additionalPhone = controls.phone.value.replace(/[^0-9+]+/g, "");
     person.birthday = controls.birthday.value;
 
     this.personsProvider.addPreson(person);

@@ -17,7 +17,7 @@ export class PersonValidatorService implements ValidatorService {
         "",
         [
           Validators.required,
-          Validators.pattern("\\+7\\([0-9]{3}\\) [0-9]{3} [0-9]{2} [0-9]{2}")
+          Validators.pattern("\\+7 \\([0-9]{3}\\) [0-9]{3} [0-9]{2} [0-9]{2}")
         ]
       ],
       additionalPhone: [""],

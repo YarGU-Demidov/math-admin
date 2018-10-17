@@ -1,90 +1,93 @@
-<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+<div class="mat-elevation-z8">
+  <mat-table [dataSource]="dataSource">
 
-  <!-- имя -->
-  <ng-container matColumnDef="name">
-    <mat-header-cell *matHeaderCellDef>Имя</mat-header-cell>
-    <mat-cell *matCellDef="let person">
-      <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-        <input matInput [formControl]="person.validator.controls['name']" [readonly]="!person.editing" [(ngModel)]="person.currentData['name']">
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
-  <!-- фамилия -->
-  <ng-container matColumnDef="surname">
-    <mat-header-cell *matHeaderCellDef>Фамилия</mat-header-cell>
-    <mat-cell *matCellDef="let person">
-      <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-        <input matInput [formControl]="person.validator.controls['surname']" [readonly]="!person.editing" [(ngModel)]="person.currentData['surname']">
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
-  <!-- отчество -->
-  <ng-container matColumnDef="middlename">
-    <mat-header-cell *matHeaderCellDef>Отчество</mat-header-cell>
-    <mat-cell *matCellDef="let person">
-      <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-        <input matInput [formControl]="person.validator.controls['middlename']" [readonly]="!person.editing"
-          [(ngModel)]="person.currentData['middlename']">
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
-  <!-- Почта -->
-  <ng-container matColumnDef="email">
-    <mat-header-cell *matHeaderCellDef>Почта</mat-header-cell>
-    <mat-cell *matCellDef="let person">
-      <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-        <input matInput [formControl]="person.validator.controls['email']" [readonly]="!person.editing" [(ngModel)]="person.currentData['email']">
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
-  <!-- телефон -->
-  <ng-container matColumnDef="phone">
-    <mat-header-cell *matHeaderCellDef>Телефон</mat-header-cell>
-    <mat-cell *matCellDef="let person">
-      <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-        <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['phone']" [readonly]="!person.editing"
-          [(ngModel)]="person.currentData['phone']">
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
+    <!-- имя -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Имя</mat-header-cell>
+      <mat-cell *matCellDef="let person">
+        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+          <input matInput [formControl]="person.validator.controls['name']" [readonly]="!person.editing" [(ngModel)]="person.currentData['name']">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    <!-- фамилия -->
+    <ng-container matColumnDef="surname">
+      <mat-header-cell *matHeaderCellDef>Фамилия</mat-header-cell>
+      <mat-cell *matCellDef="let person">
+        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+          <input matInput [formControl]="person.validator.controls['surname']" [readonly]="!person.editing" [(ngModel)]="person.currentData['surname']">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    <!-- отчество -->
+    <ng-container matColumnDef="middleName">
+      <mat-header-cell *matHeaderCellDef>Отчество</mat-header-cell>
+      <mat-cell *matCellDef="let person">
+        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+          <input matInput [formControl]="person.validator.controls['middleName']" [readonly]="!person.editing"
+            [(ngModel)]="person.currentData['middleName']">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    <!-- Почта -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef>Почта</mat-header-cell>
+      <mat-cell *matCellDef="let person">
+        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+          <input matInput [formControl]="person.validator.controls['email']" [readonly]="!person.editing" [(ngModel)]="person.currentData['email']">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    <!-- телефон -->
+    <ng-container matColumnDef="phone">
+      <mat-header-cell *matHeaderCellDef>Телефон</mat-header-cell>
+      <mat-cell *matCellDef="let person">
+        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+          <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['phone']" [readonly]="!person.editing"
+            [(ngModel)]="person.currentData['phone']">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
 
-  <!-- Доп. телефон -->
-  <ng-container matColumnDef="additionalPhone">
-    <mat-header-cell *matHeaderCellDef>Доп. телефон</mat-header-cell>
-    <mat-cell *matCellDef="let person">
-      <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-        <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['additionalPhone']"
-          [readonly]="!person.editing" [(ngModel)]="person.currentData['additionalPhone']">
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
-  <!-- Дата рождения -->
-  <ng-container matColumnDef="birthday">
-    <mat-header-cell *matHeaderCellDef>Дата рождения</mat-header-cell>
-    <mat-cell *matCellDef="let person">
-      <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-        <input matInput [matDatepicker]="dataPicker" [formControl]="person.validator.controls['birthday']" [readonly]="!person.editing"
-          [(ngModel)]="person.currentData['birthday']">
-        <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
-        <mat-datepicker #dataPicker></mat-datepicker>
-      </mat-form-field>
-    </mat-cell>
-  </ng-container>
-  <!-- колонка с кнопками-->
-  <ng-container matColumnDef="actionsColumn">
-    <mat-header-cell *matHeaderCellDef></mat-header-cell>
-    <mat-cell *matCellDef="let row">
-      <button mat-button *ngIf="!row.editing" id="1" color="primary" focusable="false" (click)="row.startEdit()">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-button *ngIf="row.editing" id="2" color="primary" focusable="false" (click)="confirmEdit(row)">
-        <mat-icon>check</mat-icon>
-      </button>
-      <button mat-button color="warn" id="3" focusable="false" (click)="cancelOrDelete(row)">
-        <mat-icon>cancel</mat-icon>
-      </button>
-    </mat-cell>
-  </ng-container>
-  <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
-</mat-table>
+    <!-- Доп. телефон -->
+    <ng-container matColumnDef="additionalPhone">
+      <mat-header-cell *matHeaderCellDef>Доп. телефон</mat-header-cell>
+      <mat-cell *matCellDef="let person">
+        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+          <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['additionalPhone']"
+            [readonly]="!person.editing" [(ngModel)]="person.currentData['additionalPhone']">
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    <!-- Дата рождения -->
+    <ng-container matColumnDef="birthday">
+      <mat-header-cell *matHeaderCellDef>Дата рождения</mat-header-cell>
+      <mat-cell *matCellDef="let person">
+        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
+          <input matInput [matDatepicker]="dataPicker" [formControl]="person.validator.controls['birthday']" [readonly]="!person.editing"
+            [(ngModel)]="person.currentData['birthday']">
+          <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
+          <mat-datepicker #dataPicker></mat-datepicker>
+        </mat-form-field>
+      </mat-cell>
+    </ng-container>
+    <!-- колонка с кнопками-->
+    <ng-container matColumnDef="actionsColumn">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-button *ngIf="!row.editing" id="1" color="primary" focusable="false" (click)="row.startEdit()">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-button *ngIf="row.editing" id="2" color="primary" focusable="false" (click)="confirmEdit(row)">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button mat-button color="warn" id="3" focusable="false" (click)="cancelOrDelete(row)">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="totalNumberOfPersons" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

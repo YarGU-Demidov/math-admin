@@ -12,7 +12,10 @@ import {
   MatIconModule,
   MatButtonModule,
   MatInputModule,
-  MatTableModule
+  MatTableModule,
+  MatPaginatorModule,
+  MatProgressSpinnerModule,
+  MatSortModule
 } from "@angular/material";
 import { AppComponent } from "./components/app-component/app.component";
 import { HomeViewComponent } from "./components/home-view/home-view.component";
@@ -36,11 +39,13 @@ import { GlobalSidebarComponent } from "./components/global-sidebar/global-sideb
   imports: [
     BrowserModule,
     CommonModule,
+    MatPaginatorModule,
     FormsModule,
     MatIconModule,
     MatButtonModule,
     MatInputModule,
     MatTableModule,
+    MatProgressSpinnerModule,
     AppRoutingModule,
     MatSidenavModule,
     BrowserAnimationsModule,

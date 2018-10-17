@@ -11,7 +11,7 @@ export class PersonValidatorService implements ValidatorService {
     return this.fb.group({
       name: ["", Validators.required],
       surname: ["", Validators.required],
-      middlename: [""],
+      middleName: [""],
       email: ["", [Validators.required, Validators.email]],
       phone: [
         "",

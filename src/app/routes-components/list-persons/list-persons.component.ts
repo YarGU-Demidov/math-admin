@@ -1,10 +1,12 @@
-import { Component, Input, OnInit } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
 import { TableDataSource, TableElement } from "angular4-material-table";
 import { PersonDataProviderService } from "src/app/services/persons-data-provider/person-data-provider.service";
 import { Person } from "src/app/enteties/person";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
 import phoneMask from "../../constants/masks/phone-mask";
 import { MergePhoneWithMaskService } from "src/app/services/merge-phone-with-mask/merge-phone-with-mask.service";
+import { MatPaginator } from "@angular/material/paginator";
+import { tap, map } from "rxjs/operators";
 
 @Component({
   selector: "app-list-persons",
@@ -15,7 +17,7 @@ export class ListPersonsComponent implements OnInit {
   columnsToDisplay: string[] = [
     "name",
     "surname",
-    "middlename",
+    "middleName",
     "email",
     "phone",
     "additionalPhone",
@@ -23,9 +25,10 @@ export class ListPersonsComponent implements OnInit {
     "actionsColumn"
   ];
   dataSource: TableDataSource<Person>;
-  @Input()
+  totalNumberOfPersons: number;
   personsList: Person[];
-  phoneMask = phoneMask;
+  @ViewChild(MatPaginator)
+  paginator: MatPaginator;
 
   constructor(
     private personValidator: PersonValidatorService,
@@ -48,7 +51,12 @@ export class ListPersonsComponent implements OnInit {
     this.updateDataSource();
   }
   private updateDataSource() {
-    const personsList = this.personsProvider.getPersons();
+    this.totalNumberOfPersons = this.personsProvider.getPersonsCount();
+    const personsList = this.personsProvider.getPersons(
+      this.paginator.pageIndex,
+      this.paginator.pageSize
+    );
+
     personsList.forEach((person: Person) => {
       if (person.phone !== null)
         person.phone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
@@ -59,14 +67,18 @@ export class ListPersonsComponent implements OnInit {
       );
     });
     this.personsList = personsList;
+
     this.dataSource.updateDatasource(this.personsList);
   }
   ngOnInit() {
-    this.dataSource = new TableDataSource<any>(
+    this.dataSource = new TableDataSource<Person>(
       [],
       Person,
       this.personValidator
     );
     this.updateDataSource();
+  }
+  ngAfterViewInit() {
+    this.paginator.page.pipe(tap(() => this.updateDataSource())).subscribe();
   }
 }

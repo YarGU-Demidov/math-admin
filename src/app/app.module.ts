@@ -40,6 +40,7 @@ import { GlobalSidebarComponent } from "./components/global-sidebar/global-sideb
     BrowserModule,
     CommonModule,
     MatPaginatorModule,
+    MatSortModule,
     FormsModule,
     MatIconModule,
     MatButtonModule,

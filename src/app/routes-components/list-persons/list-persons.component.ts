@@ -3,10 +3,11 @@ import { TableDataSource, TableElement } from "angular4-material-table";
 import { PersonDataProviderService } from "src/app/services/persons-data-provider/person-data-provider.service";
 import { Person } from "src/app/enteties/person";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
-import phoneMask from "../../constants/masks/phone-mask";
 import { MergePhoneWithMaskService } from "src/app/services/merge-phone-with-mask/merge-phone-with-mask.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { tap, map } from "rxjs/operators";
+import { merge } from "rxjs";
+import { MatSort } from "@angular/material";
 
 @Component({
   selector: "app-list-persons",
@@ -29,6 +30,8 @@ export class ListPersonsComponent implements OnInit {
   personsList: Person[];
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
+  @ViewChild(MatSort)
+  sort: MatSort;
 
   constructor(
     private personValidator: PersonValidatorService,
@@ -53,6 +56,8 @@ export class ListPersonsComponent implements OnInit {
   private updateDataSource() {
     this.totalNumberOfPersons = this.personsProvider.getPersonsCount();
     const personsList = this.personsProvider.getPersons(
+      this.sort.active,
+      this.sort.direction,
       this.paginator.pageIndex,
       this.paginator.pageSize
     );
@@ -79,6 +84,9 @@ export class ListPersonsComponent implements OnInit {
     this.updateDataSource();
   }
   ngAfterViewInit() {
-    this.paginator.page.pipe(tap(() => this.updateDataSource())).subscribe();
+    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    merge(this.sort.sortChange, this.paginator.page)
+      .pipe(tap(() => this.updateDataSource()))
+      .subscribe();
   }
 }

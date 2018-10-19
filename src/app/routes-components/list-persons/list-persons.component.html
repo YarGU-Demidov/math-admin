@@ -1,9 +1,9 @@
 <div class="mat-elevation-z8">
-  <mat-table [dataSource]="dataSource">
+  <mat-table matSort  [dataSource]="dataSource">
 
     <!-- имя -->
     <ng-container matColumnDef="name">
-      <mat-header-cell *matHeaderCellDef>Имя</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Имя</mat-header-cell>
       <mat-cell *matCellDef="let person">
         <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
           <input matInput [formControl]="person.validator.controls['name']" [readonly]="!person.editing" [(ngModel)]="person.currentData['name']">
@@ -12,7 +12,7 @@
     </ng-container>
     <!-- фамилия -->
     <ng-container matColumnDef="surname">
-      <mat-header-cell *matHeaderCellDef>Фамилия</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Фамилия</mat-header-cell>
       <mat-cell *matCellDef="let person">
         <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
           <input matInput [formControl]="person.validator.controls['surname']" [readonly]="!person.editing" [(ngModel)]="person.currentData['surname']">
@@ -21,7 +21,7 @@
     </ng-container>
     <!-- отчество -->
     <ng-container matColumnDef="middleName">
-      <mat-header-cell *matHeaderCellDef>Отчество</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Отчество</mat-header-cell>
       <mat-cell *matCellDef="let person">
         <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
           <input matInput [formControl]="person.validator.controls['middleName']" [readonly]="!person.editing"
@@ -31,7 +31,7 @@
     </ng-container>
     <!-- Почта -->
     <ng-container matColumnDef="email">
-      <mat-header-cell *matHeaderCellDef>Почта</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Почта</mat-header-cell>
       <mat-cell *matCellDef="let person">
         <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
           <input matInput [formControl]="person.validator.controls['email']" [readonly]="!person.editing" [(ngModel)]="person.currentData['email']">
@@ -40,7 +40,7 @@
     </ng-container>
     <!-- телефон -->
     <ng-container matColumnDef="phone">
-      <mat-header-cell *matHeaderCellDef>Телефон</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Телефон</mat-header-cell>
       <mat-cell *matCellDef="let person">
         <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
           <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['phone']" [readonly]="!person.editing"
@@ -51,7 +51,7 @@
 
     <!-- Доп. телефон -->
     <ng-container matColumnDef="additionalPhone">
-      <mat-header-cell *matHeaderCellDef>Доп. телефон</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Доп. телефон</mat-header-cell>
       <mat-cell *matCellDef="let person">
         <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
           <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['additionalPhone']"
@@ -61,7 +61,7 @@
     </ng-container>
     <!-- Дата рождения -->
     <ng-container matColumnDef="birthday">
-      <mat-header-cell *matHeaderCellDef>Дата рождения</mat-header-cell>
+      <mat-header-cell mat-sort-header *matHeaderCellDef>Дата рождения</mat-header-cell>
       <mat-cell *matCellDef="let person">
         <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
           <input matInput [matDatepicker]="dataPicker" [formControl]="person.validator.controls['birthday']" [readonly]="!person.editing"

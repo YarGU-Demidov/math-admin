@@ -10,7 +10,12 @@ export class PersonDataProviderService {
     this.data = [new Person("test", "testov"), new Person("second", "person")];
   }
 
-  getPersons(skip: number = 0, take: number = 5): Person[] {
+  getPersons(
+    sortField: string,
+    sortOrder: string,
+    skip: number = 0,
+    take: number = 5
+  ): Person[] {
     return this.data;
   }
   getPersonsCount(): number {

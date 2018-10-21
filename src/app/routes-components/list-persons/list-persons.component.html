@@ -1,51 +1,42 @@
 <div class="mat-elevation-z8">
-  <mat-table matSort  [dataSource]="dataSource">
+  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
+    <mat-spinner></mat-spinner>
+  </div>
+  <mat-table matSort [dataSource]="dataSource">
 
     <!-- имя -->
     <ng-container matColumnDef="name">
       <mat-header-cell mat-sort-header *matHeaderCellDef>Имя</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-          <input matInput [formControl]="person.validator.controls['name']" [readonly]="!person.editing" [(ngModel)]="person.currentData['name']">
-        </mat-form-field>
+        {{person.name}}
       </mat-cell>
     </ng-container>
     <!-- фамилия -->
     <ng-container matColumnDef="surname">
       <mat-header-cell mat-sort-header *matHeaderCellDef>Фамилия</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-          <input matInput [formControl]="person.validator.controls['surname']" [readonly]="!person.editing" [(ngModel)]="person.currentData['surname']">
-        </mat-form-field>
+        {{person.surname}}
       </mat-cell>
     </ng-container>
     <!-- отчество -->
     <ng-container matColumnDef="middleName">
       <mat-header-cell mat-sort-header *matHeaderCellDef>Отчество</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-          <input matInput [formControl]="person.validator.controls['middleName']" [readonly]="!person.editing"
-            [(ngModel)]="person.currentData['middleName']">
-        </mat-form-field>
+        {{person.middleName}}
       </mat-cell>
     </ng-container>
     <!-- Почта -->
     <ng-container matColumnDef="email">
       <mat-header-cell mat-sort-header *matHeaderCellDef>Почта</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-          <input matInput [formControl]="person.validator.controls['email']" [readonly]="!person.editing" [(ngModel)]="person.currentData['email']">
-        </mat-form-field>
+        {{person.email}}
       </mat-cell>
     </ng-container>
     <!-- телефон -->
     <ng-container matColumnDef="phone">
       <mat-header-cell mat-sort-header *matHeaderCellDef>Телефон</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-          <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['phone']" [readonly]="!person.editing"
-            [(ngModel)]="person.currentData['phone']">
-        </mat-form-field>
+        {{person.phone}}
       </mat-cell>
     </ng-container>
 
@@ -53,41 +44,37 @@
     <ng-container matColumnDef="additionalPhone">
       <mat-header-cell mat-sort-header *matHeaderCellDef>Доп. телефон</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-          <input matInput [textMask]="{mask: phoneMask}" [formControl]="person.validator.controls['additionalPhone']"
-            [readonly]="!person.editing" [(ngModel)]="person.currentData['additionalPhone']">
-        </mat-form-field>
+        {{person.additionalPhone}}
       </mat-cell>
     </ng-container>
     <!-- Дата рождения -->
     <ng-container matColumnDef="birthday">
       <mat-header-cell mat-sort-header *matHeaderCellDef>Дата рождения</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-form-field floatLabel="{{ person.editing ? 'float' : 'never'}}">
-          <input matInput [matDatepicker]="dataPicker" [formControl]="person.validator.controls['birthday']" [readonly]="!person.editing"
-            [(ngModel)]="person.currentData['birthday']">
-          <mat-datepicker-toggle matSuffix [for]="dataPicker"></mat-datepicker-toggle>
-          <mat-datepicker #dataPicker></mat-datepicker>
-        </mat-form-field>
+        {{person.birthday | date}}
       </mat-cell>
     </ng-container>
     <!-- колонка с кнопками-->
     <ng-container matColumnDef="actionsColumn">
-      <mat-header-cell *matHeaderCellDef></mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <button mat-button *ngIf="!row.editing" id="1" color="primary" focusable="false" (click)="row.startEdit()">
-          <mat-icon>edit</mat-icon>
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addNew()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
         </button>
-        <button mat-button *ngIf="row.editing" id="2" color="primary" focusable="false" (click)="confirmEdit(row)">
-          <mat-icon>check</mat-icon>
+      </mat-header-cell>
+
+      <mat-cell *matCellDef="let row; let i=index;">
+        <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
         </button>
-        <button mat-button color="warn" id="3" focusable="false" (click)="cancelOrDelete(row)">
-          <mat-icon>cancel</mat-icon>
+
+        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
+          <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-cell>
     </ng-container>
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
     <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
   </mat-table>
-  <mat-paginator [length]="totalNumberOfPersons" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  <mat-paginator [length]="dataSource.filteredData" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons></mat-paginator>
 </div>

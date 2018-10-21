@@ -1,11 +1,10 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
-import { ValidatorService } from "angular4-material-table";
 
 @Injectable({
   providedIn: "root"
 })
-export class PersonValidatorService implements ValidatorService {
+export class PersonValidatorService {
   constructor(private fb: FormBuilder) {}
   getRowValidator(): FormGroup {
     return this.fb.group({

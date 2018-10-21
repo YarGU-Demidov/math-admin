@@ -10,8 +10,9 @@ export class Person {
   public creationDate: string = null;
   public photoId: string = null;
   public isUser: boolean = false;
-  constructor(name?: string, surname?: string) {
+  constructor(name?: string, surname?: string, id?: string) {
     this.name = name;
     this.surname = surname;
+    this.id = id;
   }
 }

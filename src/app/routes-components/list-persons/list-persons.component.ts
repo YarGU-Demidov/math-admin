@@ -1,18 +1,21 @@
-import { Component, Input, OnInit, ViewChild } from "@angular/core";
-import { TableDataSource, TableElement } from "angular4-material-table";
-import { PersonDataProviderService } from "src/app/services/persons-data-provider/person-data-provider.service";
+import { Component, OnInit, ViewChild } from "@angular/core";
+
 import { Person } from "src/app/enteties/person";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
-import { MergePhoneWithMaskService } from "src/app/services/merge-phone-with-mask/merge-phone-with-mask.service";
 import { MatPaginator } from "@angular/material/paginator";
-import { tap, map } from "rxjs/operators";
-import { merge } from "rxjs";
+import { tap } from "rxjs/operators";
+import { merge, fromEvent } from "rxjs";
 import { MatSort } from "@angular/material";
+import { FormGroup } from "@angular/forms";
+import { PersonDataSource } from "src/app/classes/PersonDataSource";
+import { PersonInMemoryDataProviderService } from "src/app/services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
+import { HttpClient } from "@angular/common/http";
 
 @Component({
   selector: "app-list-persons",
   templateUrl: "./list-persons.component.html",
-  styleUrls: ["./list-persons.component.css", "./person-list.component.scss"]
+  styleUrls: ["./list-persons.component.css", "./person-list.component.scss"],
+  providers: [HttpClient]
 })
 export class ListPersonsComponent implements OnInit {
   columnsToDisplay: string[] = [
@@ -25,7 +28,9 @@ export class ListPersonsComponent implements OnInit {
     "birthday",
     "actionsColumn"
   ];
-  dataSource: TableDataSource<Person>;
+
+  addPersonReactiveForm: FormGroup;
+  dataSource: PersonDataSource;
   totalNumberOfPersons: number;
   personsList: Person[];
   @ViewChild(MatPaginator)
@@ -33,60 +38,21 @@ export class ListPersonsComponent implements OnInit {
   @ViewChild(MatSort)
   sort: MatSort;
 
-  constructor(
-    private personValidator: PersonValidatorService,
-    private mergePhoneWithMaskService: MergePhoneWithMaskService,
-    private personsProvider: PersonDataProviderService
-  ) {}
+  constructor(private personsProvider: PersonInMemoryDataProviderService) {}
 
-  confirmEdit(row: TableElement<Person>) {
-    const editingValid: boolean = row.confirmEditCreate();
-    if (editingValid) {
-      this.personsProvider.editPerson(row.currentData);
-    }
-    this.updateDataSource();
-  }
-  cancelOrDelete(row: TableElement<Person>) {
-    if (!row.editing) {
-      this.personsProvider.deletePerson(row.currentData);
-    }
-    row.cancelOrDelete();
-    this.updateDataSource();
-  }
-  private updateDataSource() {
-    this.totalNumberOfPersons = this.personsProvider.getPersonsCount();
-    const personsList = this.personsProvider.getPersons(
-      this.sort.active,
-      this.sort.direction,
-      this.paginator.pageIndex,
-      this.paginator.pageSize
-    );
-
-    personsList.forEach((person: Person) => {
-      if (person.phone !== null)
-        person.phone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
-          person.phone
-        );
-      person.additionalPhone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
-        person.additionalPhone
-      );
-    });
-    this.personsList = personsList;
-
-    this.dataSource.updateDatasource(this.personsList);
-  }
   ngOnInit() {
-    this.dataSource = new TableDataSource<Person>(
-      [],
-      Person,
-      this.personValidator
+    this.dataSource = new PersonDataSource(
+      this.personsProvider,
+      this.paginator,
+      this.sort
     );
-    this.updateDataSource();
+    this.dataSource.loadPersons();
   }
   ngAfterViewInit() {
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+
     merge(this.sort.sortChange, this.paginator.page)
-      .pipe(tap(() => this.updateDataSource()))
+      .pipe(tap(() => this.dataSource.loadPersons()))
       .subscribe();
   }
 }

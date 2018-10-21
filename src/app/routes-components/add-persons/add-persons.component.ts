@@ -1,9 +1,9 @@
 import { Component, OnInit } from "@angular/core";
 import { Person } from "../../enteties/person";
 import { FormGroup } from "@angular/forms";
-import { PersonDataProviderService } from "src/app/services/persons-data-provider/person-data-provider.service";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
 import phoneMask from "../../constants/masks/phone-mask";
+import { PersonInMemoryDataProviderService } from "src/app/services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 
 @Component({
   selector: "app-add-persons",
@@ -17,7 +17,7 @@ export class AddPersonsComponent implements OnInit {
 
   public constructor(
     private personValidatorService: PersonValidatorService,
-    private personsProvider: PersonDataProviderService
+    private personsProvider: PersonInMemoryDataProviderService
   ) {}
 
   public ngOnInit(): void {
@@ -46,6 +46,5 @@ export class AddPersonsComponent implements OnInit {
     person.birthday = controls.birthday.value;
 
     this.personsProvider.addPreson(person);
-    console.log(this.personsProvider.getPersons());
   }
 }

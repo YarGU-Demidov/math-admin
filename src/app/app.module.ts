@@ -7,6 +7,7 @@ import { MatListModule } from "@angular/material/list";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TextMaskModule } from "angular2-text-mask";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
+import { HttpClientModule } from "@angular/common/http";
 import {
   MatDatepickerModule,
   MatIconModule,
@@ -25,6 +26,7 @@ import { ListPersonsComponent } from "./routes-components/list-persons/list-pers
 import { AddPersonsComponent } from "./routes-components/add-persons/add-persons.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
+import { HttpClient } from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -40,6 +42,7 @@ import { GlobalSidebarComponent } from "./components/global-sidebar/global-sideb
     BrowserModule,
     CommonModule,
     MatPaginatorModule,
+    HttpClientModule,
     MatSortModule,
     FormsModule,
     MatIconModule,

@@ -1,80 +1,75 @@
 <div class="mat-elevation-z8">
-  <div class="spinner-container" *ngIf="dataSource.loading$ | async">
-    <mat-spinner></mat-spinner>
-  </div>
+    <div *ngIf="dataSource.loading$ | async">
+      Загрузка...
+    </div>
   <mat-table matSort [dataSource]="dataSource">
+      <!-- имя -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Имя</mat-header-cell>
+        <mat-cell *matCellDef="let person">
+          {{person.name}}
+        </mat-cell>
+      </ng-container>
+      <!-- фамилия -->
+      <ng-container matColumnDef="surname">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Фамилия</mat-header-cell>
+        <mat-cell *matCellDef="let person">
+          {{person.surname}}
+        </mat-cell>
+      </ng-container>
+      <!-- отчество -->
+      <ng-container matColumnDef="middleName">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Отчество</mat-header-cell>
+        <mat-cell *matCellDef="let person">
+          {{person.middleName}}
+        </mat-cell>
+      </ng-container>
+      <!-- Почта -->
+      <ng-container matColumnDef="email">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Почта</mat-header-cell>
+        <mat-cell *matCellDef="let person">
+          {{person.email}}
+        </mat-cell>
+      </ng-container>
+      <!-- телефон -->
+      <ng-container matColumnDef="phone">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Телефон</mat-header-cell>
+        <mat-cell *matCellDef="let person">
+          {{person.phone}}
+        </mat-cell>
+      </ng-container>
 
-    <!-- имя -->
-    <ng-container matColumnDef="name">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Имя</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.name}}
-      </mat-cell>
-    </ng-container>
-    <!-- фамилия -->
-    <ng-container matColumnDef="surname">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Фамилия</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.surname}}
-      </mat-cell>
-    </ng-container>
-    <!-- отчество -->
-    <ng-container matColumnDef="middleName">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Отчество</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.middleName}}
-      </mat-cell>
-    </ng-container>
-    <!-- Почта -->
-    <ng-container matColumnDef="email">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Почта</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.email}}
-      </mat-cell>
-    </ng-container>
-    <!-- телефон -->
-    <ng-container matColumnDef="phone">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Телефон</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.phone}}
-      </mat-cell>
-    </ng-container>
+      <!-- Доп. телефон -->
+      <ng-container matColumnDef="additionalPhone">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Доп. телефон</mat-header-cell>
+        <mat-cell *matCellDef="let person">
+          {{person.additionalPhone}}
+        </mat-cell>
+      </ng-container>
+      <!-- Дата рождения -->
+      <ng-container matColumnDef="birthday">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Дата рождения</mat-header-cell>
+        <mat-cell *matCellDef="let person">
+          {{person.birthday | date}}
+        </mat-cell>
+      </ng-container>
+      <!-- колонка с кнопками-->
+      <ng-container matColumnDef="actionsColumn">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
 
-    <!-- Доп. телефон -->
-    <ng-container matColumnDef="additionalPhone">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Доп. телефон</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.additionalPhone}}
-      </mat-cell>
-    </ng-container>
-    <!-- Дата рождения -->
-    <ng-container matColumnDef="birthday">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Дата рождения</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.birthday | date}}
-      </mat-cell>
-    </ng-container>
-    <!-- колонка с кнопками-->
-    <ng-container matColumnDef="actionsColumn">
-      <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" (click)="addNew()">
-          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
-        </button>
-      </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="startEdit(row)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
 
-      <mat-cell *matCellDef="let row; let i=index;">
-        <button mat-icon-button color="accent" (click)="startEdit(i, row.id, row.title, row.state, row.url, row.created_at, row.updated_at)">
-          <mat-icon aria-label="Edit">edit</mat-icon>
-        </button>
-
-        <button mat-icon-button color="accent" (click)="deleteItem(i, row.id, row.title, row.state, row.url)">
-          <mat-icon aria-label="Delete">delete</mat-icon>
-        </button>
-      </mat-cell>
-    </ng-container>
+          <button mat-icon-button color="primary" (click)="deleteItem(i, row)">
+            <mat-icon aria-label="Delete">delete</mat-icon>
+          </button>
+        </mat-cell>
+      </ng-container>
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
     <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
   </mat-table>
-  <mat-paginator [length]="dataSource.filteredData" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
+  <mat-paginator [length]="(dataSource.personsNumber$ | async)" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons></mat-paginator>
 </div>

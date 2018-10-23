@@ -5,11 +5,12 @@ import { PersonValidatorService } from "src/app/services/person-validator/person
 import { MatPaginator } from "@angular/material/paginator";
 import { tap } from "rxjs/operators";
 import { merge, fromEvent } from "rxjs";
-import { MatSort } from "@angular/material";
+import { MatSort, MatDialog } from "@angular/material";
 import { FormGroup } from "@angular/forms";
 import { PersonDataSource } from "src/app/classes/PersonDataSource";
 import { PersonInMemoryDataProviderService } from "src/app/services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 import { HttpClient } from "@angular/common/http";
+import { EditPersonDialogComponent } from "../dialogs/edit-person-dialog/edit-person-dialog.component";
 
 @Component({
   selector: "app-list-persons",
@@ -38,7 +39,10 @@ export class ListPersonsComponent implements OnInit {
   @ViewChild(MatSort)
   sort: MatSort;
 
-  constructor(private personsProvider: PersonInMemoryDataProviderService) {}
+  constructor(
+    private personsProvider: PersonInMemoryDataProviderService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit() {
     this.dataSource = new PersonDataSource(
@@ -54,5 +58,17 @@ export class ListPersonsComponent implements OnInit {
     merge(this.sort.sortChange, this.paginator.page)
       .pipe(tap(() => this.dataSource.loadPersons()))
       .subscribe();
+  }
+
+  startEdit(row: any) {
+    const dialogRef = this.dialog.open(EditPersonDialogComponent, {
+      data: row
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.dataSource.loadPersons();
+      }
+    });
   }
 }

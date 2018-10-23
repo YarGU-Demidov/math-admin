@@ -21,10 +21,7 @@ export class AddPersonsComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.initForm();
-  }
-  initForm() {
-    this.addPersonReactiveForm = this.personValidatorService.getRowValidator();
+    this.addPersonReactiveForm = this.personValidatorService.getPersonValidators();
   }
   onSubmit() {
     const controls = this.addPersonReactiveForm.controls;
@@ -35,16 +32,9 @@ export class AddPersonsComponent implements OnInit {
       );
       return;
     }
-    const person = new Person();
-
-    person.name = controls.name.value;
-    person.surname = controls.surname.value;
-    person.middleName = controls.middlename.value;
-    person.email = controls.email.value;
-    person.phone = controls.phone.value.replace(/[^0-9+]+/g, "");
-    person.additionalPhone = controls.phone.value.replace(/[^0-9+]+/g, "");
-    person.birthday = controls.birthday.value;
-
+    const person = this.personValidatorService.getPersonPapulatedWithValues(
+      this.addPersonReactiveForm.controls
+    );
     this.personsProvider.addPreson(person);
   }
 }

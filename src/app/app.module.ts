@@ -16,7 +16,9 @@ import {
   MatTableModule,
   MatPaginatorModule,
   MatProgressSpinnerModule,
-  MatSortModule
+  MatSortModule,
+  MatCardModule,
+  MatDialogModule
 } from "@angular/material";
 import { AppComponent } from "./components/app-component/app.component";
 import { HomeViewComponent } from "./components/home-view/home-view.component";
@@ -26,7 +28,7 @@ import { ListPersonsComponent } from "./routes-components/list-persons/list-pers
 import { AddPersonsComponent } from "./routes-components/add-persons/add-persons.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
-import { HttpClient } from "@angular/common/http";
+import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-person-dialog/edit-person-dialog.component";
 
 @NgModule({
   declarations: [
@@ -36,12 +38,15 @@ import { HttpClient } from "@angular/common/http";
     PersonsControllerComponent,
     ListPersonsComponent,
     AddPersonsComponent,
-    GlobalSidebarComponent
+    GlobalSidebarComponent,
+    EditPersonDialogComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
+    MatCardModule,
     MatPaginatorModule,
+    MatDialogModule,
     HttpClientModule,
     MatSortModule,
     FormsModule,
@@ -61,6 +66,7 @@ import { HttpClient } from "@angular/common/http";
     MatMomentDateModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [EditPersonDialogComponent]
 })
 export class AppModule {}

@@ -15,17 +15,6 @@ export class PersonInMemoryDataProviderService {
     private http: HttpClient,
     private mergePhoneWithMaskService: MergePhoneWithMaskService
   ) {}
-  dataChange: BehaviorSubject<Person[]> = new BehaviorSubject<Person[]>([]);
-  // Temporarily stores data from dialogs
-  dialogData: any;
-
-  get data(): Person[] {
-    return this.dataChange.value;
-  }
-
-  getDialogData() {
-    return this.dialogData;
-  }
 
   getPersons(
     sortField: string,
@@ -43,10 +32,15 @@ export class PersonInMemoryDataProviderService {
         person.additionalPhone
       );
     }, this);
+    for (let i = 1; i < personList.length; i++) {
+      let temp = personList[i];
+      personList[i] = personList[i - 1];
+      personList[i - 1] = temp;
+    }
     return of(personList);
   }
   getPersonsCount(): Observable<number> {
-    return of(data.length);
+    return of(Math.round(Math.random() * 10));
   }
   addPreson(person: Person) {}
   editPerson(newPerson: Person) {}

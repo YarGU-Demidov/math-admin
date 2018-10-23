@@ -1,12 +1,18 @@
 import { Injectable } from "@angular/core";
-import { FormGroup, Validators, FormBuilder } from "@angular/forms";
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  AbstractControl
+} from "@angular/forms";
+import { Person } from "src/app/enteties/person";
 
 @Injectable({
   providedIn: "root"
 })
 export class PersonValidatorService {
   constructor(private fb: FormBuilder) {}
-  getRowValidator(): FormGroup {
+  getPersonValidators(): FormGroup {
     return this.fb.group({
       name: ["", Validators.required],
       surname: ["", Validators.required],
@@ -22,5 +28,16 @@ export class PersonValidatorService {
       additionalPhone: [""],
       birthday: ["", Validators.required]
     });
+  }
+  getPersonPapulatedWithValues(controls: { [key: string]: AbstractControl }) {
+    let person = new Person();
+    person.name = controls.name.value;
+    person.surname = controls.surname.value;
+    person.middleName = controls.middlename.value;
+    person.email = controls.email.value;
+    person.phone = controls.phone.value.replace(/[^0-9+]+/g, "");
+    person.additionalPhone = controls.phone.value.replace(/[^0-9+]+/g, "");
+    person.birthday = controls.birthday.value;
+    return person;
   }
 }

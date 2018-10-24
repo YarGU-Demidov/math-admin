@@ -26,18 +26,26 @@ export class PersonValidatorService {
         ]
       ],
       additionalPhone: [""],
-      birthday: ["", Validators.required]
+      birthday: ["", Validators.required],
+      id: [""],
+      isUser: [""],
+      creationDate: [""],
+      photoId: [""]
     });
   }
   getPersonPapulatedWithValues(controls: { [key: string]: AbstractControl }) {
     let person = new Person();
     person.name = controls.name.value;
     person.surname = controls.surname.value;
-    person.middleName = controls.middlename.value;
+    person.middleName = controls.middleName.value;
     person.email = controls.email.value;
     person.phone = controls.phone.value.replace(/[^0-9+]+/g, "");
     person.additionalPhone = controls.phone.value.replace(/[^0-9+]+/g, "");
     person.birthday = controls.birthday.value;
+    person.id = controls.id.value;
+    person.isUser = controls.isUser.value;
+    person.creationDate = controls.creationDate.value;
+    person.photoId = controls.photoId.value;
     return person;
   }
 }

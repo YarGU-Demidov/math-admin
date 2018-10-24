@@ -5,7 +5,7 @@ import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { MergePhoneWithMaskService } from "../../merge-phone-with-mask/merge-phone-with-mask.service";
 import IPersonProvider from "../person-provider.interface";
-import data from "./data";
+import { getPersons, deletePerson } from "./data";
 
 @Injectable({
   providedIn: "root"
@@ -22,11 +22,11 @@ export class PersonInMemoryDataProviderService {
     skip: number = 0,
     take: number = 5
   ): Observable<Person[]> {
-    let personList = data;
-    personList.map(function(person: any) {
-      if (person.personPhone !== null)
-        person.personPhone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
-          person.personPhone
+    let personList = getPersons();
+    personList.map(function(person: Person) {
+      if (person.phone !== null)
+        person.phone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
+          person.phone
         );
       person.additionalPhone = this.mergePhoneWithMaskService.mergeWithPhoneMask(
         person.additionalPhone
@@ -42,7 +42,15 @@ export class PersonInMemoryDataProviderService {
   getPersonsCount(): Observable<number> {
     return of(Math.round(Math.random() * 10));
   }
-  addPreson(person: Person) {}
-  editPerson(newPerson: Person) {}
-  deletePerson(person) {}
+  addPreson(person: Person) {
+    getPersons().push(person);
+  }
+  editPerson(newPerson: Person) {
+    const index = getPersons().findIndex(person => person.id == newPerson.id);
+    getPersons()[index] = newPerson;
+  }
+  deletePerson(id: string) {
+    const index = getPersons().findIndex(person => person.id == id);
+    deletePerson(index);
+  }
 }

@@ -28,7 +28,8 @@ import { ListPersonsComponent } from "./routes-components/list-persons/list-pers
 import { AddPersonsComponent } from "./routes-components/add-persons/add-persons.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
-import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-person-dialog/edit-person-dialog.component";
+import { EditPersonDialogComponent } from "./routes-components/list-persons/dialogs/edit-person-dialog/edit-person-dialog.component";
+import { DeletePersonDialogComponent } from "./routes-components/list-persons/dialogs/delete-person-dialog/delete-person-dialog.component";
 
 @NgModule({
   declarations: [
@@ -39,7 +40,8 @@ import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-pers
     ListPersonsComponent,
     AddPersonsComponent,
     GlobalSidebarComponent,
-    EditPersonDialogComponent
+    EditPersonDialogComponent,
+    DeletePersonDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -67,6 +69,6 @@ import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-pers
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [EditPersonDialogComponent]
+  entryComponents: [EditPersonDialogComponent, DeletePersonDialogComponent]
 })
 export class AppModule {}

@@ -10,7 +10,8 @@ import { FormGroup } from "@angular/forms";
 import { PersonDataSource } from "src/app/classes/PersonDataSource";
 import { PersonInMemoryDataProviderService } from "src/app/services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 import { HttpClient } from "@angular/common/http";
-import { EditPersonDialogComponent } from "../dialogs/edit-person-dialog/edit-person-dialog.component";
+import { EditPersonDialogComponent } from "../list-persons/dialogs/edit-person-dialog/edit-person-dialog.component";
+import { DeletePersonDialogComponent } from "./dialogs/delete-person-dialog/delete-person-dialog.component";
 
 @Component({
   selector: "app-list-persons",
@@ -60,9 +61,21 @@ export class ListPersonsComponent implements OnInit {
       .subscribe();
   }
 
-  startEdit(row: any) {
+  startEdit(person: Person) {
     const dialogRef = this.dialog.open(EditPersonDialogComponent, {
-      data: row
+      data: person
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.dataSource.loadPersons();
+      }
+    });
+  }
+
+  deletePerson(person: Person) {
+    const dialogRef = this.dialog.open(DeletePersonDialogComponent, {
+      data: person
     });
 
     dialogRef.afterClosed().subscribe(result => {

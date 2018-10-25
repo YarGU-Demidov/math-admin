@@ -1,10 +1,10 @@
 import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
-import { PersonInMemoryDataProviderService } from "src/app/services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
 import { FormGroup } from "@angular/forms";
 import { Person } from "src/app/enteties/person";
 import phoneMask from "src/app/constants/masks/phone-mask";
+import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 
 @Component({
   selector: "app-edit-person-dialog",
@@ -18,7 +18,7 @@ export class EditPersonDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<EditPersonDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public person: any,
-    public personService: PersonInMemoryDataProviderService,
+    public personService: PersonProvider,
     private validator: PersonValidatorService
   ) {}
 

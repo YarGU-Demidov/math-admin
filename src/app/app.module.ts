@@ -30,6 +30,9 @@ import { AppRoutingModule } from "./app-routing.module";
 import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
 import { EditPersonDialogComponent } from "./routes-components/list-persons/dialogs/edit-person-dialog/edit-person-dialog.component";
 import { DeletePersonDialogComponent } from "./routes-components/list-persons/dialogs/delete-person-dialog/delete-person-dialog.component";
+import { PersonHttpDataProviderService } from "./services/person-services/person-http-data-provider/person-http-data-provider.service";
+import { PersonProvider } from "./services/person-services/person-provider.abstract";
+import { PersonInMemoryDataProviderService } from "./services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 
 @NgModule({
   declarations: [
@@ -67,7 +70,9 @@ import { DeletePersonDialogComponent } from "./routes-components/list-persons/di
     MatDatepickerModule,
     MatMomentDateModule
   ],
-  providers: [],
+  providers: [
+    { provide: PersonProvider, useClass: PersonInMemoryDataProviderService }
+  ],
   bootstrap: [AppComponent],
   entryComponents: [EditPersonDialogComponent, DeletePersonDialogComponent]
 })

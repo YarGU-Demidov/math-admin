@@ -3,12 +3,12 @@ import { Person } from "src/app/enteties/person";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
-import IPersonProvider from "../person-provider.interface";
+import { PersonProvider } from "../person-provider.abstract";
 
 @Injectable({
   providedIn: "root"
 })
-export class PersonHttpDataProviderService implements IPersonProvider {
+export class PersonHttpDataProviderService implements PersonProvider {
   constructor(private http: HttpClient) {}
   getPersons(
     sortField: string,

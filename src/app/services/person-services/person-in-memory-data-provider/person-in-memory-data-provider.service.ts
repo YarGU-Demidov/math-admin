@@ -4,13 +4,13 @@ import { Observable, BehaviorSubject, of } from "rxjs";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { map } from "rxjs/operators";
 import { MergePhoneWithMaskService } from "../../merge-phone-with-mask/merge-phone-with-mask.service";
-import IPersonProvider from "../person-provider.interface";
 import { getPersons, deletePerson } from "./data";
+import { PersonProvider } from "../person-provider.abstract";
 
 @Injectable({
   providedIn: "root"
 })
-export class PersonInMemoryDataProviderService {
+export class PersonInMemoryDataProviderService implements PersonProvider {
   constructor(
     private http: HttpClient,
     private mergePhoneWithMaskService: MergePhoneWithMaskService
@@ -46,8 +46,9 @@ export class PersonInMemoryDataProviderService {
     getPersons().push(person);
   }
   editPerson(newPerson: Person) {
-    const index = getPersons().findIndex(person => person.id == newPerson.id);
-    getPersons()[index] = newPerson;
+    const data = getPersons();
+    const index = data.findIndex(person => person.id == newPerson.id);
+    data[index] = newPerson;
   }
   deletePerson(id: string) {
     const index = getPersons().findIndex(person => person.id == id);

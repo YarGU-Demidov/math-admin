@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable, of, merge } from "rxjs";
 import { PersonInMemoryDataProviderService } from "../services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 import { map, finalize, catchError } from "rxjs/operators";
 import { MatPaginator, MatSort } from "@angular/material";
+import { PersonProvider } from "../services/person-services/person-provider.abstract";
 export class PersonDataSource implements DataSource<Person> {
   private personsSubject = new BehaviorSubject<Person[]>([]);
 
@@ -13,7 +14,7 @@ export class PersonDataSource implements DataSource<Person> {
   public loading$ = this.loadingSubject.asObservable();
 
   constructor(
-    private personService: PersonInMemoryDataProviderService,
+    private personService: PersonProvider,
     public paginator: MatPaginator,
     public sort: MatSort
   ) {}

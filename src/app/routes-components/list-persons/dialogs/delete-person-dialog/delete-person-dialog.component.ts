@@ -1,7 +1,7 @@
 import { Component, OnInit, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { Person } from "src/app/enteties/person";
-import { PersonInMemoryDataProviderService } from "src/app/services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
+import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 
 @Component({
   selector: "app-delete-person-dialog",
@@ -12,7 +12,7 @@ export class DeletePersonDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<DeletePersonDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: Person,
-    public personDataService: PersonInMemoryDataProviderService
+    public personDataService: PersonProvider
   ) {}
 
   onCancel(): void {

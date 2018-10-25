@@ -1,17 +1,16 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, Inject } from "@angular/core";
 
 import { Person } from "src/app/enteties/person";
-import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
 import { MatPaginator } from "@angular/material/paginator";
 import { tap } from "rxjs/operators";
 import { merge, fromEvent } from "rxjs";
 import { MatSort, MatDialog } from "@angular/material";
 import { FormGroup } from "@angular/forms";
 import { PersonDataSource } from "src/app/classes/PersonDataSource";
-import { PersonInMemoryDataProviderService } from "src/app/services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 import { HttpClient } from "@angular/common/http";
 import { EditPersonDialogComponent } from "../list-persons/dialogs/edit-person-dialog/edit-person-dialog.component";
 import { DeletePersonDialogComponent } from "./dialogs/delete-person-dialog/delete-person-dialog.component";
+import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 
 @Component({
   selector: "app-list-persons",
@@ -41,9 +40,11 @@ export class ListPersonsComponent implements OnInit {
   sort: MatSort;
 
   constructor(
-    private personsProvider: PersonInMemoryDataProviderService,
+    private personsProvider: PersonProvider,
     private dialog: MatDialog
-  ) {}
+  ) {
+    this.personsProvider = personsProvider;
+  }
 
   ngOnInit() {
     this.dataSource = new PersonDataSource(

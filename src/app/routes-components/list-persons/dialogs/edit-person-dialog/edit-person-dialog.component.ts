@@ -47,9 +47,7 @@ export class EditPersonDialogComponent {
     this.dialogRef.close();
   }
   onConfirm(): void {
-    const person = this.validator.getPersonPapulatedWithValues(
-      this.editPersonReactiveForm.controls
-    );
+    const person = this.validator.getPersonPapulatedWithValues();
     this.personService.editPerson(person);
   }
 }

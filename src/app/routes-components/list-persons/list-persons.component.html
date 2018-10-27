@@ -1,11 +1,20 @@
 <div class="mat-elevation-z8">
+  <div class="form">
+    <mat-form-field>
+        <input  matInput #filterName placeholder="Поиск по имени" #input>
+    </mat-form-field>
+    <mat-form-field>
+        <input matInput #filterSurname placeholder="Поиск по фамилии" #input>
+    </mat-form-field>
+  </div>
     <div *ngIf="dataSource.loading$ | async">
       Загрузка...
     </div>
   <mat-table matSort [dataSource]="dataSource">
       <!-- имя -->
       <ng-container matColumnDef="name">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Имя</mat-header-cell>
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+        <div>Имя</div></mat-header-cell>
         <mat-cell *matCellDef="let person">
           {{person.name}}
         </mat-cell>
@@ -55,10 +64,13 @@
       </ng-container>
       <!-- колонка с кнопками-->
       <ng-container matColumnDef="actionsColumn">
-        <mat-header-cell *matHeaderCellDef></mat-header-cell>
-
+        <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addPerson()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+      </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary" (click)="startEdit(row)">
+          <button mat-icon-button color="primary" (click)="editPerson(row)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 

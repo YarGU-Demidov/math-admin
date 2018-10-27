@@ -1,39 +1,39 @@
 import { Injectable } from "@angular/core";
-import {
-  FormGroup,
-  Validators,
-  FormBuilder,
-  AbstractControl
-} from "@angular/forms";
+import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Person } from "src/app/enteties/person";
 
 @Injectable({
   providedIn: "root"
 })
 export class PersonValidatorService {
+  formGroup: FormGroup;
   constructor(private fb: FormBuilder) {}
   getPersonValidators(): FormGroup {
-    return this.fb.group({
-      name: ["", Validators.required],
-      surname: ["", Validators.required],
-      middleName: [""],
-      email: ["", [Validators.required, Validators.email]],
-      phone: [
-        "",
-        [
-          Validators.required,
-          Validators.pattern("\\+7 \\([0-9]{3}\\) [0-9]{3} [0-9]{2} [0-9]{2}")
-        ]
-      ],
-      additionalPhone: [""],
-      birthday: ["", Validators.required],
-      id: [""],
-      isUser: [""],
-      creationDate: [""],
-      photoId: [""]
-    });
+    if (!this.formGroup) {
+      this.formGroup = this.fb.group({
+        name: ["", Validators.required],
+        surname: ["", Validators.required],
+        middleName: [""],
+        email: ["", [Validators.required, Validators.email]],
+        phone: [
+          "",
+          [
+            Validators.required,
+            Validators.pattern("\\+7 \\([0-9]{3}\\) [0-9]{3} [0-9]{2} [0-9]{2}")
+          ]
+        ],
+        additionalPhone: [""],
+        birthday: ["", Validators.required],
+        id: [""],
+        isUser: [""],
+        creationDate: [""],
+        photoId: [""]
+      });
+    }
+    return this.formGroup;
   }
-  getPersonPapulatedWithValues(controls: { [key: string]: AbstractControl }) {
+  getPersonPapulatedWithValues() {
+    const controls = this.formGroup.controls;
     let person = new Person();
     person.name = controls.name.value;
     person.surname = controls.surname.value;

@@ -6,11 +6,13 @@ import { map, finalize, catchError } from "rxjs/operators";
 import { MatPaginator, MatSort } from "@angular/material";
 import { PersonProvider } from "../services/person-services/person-provider.abstract";
 export class PersonDataSource implements DataSource<Person> {
-  private personsSubject = new BehaviorSubject<Person[]>([]);
+  filterName: string;
+  filterSurname: string;
 
-  private filteredPersonsNumber = new BehaviorSubject<number>(0);
+  private personsSubject = new BehaviorSubject<Person[]>([]);
+  private personsNumber = new BehaviorSubject<number>(0);
   private loadingSubject = new BehaviorSubject<boolean>(false);
-  public personsNumber$ = this.filteredPersonsNumber.asObservable();
+  public personsNumber$ = this.personsNumber.asObservable();
   public loading$ = this.loadingSubject.asObservable();
 
   constructor(
@@ -30,7 +32,7 @@ export class PersonDataSource implements DataSource<Person> {
     this.loadingSubject.next(true);
     this.personService
       .getPersonsCount()
-      .subscribe(res => this.filteredPersonsNumber.next(res));
+      .subscribe(res => this.personsNumber.next(res));
     this.personService
       .getPersons(this.sort.active, this.sort.direction)
       .pipe(

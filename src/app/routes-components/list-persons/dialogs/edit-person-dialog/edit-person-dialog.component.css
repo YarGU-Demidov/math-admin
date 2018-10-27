@@ -1,13 +1,8 @@
-.container {
+.md-dialog-container {
   display: flex;
   flex-direction: column;
   min-width: 350px;
 }
-
-.container > * {
-  width: 100%;
-}
-
 .form {
   display: flex;
   padding-top: 6px;

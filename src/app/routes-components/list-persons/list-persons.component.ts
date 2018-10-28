@@ -1,11 +1,5 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  Inject,
-  ElementRef
-} from "@angular/core";
-
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
+import { SelectionModel } from "@angular/cdk/collections";
 import { Person } from "src/app/enteties/person";
 import { MatPaginator } from "@angular/material/paginator";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
@@ -27,6 +21,7 @@ import { AddPersonDialogComponent } from "./dialogs/add-person-dialog/add-person
 })
 export class ListPersonsComponent implements OnInit {
   columnsToDisplay: string[] = [
+    "select",
     "name",
     "surname",
     "middleName",
@@ -37,6 +32,7 @@ export class ListPersonsComponent implements OnInit {
     "actionsColumn"
   ];
 
+  selection = new SelectionModel<Person>(true, []);
   addPersonReactiveForm: FormGroup;
   dataSource: PersonDataSource;
   @ViewChild(MatPaginator)
@@ -59,7 +55,7 @@ export class ListPersonsComponent implements OnInit {
       this.paginator,
       this.sort
     );
-
+    console.log(this.selection.selected.length);
     this.dataSource.loadPersons();
   }
   ngAfterViewInit() {
@@ -94,7 +90,17 @@ export class ListPersonsComponent implements OnInit {
       this.dataSource.loadPersons()
     );
   }
-
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected()
+      ? this.selection.clear()
+      : this.dataSource.data.forEach(row => this.selection.select(row));
+  }
   editPerson(person: Person) {
     const dialogRef = this.dialog.open(EditPersonDialogComponent, {
       data: person
@@ -107,9 +113,9 @@ export class ListPersonsComponent implements OnInit {
     });
   }
 
-  deletePerson(person: Person) {
+  deletePerson() {
     const dialogRef = this.dialog.open(DeletePersonDialogComponent, {
-      data: person
+      data: this.selection.selected
     });
 
     dialogRef.afterClosed().subscribe(result => {

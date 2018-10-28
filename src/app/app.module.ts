@@ -18,7 +18,8 @@ import {
   MatProgressSpinnerModule,
   MatSortModule,
   MatCardModule,
-  MatDialogModule
+  MatDialogModule,
+  MatCheckboxModule
 } from "@angular/material";
 import { AppComponent } from "./components/app-component/app.component";
 import { HomeViewComponent } from "./routes-components/home-view/home-view.component";
@@ -65,7 +66,8 @@ import { AddPersonDialogComponent } from "./routes-components/list-persons/dialo
     ReactiveFormsModule,
     TextMaskModule,
     MatDatepickerModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatCheckboxModule
   ],
   providers: [
     { provide: PersonProvider, useClass: PersonInMemoryDataProviderService }

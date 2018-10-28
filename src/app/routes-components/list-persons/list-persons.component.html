@@ -11,6 +11,21 @@
       Загрузка...
     </div>
   <mat-table matSort [dataSource]="dataSource">
+      <!-- выбор -->
+      <ng-container matColumnDef="select">
+          <mat-header-cell *matHeaderCellDef>
+            <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                          [checked]="selection.hasValue() && isAllSelected()"
+                          [indeterminate]="selection.hasValue() && !isAllSelected()">
+            </mat-checkbox>
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <mat-checkbox color="primary" (click)="$event.stopPropagation()"
+                          (change)="$event ? selection.toggle(row) : null"
+                          [checked]="selection.isSelected(row)">
+            </mat-checkbox>
+          </mat-cell>
+        </ng-container>
       <!-- имя -->
       <ng-container matColumnDef="name">
         <mat-header-cell mat-sort-header *matHeaderCellDef>
@@ -68,15 +83,15 @@
         <button mat-icon-button color="primary" (click)="addPerson()">
           <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
         </button>
+        <button mat-icon-button [disabled]="selection.selected.length == 0" color="primary" (click)="deletePerson()">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
       </mat-header-cell>
         <mat-cell *matCellDef="let row">
           <button mat-icon-button color="primary" (click)="editPerson(row)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 
-          <button mat-icon-button color="primary" (click)="deletePerson(row)">
-            <mat-icon aria-label="Delete">delete</mat-icon>
-          </button>
         </mat-cell>
       </ng-container>
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>

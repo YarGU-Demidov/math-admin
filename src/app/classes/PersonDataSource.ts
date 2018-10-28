@@ -10,6 +10,7 @@ export class PersonDataSource implements DataSource<Person> {
   filterSurname: string;
 
   private personsSubject = new BehaviorSubject<Person[]>([]);
+  public data: Person[];
   private personsNumber = new BehaviorSubject<number>(0);
   private loadingSubject = new BehaviorSubject<boolean>(false);
   public personsNumber$ = this.personsNumber.asObservable();
@@ -19,7 +20,9 @@ export class PersonDataSource implements DataSource<Person> {
     private personService: PersonProvider,
     public paginator: MatPaginator,
     public sort: MatSort
-  ) {}
+  ) {
+    this.personsSubject.asObservable().subscribe(data => (this.data = data));
+  }
 
   connect(): Observable<Person[]> {
     return this.personsSubject.asObservable();

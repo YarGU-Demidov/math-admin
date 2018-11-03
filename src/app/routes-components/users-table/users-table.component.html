@@ -1,0 +1,61 @@
+<div class="mat-elevation-z8">
+
+  <mat-table matSort [dataSource]="dataSource">
+    <!-- выбор -->
+    <ng-container matColumnDef="select">
+        <mat-header-cell *matHeaderCellDef>
+          <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+            [indeterminate]="selection.hasValue() && !isAllSelected()">
+          </mat-checkbox>
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+            [checked]="selection.isSelected(row)">
+          </mat-checkbox>
+        </mat-cell>
+      </ng-container>
+      <!-- логин -->
+      <ng-container matColumnDef="login">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>
+        <div>Логин</div></mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          {{user.login}}
+        </mat-cell>
+      </ng-container>
+      <!-- фио -->
+      <ng-container matColumnDef="snm">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>ФИО</mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          {{user.snm}}
+        </mat-cell>
+      </ng-container>
+      <!-- Дата создания -->
+      <ng-container matColumnDef="creationDate">
+        <mat-header-cell mat-sort-header *matHeaderCellDef>Дата создания</mat-header-cell>
+        <mat-cell *matCellDef="let user">
+          {{user.creationDate | date}}
+        </mat-cell>
+      </ng-container>
+      <!-- колонка с кнопками-->
+      <ng-container matColumnDef="actionsColumn">
+        <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addPerson()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+        <button mat-icon-button [disabled]="selection.selected.length == 0" color="primary" (click)="deletePerson()">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+          <button mat-icon-button color="primary" (click)="editPerson(row)">
+            <mat-icon aria-label="Edit">edit</mat-icon>
+          </button>
+
+        </mat-cell>
+      </ng-container>
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="(dataSource.dataCount$ | async)" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons></mat-paginator>
+</div>

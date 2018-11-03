@@ -2,7 +2,7 @@ import { Component, Inject } from "@angular/core";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { PersonValidatorService } from "src/app/services/person-validator/person-validator.service";
 import { FormGroup } from "@angular/forms";
-import { Person } from "src/app/enteties/person";
+import { Person } from "src/app/enteties/Person";
 import phoneMask from "src/app/constants/masks/phone-mask";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 
@@ -39,7 +39,7 @@ export class EditPersonDialogComponent {
       birthday: person.birthday,
       creationDate: person.creationDate,
       photoId: person.photoId,
-      isUser: person.isUser
+      user: person.user
     });
     return formGroup;
   }

@@ -1,4 +1,4 @@
-import { Person } from "src/app/enteties/person";
+import { Person } from "src/app/enteties/Person";
 
 let personList: Person[] = [
   {
@@ -11,7 +11,8 @@ let personList: Person[] = [
     email: "test1@mail.com",
     birthday: new Date(),
     creationDate: "232323",
-    photoId: "2424",
+    photoId: "123",
+    user: null,
     isUser: false
   },
   {
@@ -23,9 +24,10 @@ let personList: Person[] = [
     email: "test2@mail.com",
     birthday: new Date(),
     creationDate: "232323",
-    photoId: "2424",
+    additionalPhone: "+79445239232",
+    photoId: "123",
     isUser: false,
-    additionalPhone: "+79445239232"
+    user: null
   }
 ];
 export function deletePerson(index: number) {

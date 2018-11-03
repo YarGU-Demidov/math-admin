@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Person } from "src/app/enteties/person";
+import { Person } from "src/app/enteties/Person";
 import { Observable, BehaviorSubject, of } from "rxjs";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { map } from "rxjs/operators";

@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
-import { Person } from "src/app/enteties/person";
+import { Person } from "src/app/enteties/Person";
 
 @Injectable({
   providedIn: "root"
@@ -25,7 +25,7 @@ export class PersonValidatorService {
         additionalPhone: [""],
         birthday: ["", Validators.required],
         id: [""],
-        isUser: [""],
+        user: [""],
         creationDate: [""],
         photoId: [""]
       });
@@ -43,7 +43,6 @@ export class PersonValidatorService {
     person.additionalPhone = controls.phone.value.replace(/[^0-9+]+/g, "");
     person.birthday = controls.birthday.value;
     person.id = controls.id.value;
-    person.isUser = controls.isUser.value;
     person.creationDate = controls.creationDate.value;
     person.photoId = controls.photoId.value;
     return person;

@@ -1,25 +1,22 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
-import { Person } from "src/app/enteties/person";
+import { Person } from "src/app/enteties/Person";
 import { MatPaginator } from "@angular/material/paginator";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { merge, fromEvent } from "rxjs";
 import { MatSort, MatDialog } from "@angular/material";
-import { FormGroup } from "@angular/forms";
-import { PersonDataSource } from "src/app/classes/PersonDataSource";
-import { HttpClient } from "@angular/common/http";
-import { EditPersonDialogComponent } from "../list-persons/dialogs/edit-person-dialog/edit-person-dialog.component";
+import { PersonDataSource } from "src/app/dataSources/PersonDataSource";
+import { EditPersonDialogComponent } from "./dialogs/edit-person-dialog/edit-person-dialog.component";
 import { DeletePersonDialogComponent } from "./dialogs/delete-person-dialog/delete-person-dialog.component";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 import { AddPersonDialogComponent } from "./dialogs/add-person-dialog/add-person-dialog.component";
 
 @Component({
-  selector: "app-list-persons",
-  templateUrl: "./list-persons.component.html",
-  styleUrls: ["./list-persons.component.css", "./person-list.component.scss"],
-  providers: [HttpClient]
+  selector: "app-table-persons",
+  templateUrl: "./persons-table.component.html",
+  styleUrls: ["./persons-table.component.css", "./persons-table.component.scss"]
 })
-export class ListPersonsComponent implements OnInit {
+export class PersonsTableComponent implements OnInit {
   columnsToDisplay: string[] = [
     "select",
     "name",
@@ -29,11 +26,11 @@ export class ListPersonsComponent implements OnInit {
     "phone",
     "additionalPhone",
     "birthday",
+    "isUser",
     "actionsColumn"
   ];
 
   selection = new SelectionModel<Person>(true, []);
-  addPersonReactiveForm: FormGroup;
   dataSource: PersonDataSource;
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
@@ -55,7 +52,6 @@ export class ListPersonsComponent implements OnInit {
       this.paginator,
       this.sort
     );
-    console.log(this.selection.selected.length);
     this.dataSource.loadPersons();
   }
   ngAfterViewInit() {

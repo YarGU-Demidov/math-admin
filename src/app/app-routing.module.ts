@@ -1,7 +1,8 @@
 import { HomeViewComponent } from "./routes-components/home-view/home-view.component";
 import { Routes, RouterModule } from "@angular/router";
 import { NgModule } from "@angular/core";
-import { ListPersonsComponent } from "./routes-components/list-persons/list-persons.component";
+import { PersonsTableComponent } from "./routes-components/persons-table/persons-table.component";
+import { UsersTableComponent } from "./routes-components/users-table/users-table.component";
 const routes: Routes = [
   {
     path: "",
@@ -10,7 +11,11 @@ const routes: Routes = [
   },
   {
     path: "persons",
-    component: ListPersonsComponent
+    component: PersonsTableComponent
+  },
+  {
+    path: "users",
+    component: UsersTableComponent
   }
 ];
 

@@ -1,3 +1,4 @@
+import { User } from "./User";
 export class Person {
   public id: string = null;
   public name: string = null;
@@ -9,7 +10,12 @@ export class Person {
   public birthday: Date = null;
   public creationDate: string = null;
   public photoId: string = null;
-  public isUser: boolean = false;
+  public user: User = null;
+  get isUser(): boolean {
+    if (this.user) return true;
+    return false;
+  }
+
   constructor(name?: string, surname?: string, id?: string) {
     this.name = name;
     this.surname = surname;

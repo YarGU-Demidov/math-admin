@@ -1,14 +1,15 @@
 import { Injectable } from "@angular/core";
 import { FormGroup, Validators, FormBuilder } from "@angular/forms";
 import { Person } from "src/app/enteties/Person";
+import { ValidatorService } from "../ValidatorSevice.interface";
 
 @Injectable({
   providedIn: "root"
 })
-export class PersonValidatorService {
+export class PersonValidatorService implements ValidatorService<Person> {
   formGroup: FormGroup;
   constructor(private fb: FormBuilder) {}
-  getPersonValidators(): FormGroup {
+  getValidator(): FormGroup {
     if (!this.formGroup) {
       this.formGroup = this.fb.group({
         name: ["", Validators.required],
@@ -32,7 +33,7 @@ export class PersonValidatorService {
     }
     return this.formGroup;
   }
-  getPersonPapulatedWithValues() {
+  getDataObjectPopulatedWithValues() {
     const controls = this.formGroup.controls;
     let person = new Person();
     person.name = controls.name.value;

@@ -29,13 +29,13 @@ export class PersonHttpDataProviderService implements PersonProvider {
   getPersonsCount(): Observable<number> {
     throw new Error("Method not implemented.");
   }
-  addPreson(person: Person): void {
+  addData(person: Person): void {
     throw new Error("Method not implemented.");
   }
-  editPerson(newPerson: Person): void {
+  editData(newPerson: Person): void {
     throw new Error("Method not implemented.");
   }
-  deletePerson(person: any): void {
+  deleteData(person: any): void {
     throw new Error("Method not implemented.");
   }
 }

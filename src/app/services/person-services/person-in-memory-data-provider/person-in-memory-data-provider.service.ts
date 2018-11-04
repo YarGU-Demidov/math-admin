@@ -42,15 +42,18 @@ export class PersonInMemoryDataProviderService implements PersonProvider {
   getPersonsCount(): Observable<number> {
     return of(Math.round(Math.random() * 10));
   }
-  addPreson(person: Person) {
+  addData(person: Person) {
+    console.log("person added");
     getPersons().push(person);
   }
-  editPerson(newPerson: Person) {
+  editData(newPerson: Person) {
+    console.log("person edited");
     const data = getPersons();
     const index = data.findIndex(person => person.id == newPerson.id);
     data[index] = newPerson;
   }
-  deletePerson(id: string) {
+  deleteData(id: string) {
+    console.log("person deleted");
     const index = getPersons().findIndex(person => person.id == id);
     deletePerson(index);
   }

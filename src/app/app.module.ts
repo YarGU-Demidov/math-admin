@@ -27,7 +27,6 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { PersonsTableComponent } from "./routes-components/persons-table/persons-table.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
-import { EditPersonDialogComponent } from "./routes-components/persons-table/dialogs/edit-person-dialog/edit-person-dialog.component";
 import { DeletePersonDialogComponent } from "./routes-components/persons-table/dialogs/delete-person-dialog/delete-person-dialog.component";
 import { PersonProvider } from "./services/person-services/person-provider.abstract";
 import { PersonInMemoryDataProviderService } from "./services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
@@ -35,6 +34,7 @@ import { AddPersonDialogComponent } from "./routes-components/persons-table/dial
 import { UsersTableComponent } from "./routes-components/users-table/users-table.component";
 import { UserProvider } from "./services/user-services/user-provider.abstract";
 import { UserInMemoryDataProviderService } from "./services/user-services/person-in-memory-data-provider/user-in-memory-provider";
+import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-person-dialog/edit-person-dialog.component";
 
 @NgModule({
   declarations: [

@@ -20,6 +20,6 @@ export class DeletePersonDialogComponent {
   }
 
   onConfirm(): void {
-    this.personDataService.deletePerson(this.data.id);
+    this.personDataService.deleteData(this.data.id);
   }
 }

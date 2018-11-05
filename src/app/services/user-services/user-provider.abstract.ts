@@ -6,7 +6,7 @@ import { User } from "src/app/enteties/User";
 @Injectable({
   providedIn: "root"
 })
-export abstract class UserProvider implements DataProvider {
+export abstract class UserProvider extends DataProvider<User> {
   abstract getUsers(
     sortField: string,
     sortOrder: string,
@@ -14,7 +14,4 @@ export abstract class UserProvider implements DataProvider {
     take?: number
   ): Observable<User[]>;
   abstract getUsersCount(): Observable<number>;
-  abstract addUser(user: User);
-  abstract editUser(newUser: User);
-  abstract deleteUser(login: string);
 }

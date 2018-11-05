@@ -1,29 +1,28 @@
 import { Component, OnInit } from "@angular/core";
 import { MatDialogRef } from "@angular/material";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
-import { FormGroup } from "@angular/forms";
 import phoneMask from "src/app/constants/masks/phone-mask";
 import { PersonValidatorService } from "src/app/services/validator-services/person-validator/person-validator.service";
+import { Dialog } from "src/app/routes-components/dialogs/DialogComponent.abastract";
+import { Person } from "src/app/enteties/Person";
 
 @Component({
   selector: "app-add-person-dialog",
   templateUrl: "./add-person-dialog.component.html",
   styleUrls: ["./add-person-dialog.component.css"]
 })
-export class AddPersonDialogComponent {
+export class AddPersonDialogComponent extends Dialog<Person> {
   public phoneMask = phoneMask;
-  editPersonReactiveForm: FormGroup;
   constructor(
-    public dialogRef: MatDialogRef<AddPersonDialogComponent>,
-    public personProvider: PersonProvider,
-    private validator: PersonValidatorService
+    protected dialogRef: MatDialogRef<AddPersonDialogComponent>,
+    protected personProvider: PersonProvider,
+    protected validator: PersonValidatorService
   ) {
-    this.editPersonReactiveForm = validator.getValidator();
+    super(dialogRef, personProvider, validator);
   }
-  onCancel(): void {
-    this.dialogRef.close();
+  ngOnInit() {
+    this.formGroup = this.validator.formGroup;
   }
-
   public onConfirm(): void {
     this.personProvider.addData(
       this.validator.getDataObjectPopulatedWithValues()

@@ -29,17 +29,17 @@ export class UserInMemoryDataProviderService extends UserProvider {
   getUsersCount() {
     return of(Math.round(Math.random() * 10));
   }
-  addUser(user: User) {
+  addData(user: User) {
+    console.log(`user added ${user}`);
     getUsers().push(user);
   }
-  editUser(newUser: User) {
+  editData(newUser: User) {
+    console.log(`user edited ${newUser}`);
     const data = getUsers();
     const index = data.findIndex(user => user.login == newUser.login);
     data[index] = newUser;
   }
-  deleteUser(login: string) {
-    const index = getUsers().findIndex(user => user.login == login);
-    deleteUser(index);
+  deleteData(data: User[]) {
+    console.log(`users deleted ${data}`);
   }
-  deletePerson(login: string) {}
 }

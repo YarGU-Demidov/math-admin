@@ -43,18 +43,16 @@ export class PersonInMemoryDataProviderService implements PersonProvider {
     return of(Math.round(Math.random() * 10));
   }
   addData(person: Person) {
-    console.log("person added");
+    console.log(`person added ${person}`);
     getPersons().push(person);
   }
   editData(newPerson: Person) {
-    console.log("person edited");
+    console.log(`person edited ${newPerson}`);
     const data = getPersons();
     const index = data.findIndex(person => person.id == newPerson.id);
     data[index] = newPerson;
   }
-  deleteData(id: string) {
-    console.log("person deleted");
-    const index = getPersons().findIndex(person => person.id == id);
-    deletePerson(index);
+  deleteData(data: Person[]) {
+    console.log(`persons deleted ${data}`);
   }
 }

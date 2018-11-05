@@ -35,7 +35,7 @@ export class PersonHttpDataProviderService implements PersonProvider {
   editData(newPerson: Person): void {
     throw new Error("Method not implemented.");
   }
-  deleteData(person: any): void {
+  deleteData(persons: Person[]): void {
     throw new Error("Method not implemented.");
   }
 }

@@ -1,10 +1,12 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { UserDataSource } from "src/app/dataSources/UserDataSource";
 import { UserProvider } from "src/app/services/user-services/user-provider.abstract";
-import { MatPaginator, MatSort } from "@angular/material";
+import { MatPaginator, MatSort, MatDialog } from "@angular/material";
 import { User } from "src/app/enteties/User";
 import { SelectionModel } from "@angular/cdk/collections";
 import { merge } from "rxjs";
+import { DeleteUserDialogComponent } from "../dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
+import { EditUserDialogComponent } from "../dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
 
 @Component({
   selector: "app-users-table",
@@ -26,7 +28,7 @@ export class UsersTableComponent implements OnInit {
   @ViewChild(MatSort)
   sort: MatSort;
 
-  constructor(private userProvider: UserProvider) {}
+  constructor(private userProvider: UserProvider, private dialog: MatDialog) {}
   ngOnInit() {
     this.dataSource = new UserDataSource(
       this.userProvider,
@@ -51,5 +53,27 @@ export class UsersTableComponent implements OnInit {
     merge(this.sort.sortChange, this.paginator.page).subscribe(() =>
       this.dataSource.loadPersons()
     );
+  }
+  deleteUser() {
+    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
+      data: this.selection.selected
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.dataSource.loadPersons();
+        this.selection.clear();
+      }
+    });
+  }
+  editUser(user: User) {
+    const dialogRef = this.dialog.open(EditUserDialogComponent, {
+      data: user
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.dataSource.loadPersons();
+      }
+    });
   }
 }

@@ -27,14 +27,17 @@ import { NavbarComponent } from "./navbar/navbar.component";
 import { PersonsTableComponent } from "./routes-components/persons-table/persons-table.component";
 import { AppRoutingModule } from "./app-routing.module";
 import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
-import { DeletePersonDialogComponent } from "./routes-components/persons-table/dialogs/delete-person-dialog/delete-person-dialog.component";
 import { PersonProvider } from "./services/person-services/person-provider.abstract";
 import { PersonInMemoryDataProviderService } from "./services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
-import { AddPersonDialogComponent } from "./routes-components/persons-table/dialogs/add-person-dialog/add-person-dialog.component";
 import { UsersTableComponent } from "./routes-components/users-table/users-table.component";
 import { UserProvider } from "./services/user-services/user-provider.abstract";
 import { UserInMemoryDataProviderService } from "./services/user-services/person-in-memory-data-provider/user-in-memory-provider";
 import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-person-dialog/edit-person-dialog.component";
+import { DeletePersonDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-person-dialog/delete-person-dialog.component";
+import { AddPersonDialogComponent } from "./routes-components/dialogs/add-dialog/add-person-dialog/add-person-dialog.component";
+import { AddUserDialogComponent } from "./routes-components/dialogs/add-dialog/add-user-dialog/add-user-dialog.component";
+import { EditUserDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
+import { DeleteUserDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
 
 @NgModule({
   declarations: [
@@ -46,7 +49,11 @@ import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-dial
     EditPersonDialogComponent,
     DeletePersonDialogComponent,
     AddPersonDialogComponent,
-    UsersTableComponent
+    UsersTableComponent,
+    AddUserDialogComponent,
+    EditUserDialogComponent,
+    DeleteUserDialogComponent,
+    AddUserDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -81,7 +88,10 @@ import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-dial
   entryComponents: [
     EditPersonDialogComponent,
     DeletePersonDialogComponent,
-    AddPersonDialogComponent
+    AddPersonDialogComponent,
+    EditUserDialogComponent,
+    AddUserDialogComponent,
+    DeleteUserDialogComponent
   ]
 })
 export class AppModule {}

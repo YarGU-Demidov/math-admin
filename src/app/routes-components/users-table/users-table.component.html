@@ -1,5 +1,7 @@
 <div class="mat-elevation-z8">
-
+  <div *ngIf="dataSource.loading$ | async">
+    Загрузка...
+  </div>
   <mat-table matSort [dataSource]="dataSource">
     <!-- выбор -->
     <ng-container matColumnDef="select">
@@ -42,19 +44,19 @@
         <button mat-icon-button color="primary" (click)="addPerson()">
           <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
         </button>
-        <button mat-icon-button [disabled]="selection.selected.length == 0" color="primary" (click)="deletePerson()">
+        <button mat-icon-button [disabled]="selection.selected.length == 0" color="primary" (click)="deleteUser()">
           <mat-icon aria-label="Delete">delete</mat-icon>
         </button>
       </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          <button mat-icon-button color="primary" (click)="editPerson(row)">
+          <button mat-icon-button color="primary" (click)="editUser(row)">
             <mat-icon aria-label="Edit">edit</mat-icon>
           </button>
 
         </mat-cell>
       </ng-container>
     <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
-    <mat-row *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+    <mat-row (click)="selection.toggle(row)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
   </mat-table>
   <mat-paginator [length]="(dataSource.dataCount$ | async)" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
     showFirstLastButtons></mat-paginator>

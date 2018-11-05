@@ -6,10 +6,10 @@ import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { merge, fromEvent } from "rxjs";
 import { MatSort, MatDialog } from "@angular/material";
 import { PersonDataSource } from "src/app/dataSources/PersonDataSource";
-import { DeletePersonDialogComponent } from "./dialogs/delete-person-dialog/delete-person-dialog.component";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
-import { AddPersonDialogComponent } from "./dialogs/add-person-dialog/add-person-dialog.component";
 import { EditPersonDialogComponent } from "../dialogs/edit-dialog/edit-person-dialog/edit-person-dialog.component";
+import { DeletePersonDialogComponent } from "../dialogs/delete-dialog/delete-person-dialog/delete-person-dialog.component";
+import { AddPersonDialogComponent } from "../dialogs/add-dialog/add-person-dialog/add-person-dialog.component";
 
 @Component({
   selector: "app-table-persons",
@@ -113,10 +113,10 @@ export class PersonsTableComponent implements OnInit {
     const dialogRef = this.dialog.open(DeletePersonDialogComponent, {
       data: this.selection.selected
     });
-
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.dataSource.loadPersons();
+        this.selection.clear();
       }
     });
   }

@@ -19,7 +19,8 @@ import {
   MatSortModule,
   MatCardModule,
   MatDialogModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatAutocompleteModule
 } from "@angular/material";
 import { AppComponent } from "./components/app-component/app.component";
 import { HomeViewComponent } from "./routes-components/home-view/home-view.component";
@@ -57,6 +58,7 @@ import { DeleteUserDialogComponent } from "./routes-components/dialogs/delete-di
   ],
   imports: [
     BrowserModule,
+    MatAutocompleteModule,
     CommonModule,
     MatCardModule,
     MatPaginatorModule,

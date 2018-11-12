@@ -26,7 +26,9 @@ export class UserValidatorService implements ValidatorService<User> {
       personId: data.personId,
       groupId: data.groupId,
       creationDate: data.creationDate,
-      person: data.person
+      person: data.person,
+      personName:
+        data.person === null ? "" : `${data.person.surname} ${data.person.name}`
     });
   }
 
@@ -35,9 +37,10 @@ export class UserValidatorService implements ValidatorService<User> {
       login: ["", Validators.required],
       password: ["", Validators.required],
       personId: [""],
-      groupId: [""],
+      groupId: ["", Validators.required],
       creationDate: [""],
-      person: [""]
+      person: this.fb.control({}),
+      personName: ["", Validators.required]
     });
   }
 }

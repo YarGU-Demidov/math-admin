@@ -21,11 +21,11 @@ export class AddPersonDialogComponent extends Dialog<Person> {
     super(dialogRef, personProvider, validator);
   }
   ngOnInit() {
-    this.formGroup = this.validator.formGroup;
+    this.formGroup = this.validator.getInitialFormGroup();
   }
   public onConfirm(): void {
     this.personProvider.addData(
-      this.validator.getDataObjectPopulatedWithValues()
+      this.validator.getDataObjectPopulatedWithValues(this.formGroup)
     );
   }
 }

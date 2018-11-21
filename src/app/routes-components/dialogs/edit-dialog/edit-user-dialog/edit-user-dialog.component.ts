@@ -17,6 +17,7 @@ import { Observable, BehaviorSubject } from "rxjs";
 export class EditUserDialogComponent extends Dialog<User> {
   private persons: Person[];
   private filteredPersons: Observable<Person[]>;
+  private _person: Person;
   constructor(
     private personProvider: PersonProvider,
     protected dialogRef: MatDialogRef<EditUserDialogComponent>,
@@ -25,29 +26,32 @@ export class EditUserDialogComponent extends Dialog<User> {
     @Inject(MAT_DIALOG_DATA) protected user: User
   ) {
     super(dialogRef, userService, validator, user);
-    //this.updatePersons()
+    this.updatePersons();
   }
 
   ngOnInit() {
-    this.validator.populateInitalFormValuesWithData(this.dataObject);
-    this.formGroup = this.validator.formGroup;
+    this.formGroup = this.validator.populateInitalFormValuesWithData(
+      this.dataObject
+    );
 
     this.filteredPersons = this.formGroup.controls.person.valueChanges.pipe(
-      startWith("")
-      // map(value => this._filter(value))
+      startWith(""),
+      map(value => this._filter(value))
     );
   }
-  _filter(value: string): Person[] {
-    const filterValue = value.toLowerCase();
-    return this.persons.filter(person => {
-      if (!person.isUser) {
-        const surnameNameMiddlename = `${person.surname} ${person.name} ${
-          person.middleName
-        }`;
-        return surnameNameMiddlename.toLowerCase().includes(filterValue);
-      }
-      return false;
-    });
+  _filter(value: string | Person): Person[] {
+    if (typeof value == "string") {
+      const filterValue = value.toLowerCase();
+      return this.persons.filter(person => {
+        if (!person.isUser) {
+          const surnameNameMiddlename = `${person.surname} ${person.name} ${
+            person.middleName
+          }`;
+          return surnameNameMiddlename.toLowerCase().includes(filterValue);
+        }
+        return false;
+      });
+    }
   }
 
   updatePersons() {
@@ -57,7 +61,9 @@ export class EditUserDialogComponent extends Dialog<User> {
   }
 
   onConfirm(): void {
-    const data = this.validator.getDataObjectPopulatedWithValues();
+    const data = this.validator.getDataObjectPopulatedWithValues(
+      this.formGroup
+    );
     this.dataProvider.editData(data);
   }
 }

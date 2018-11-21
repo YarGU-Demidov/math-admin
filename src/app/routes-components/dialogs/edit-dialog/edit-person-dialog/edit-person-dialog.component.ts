@@ -25,12 +25,15 @@ export class EditPersonDialogComponent extends Dialog<Person> {
   }
 
   ngOnInit() {
-    this.validator.populateInitalFormValuesWithData(this.dataObject);
-    this.formGroup = this.validator.formGroup;
+    this.formGroup = this.validator.populateInitalFormValuesWithData(
+      this.dataObject
+    );
   }
 
   onConfirm(): void {
-    const data = this.validator.getDataObjectPopulatedWithValues();
+    const data = this.validator.getDataObjectPopulatedWithValues(
+      this.formGroup
+    );
     this.dataProvider.editData(data);
   }
 }

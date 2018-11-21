@@ -15,9 +15,9 @@ export class Person {
     if (this.user) return true;
     return false;
   }
-  public toString = (): string => {
-    return `${this.surname} ${this.name}`;
-  };
+  toString(): string {
+    return this.name + " " + this.surname;
+  }
   constructor(name?: string, surname?: string, id?: string) {
     this.name = name;
     this.surname = surname;

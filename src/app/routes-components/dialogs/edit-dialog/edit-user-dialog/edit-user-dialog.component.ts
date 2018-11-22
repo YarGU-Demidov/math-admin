@@ -17,15 +17,14 @@ import { Observable, BehaviorSubject } from "rxjs";
 export class EditUserDialogComponent extends Dialog<User> {
   private persons: Person[];
   private filteredPersons: Observable<Person[]>;
-  private _person: Person;
   constructor(
     private personProvider: PersonProvider,
     protected dialogRef: MatDialogRef<EditUserDialogComponent>,
-    protected userService: UserProvider,
+    protected dataProvider: UserProvider,
     protected validator: UserValidatorService,
     @Inject(MAT_DIALOG_DATA) protected user: User
   ) {
-    super(dialogRef, userService, validator, user);
+    super(dialogRef, dataProvider, validator, user);
     this.updatePersons();
   }
 

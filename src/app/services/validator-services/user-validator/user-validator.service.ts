@@ -38,14 +38,18 @@ export class UserValidatorService implements ValidatorService<User> {
     return formGroup;
   }
   getInitialFormGroup() {
-    const formGroup = this.fb.group({
-      login: ["", Validators.required],
-      password: ["", Validators.required],
-      personId: [""],
-      groupId: ["", Validators.required],
-      creationDate: [""],
-      person: ["", [ValidatePerson]]
-    });
+    const formGroup = this.fb.group(
+      {
+        login: ["", Validators.required],
+        password: ["", Validators.required],
+        passwordRepeat: ["", Validators.required],
+        personId: [""],
+        groupId: ["", Validators.required],
+        creationDate: [""],
+        person: ["", [ValidatePerson]]
+      },
+      { validator: PasswordsMatch }
+    );
     formGroup.controls.person.valueChanges.subscribe(data => {
       if (data) {
         if (!data.set)
@@ -73,5 +77,18 @@ function ValidatePerson(control: FormControl) {
   if (!control.value || !control.value.id) {
     return { valid: false };
   }
+  return null;
+}
+function PasswordsMatch(group: FormGroup) {
+  if (!group.controls.password.value || !group.controls.passwordRepeat.value) {
+    return { valid: false };
+  }
+  if (group.controls.password.value !== group.controls.passwordRepeat.value) {
+    group.controls.password.setErrors({ invalid: true });
+    group.controls.passwordRepeat.setErrors({ invalid: true });
+    return { valid: false };
+  }
+  group.controls.password.setErrors(null);
+  group.controls.passwordRepeat.setErrors(null);
   return null;
 }

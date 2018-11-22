@@ -7,6 +7,7 @@ import { SelectionModel } from "@angular/cdk/collections";
 import { merge } from "rxjs";
 import { DeleteUserDialogComponent } from "../dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
 import { EditUserDialogComponent } from "../dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
+import { AddUserDialogComponent } from "../dialogs/add-dialog/add-user-dialog/add-user-dialog.component";
 
 @Component({
   selector: "app-users-table",
@@ -69,6 +70,15 @@ export class UsersTableComponent implements OnInit {
     const dialogRef = this.dialog.open(EditUserDialogComponent, {
       data: user
     });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 1) {
+        this.dataSource.loadPersons();
+      }
+    });
+  }
+  addUser() {
+    const dialogRef = this.dialog.open(AddUserDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {

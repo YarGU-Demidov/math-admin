@@ -41,7 +41,7 @@
       <!-- колонка с кнопками-->
       <ng-container matColumnDef="actionsColumn">
         <mat-header-cell *matHeaderCellDef>
-        <button mat-icon-button color="primary" (click)="addPerson()">
+        <button mat-icon-button color="primary" (click)="addUser()">
           <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
         </button>
         <button mat-icon-button [disabled]="selection.selected.length == 0" color="primary" (click)="deleteUser()">

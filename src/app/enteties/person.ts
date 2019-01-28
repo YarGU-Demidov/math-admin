@@ -1,6 +1,6 @@
 import { User } from "./User";
-export class Person {
-  public id: string = null;
+import Entity from "./Entity";
+export class Person extends Entity<string> {
   public name: string = null;
   public surname: string = null;
   public middleName: string = null;
@@ -8,7 +8,6 @@ export class Person {
   public email: string = null;
   public additionalPhone: string = null;
   public birthday: Date = null;
-  public creationDate: string = null;
   public photoId: string = null;
   public user: User = null;
   get isUser(): boolean {
@@ -19,6 +18,7 @@ export class Person {
     return this.name + " " + this.surname;
   }
   constructor(name?: string, surname?: string, id?: string) {
+    super();
     this.name = name;
     this.surname = surname;
     this.id = id;

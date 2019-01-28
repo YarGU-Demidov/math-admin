@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { of } from "rxjs";
+import { of, Observable } from "rxjs";
 import { UserProvider } from "../user-provider.abstract";
 import { getUsers, deleteUser } from "./Users";
 import { User } from "src/app/enteties/User";
@@ -7,17 +7,14 @@ import { User } from "src/app/enteties/User";
 @Injectable({
   providedIn: "root"
 })
-export class UserInMemoryDataProviderService extends UserProvider {
+export class UserInMemoryDataProvider extends UserProvider {
   constructor() {
     super();
   }
-
-  getUsers(
-    sortField: string,
-    sortOrder: string,
-    skip: number = 0,
-    take: number = 5
-  ) {
+  getByLogin(login: string): Observable<User> {
+    return of(getUsers()[0]);
+  }
+  getAll(): Observable<User[]> {
     let userList = getUsers();
     for (let i = 1; i < userList.length; i++) {
       let temp = userList[i];
@@ -26,9 +23,13 @@ export class UserInMemoryDataProviderService extends UserProvider {
     }
     return of(userList);
   }
-  getUsersCount() {
+  getPaged(page?: number, perPage?: number): Observable<User[]> {
+    return this.getAll();
+  }
+  getCount(): Observable<number> {
     return of(Math.round(Math.random() * 10));
   }
+  getUsersCount() {}
   addData(user: User) {
     console.log(`user added ${user}`);
     getUsers().push(user);

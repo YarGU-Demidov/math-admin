@@ -19,11 +19,9 @@ export class PersonDataSource extends AbstractDataSource<Person> {
 
   loadPersons() {
     this.loadingSubject.next(true);
+    this.personService.getCount().subscribe(res => this.dataCount.next(res));
     this.personService
-      .getPersonsCount()
-      .subscribe(res => this.dataCount.next(res));
-    this.personService
-      .getPersons(this.sort.active, this.sort.direction)
+      .getPaged(this.paginator.pageIndex, this.paginator.pageSize)
       .pipe(
         catchError(() => of([])),
         finalize(() => setTimeout(() => this.loadingSubject.next(false), 1000))

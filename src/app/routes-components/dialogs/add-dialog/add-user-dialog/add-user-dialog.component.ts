@@ -49,7 +49,7 @@ export class AddUserDialogComponent extends Dialog<User> {
   }
   updatePersons() {
     this.personProvider
-      .getPersons("name", "asc")
+      .getPaged(0, 10)
       .subscribe(data => (this.persons = data));
   }
   public onConfirm(): void {

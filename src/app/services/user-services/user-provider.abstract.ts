@@ -7,11 +7,5 @@ import { User } from "src/app/enteties/User";
   providedIn: "root"
 })
 export abstract class UserProvider extends DataProvider<User> {
-  abstract getUsers(
-    sortField: string,
-    sortOrder: string,
-    skip?: number,
-    take?: number
-  ): Observable<User[]>;
-  abstract getUsersCount(): Observable<number>;
+  abstract getByLogin(login: string): Observable<User>;
 }

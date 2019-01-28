@@ -2,6 +2,7 @@ import { User } from "src/app/enteties/User";
 
 let userList: User[] = [
   {
+    id: "2",
     login: "1",
     password: "Bob",
     personId: "Firsy",

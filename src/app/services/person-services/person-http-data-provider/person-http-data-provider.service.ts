@@ -8,8 +8,19 @@ import { PersonProvider } from "../person-provider.abstract";
 @Injectable({
   providedIn: "root"
 })
-export class PersonHttpDataProviderService implements PersonProvider {
-  constructor(private http: HttpClient) {}
+export class PersonHttpDataProviderService extends PersonProvider {
+  getAll(): Observable<Person[]> {
+    throw new Error("Method not implemented.");
+  }
+  getPaged(page?: number, perPage?: number): Observable<Person[]> {
+    throw new Error("Method not implemented.");
+  }
+  getCount(): Observable<number> {
+    throw new Error("Method not implemented.");
+  }
+  constructor(private http: HttpClient) {
+    super();
+  }
   getPersons(
     sortField: string,
     sortOrder: string,

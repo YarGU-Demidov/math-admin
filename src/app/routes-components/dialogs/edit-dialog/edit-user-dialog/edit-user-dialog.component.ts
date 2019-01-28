@@ -55,7 +55,7 @@ export class EditUserDialogComponent extends Dialog<User> {
 
   updatePersons() {
     this.personProvider
-      .getPersons("name", "asc")
+      .getPaged(0, 10)
       .subscribe(data => (this.persons = data));
   }
 

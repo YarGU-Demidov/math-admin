@@ -33,7 +33,8 @@ export class UserValidatorService implements ValidatorService<User> {
       personId: data.personId,
       groupId: data.groupId,
       creationDate: data.creationDate,
-      person: data.person
+      person: data.person,
+      passwordRepeat: data.password
     });
     return formGroup;
   }

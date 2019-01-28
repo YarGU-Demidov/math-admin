@@ -32,13 +32,14 @@ import { PersonProvider } from "./services/person-services/person-provider.abstr
 import { PersonInMemoryDataProviderService } from "./services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 import { UsersTableComponent } from "./routes-components/users-table/users-table.component";
 import { UserProvider } from "./services/user-services/user-provider.abstract";
-import { UserInMemoryDataProviderService } from "./services/user-services/person-in-memory-data-provider/user-in-memory-provider";
+import { UserInMemoryDataProvider } from "./services/user-services/user-in-memory-data-provider/user-in-memory-provider";
 import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-person-dialog/edit-person-dialog.component";
 import { DeletePersonDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-person-dialog/delete-person-dialog.component";
 import { AddPersonDialogComponent } from "./routes-components/dialogs/add-dialog/add-person-dialog/add-person-dialog.component";
 import { AddUserDialogComponent } from "./routes-components/dialogs/add-dialog/add-user-dialog/add-user-dialog.component";
 import { EditUserDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
 import { DeleteUserDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
+import { UserHttpDataProvider } from "./services/user-services/user-http-data-provider/UserHttpDataProvider";
 
 @NgModule({
   declarations: [
@@ -84,7 +85,7 @@ import { DeleteUserDialogComponent } from "./routes-components/dialogs/delete-di
   ],
   providers: [
     { provide: PersonProvider, useClass: PersonInMemoryDataProviderService },
-    { provide: UserProvider, useClass: UserInMemoryDataProviderService }
+    { provide: UserProvider, useClass: UserHttpDataProvider }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

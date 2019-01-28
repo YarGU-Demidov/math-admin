@@ -10,7 +10,7 @@ let personList: Person[] = [
     additionalPhone: "+79445239232",
     email: "test1@mail.com",
     birthday: new Date(),
-    creationDate: "232323",
+    creationDate: new Date(),
     photoId: "123",
     user: null,
     isUser: false
@@ -23,7 +23,7 @@ let personList: Person[] = [
     middleName: "Firsy",
     email: "test2@mail.com",
     birthday: new Date(),
-    creationDate: "232323",
+    creationDate: new Date(),
     additionalPhone: "+79445239232",
     photoId: "123",
     isUser: false,

@@ -36,7 +36,6 @@ export class UsersTableComponent implements OnInit {
       this.paginator,
       this.sort
     );
-    this.dataSource.loadPersons();
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -50,9 +49,10 @@ export class UsersTableComponent implements OnInit {
     return numSelected === numRows;
   }
   ngAfterViewInit() {
+    this.dataSource.loadUsers();
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page).subscribe(() =>
-      this.dataSource.loadPersons()
+      this.dataSource.loadUsers()
     );
   }
   deleteUser() {
@@ -61,7 +61,7 @@ export class UsersTableComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        this.dataSource.loadPersons();
+        this.dataSource.loadUsers();
         this.selection.clear();
       }
     });
@@ -73,7 +73,7 @@ export class UsersTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        this.dataSource.loadPersons();
+        this.dataSource.loadUsers();
       }
     });
   }
@@ -82,7 +82,7 @@ export class UsersTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
-        this.dataSource.loadPersons();
+        this.dataSource.loadUsers();
       }
     });
   }

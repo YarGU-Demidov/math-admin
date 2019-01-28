@@ -1,6 +1,6 @@
 <div class="md-dialog-container">
   <h3 mat-dialog-title>Редактирование: {{person.name}} {{person.surname}}</h3>
-	<form class="mat-dialog-content" [formGroup]="formGroup">
+	<form [formGroup]="formGroup">
 		<div class="form">
 			<mat-form-field>
 				<input matInput placeholder="Имя*" formControlName="name" type="text" name="name" id="person-name">

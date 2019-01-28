@@ -14,17 +14,15 @@ export class UserDataSource extends AbstractDataSource<User> {
     super();
   }
 
-  loadPersons() {
-    this.loadingSubject.next(true);
-    this.userService.getUsersCount().subscribe(res => this.dataCount.next(res));
+  loadUsers() {
+    setTimeout(() => this.loadingSubject.next(true), 0);
+    this.userService.getCount().subscribe(res => this.dataCount.next(res));
     this.userService
-      .getUsers(this.sort.active, this.sort.direction)
+      .getPaged(this.paginator.pageIndex, this.paginator.pageSize)
       .pipe(
         catchError(() => of([])),
-        finalize(() => setTimeout(() => this.loadingSubject.next(false), 1000))
+        finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(persons =>
-        setTimeout(() => this.dataSubject.next(persons), 1000)
-      );
+      .subscribe(users => this.dataSubject.next(users));
   }
 }

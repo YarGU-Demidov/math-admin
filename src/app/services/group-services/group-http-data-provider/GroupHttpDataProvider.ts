@@ -2,31 +2,28 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Observable, from } from "rxjs";
 import { map } from "rxjs/operators";
-import { UserProvider } from "../user-provider.abstract";
 import { User } from "src/app/enteties/User";
 import version from "./../../../version/version";
 import { global, users, server } from "./../../../api-endpoints/methodNames";
+import { GroupProvider } from "../GroupProvider.abstract";
+import Group from "src/app/enteties/Group";
 
 @Injectable({
   providedIn: "root"
 })
-export class UserHttpDataProvider extends UserProvider {
+export class UserHttpDataProvider extends GroupProvider {
   constructor(private http: HttpClient) {
     super();
   }
-  getByLogin(login: string): Observable<User> {
-    return this.http
-      .get(`${server}/${version}/${users.users}/${users.getByLogin}`, {
-        params: new HttpParams().set("login", login)
-      })
-      .pipe(map(res => res["data"]));
+  getGroupsByType(groupTypeAlias: string): Observable<Group[]> {
+    throw new Error("Method not implemented.");
   }
-  getAll(): Observable<User[]> {
+  getAll(): Observable<Group[]> {
     return this.http
       .get(`${server}/${version}/${users.users}/${global.getAll}`)
       .pipe(map(res => res["data"]));
   }
-  getPaged(page?: number, perPage?: number): Observable<User[]> {
+  getPaged(page?: number, perPage?: number): Observable<Group[]> {
     return this.http
       .get(`${server}/${version}/${users.users}/${global.getPagedWithPerson}`, {
         params: new HttpParams()
@@ -42,13 +39,13 @@ export class UserHttpDataProvider extends UserProvider {
       })
       .pipe(map(res => res["data"]));
   }
-  addData(user: User): void {
+  addData(group: Group): void {
     throw new Error("Method not implemented.");
   }
-  editData(newUser: User): void {
+  editData(group: Group): void {
     throw new Error("Method not implemented.");
   }
-  deleteData(users: User[]): void {
+  deleteData(group: Group[]): void {
     throw new Error("Method not implemented.");
   }
 }

@@ -2,20 +2,35 @@ export const server = "http://localhost:5002";
 export enum global {
   getCount = "get-count",
   getPaged = "get-all-by-page",
+  getPagedWithPerson = "get-all-by-page-with-person",
   create = "create",
   update = "update",
   delete = "delete",
   getOne = "get-by-id",
-  getByAlias = "get-by-alias"
+  getByAlias = "get-by-alias",
+  getAll = "get-all",
+  hasRight = "has-right"
 }
 
 export enum users {
   users = "users",
-  getAll = "get-all",
   getByLogin = "get-by-login",
   getByLoginAndPassword = "get-by-login-and-password",
   hasRight = "has-right",
   hasCurrentUserRight = "has-current-user-right",
   getCurrentUser = "get-current-user",
   doesCurrentUserGuest = "does-current-user-is-guest"
+}
+
+export enum persons {
+  persons = "persons",
+  getAllWithoutUsers = "get-all-without-users",
+  getAllWithoutProfessors = "get-all-without-professors",
+  getAllBySurname = "get-all-by-surname",
+  getAllBySurnameWithoutUsers = "get-all-by-surname-without-users"
+}
+
+export enum groups {
+  groups = "groups",
+  getGroupsByType = "get-groups-by-type"
 }

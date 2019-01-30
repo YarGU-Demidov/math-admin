@@ -29,10 +29,8 @@ import { PersonsTableComponent } from "./routes-components/persons-table/persons
 import { AppRoutingModule } from "./app-routing.module";
 import { GlobalSidebarComponent } from "./components/global-sidebar/global-sidebar.component";
 import { PersonProvider } from "./services/person-services/person-provider.abstract";
-import { PersonInMemoryDataProviderService } from "./services/person-services/person-in-memory-data-provider/person-in-memory-data-provider.service";
 import { UsersTableComponent } from "./routes-components/users-table/users-table.component";
 import { UserProvider } from "./services/user-services/user-provider.abstract";
-import { UserInMemoryDataProvider } from "./services/user-services/user-in-memory-data-provider/user-in-memory-provider";
 import { EditPersonDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-person-dialog/edit-person-dialog.component";
 import { DeletePersonDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-person-dialog/delete-person-dialog.component";
 import { AddPersonDialogComponent } from "./routes-components/dialogs/add-dialog/add-person-dialog/add-person-dialog.component";
@@ -40,6 +38,7 @@ import { AddUserDialogComponent } from "./routes-components/dialogs/add-dialog/a
 import { EditUserDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
 import { DeleteUserDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
 import { UserHttpDataProvider } from "./services/user-services/user-http-data-provider/UserHttpDataProvider";
+import { PersonHttpDataProvider } from "./services/person-services/person-http-data-provider/person-http-data-provider.service";
 
 @NgModule({
   declarations: [
@@ -84,7 +83,7 @@ import { UserHttpDataProvider } from "./services/user-services/user-http-data-pr
     MatCheckboxModule
   ],
   providers: [
-    { provide: PersonProvider, useClass: PersonInMemoryDataProviderService },
+    { provide: PersonProvider, useClass: PersonHttpDataProvider },
     { provide: UserProvider, useClass: UserHttpDataProvider }
   ],
   bootstrap: [AppComponent],

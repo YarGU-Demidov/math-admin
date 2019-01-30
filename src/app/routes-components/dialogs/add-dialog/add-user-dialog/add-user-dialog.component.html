@@ -23,8 +23,8 @@
       <mat-form-field>
         <input matInput placeholder="Лицо*" formControlName="person" type="formControl" name="person" [matAutocomplete]="auto">
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let person of filteredPersons | async" [value]="person">
-            {{person.surname}} {{person.name}}
+          <mat-option *ngFor="let person of persons | async" [value]="person">
+            {{person.surname}} {{person.name}} {{person.birthday}}
           </mat-option>
         </mat-autocomplete>
       </mat-form-field>

@@ -9,8 +9,17 @@ import { PersonProvider } from "../person-provider.abstract";
   providedIn: "root"
 })
 export class PersonInMemoryDataProviderService extends PersonProvider {
+  getBySurnameWithoutUsers(surname: string): Observable<Person[]> {
+    throw new Error("Method not implemented.");
+  }
+  getAllWithoutUsers(): Observable<Person[]> {
+    throw new Error("Method not implemented.");
+  }
   constructor(private mergePhoneWithMaskService: MergePhoneWithMaskService) {
     super();
+  }
+  getBySurname(surname: string): Observable<Person[]> {
+    throw new Error("Method not implemented.");
   }
   getAll(): Observable<Person[]> {
     let personList = getPersons();

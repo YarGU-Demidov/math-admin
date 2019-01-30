@@ -6,4 +6,8 @@ import { DataProvider } from "../DataProvider.abstract";
 @Injectable({
   providedIn: "root"
 })
-export abstract class PersonProvider extends DataProvider<Person> {}
+export abstract class PersonProvider extends DataProvider<Person> {
+  abstract getBySurname(surname: string): Observable<Person[]>;
+  abstract getBySurnameWithoutUsers(surname: string): Observable<Person[]>;
+  abstract getAllWithoutUsers(): Observable<Person[]>;
+}

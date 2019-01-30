@@ -1,13 +1,14 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { UserDataSource } from "src/app/dataSources/UserDataSource";
 import { UserProvider } from "src/app/services/user-services/user-provider.abstract";
 import { MatPaginator, MatSort, MatDialog } from "@angular/material";
 import { User } from "src/app/enteties/User";
 import { SelectionModel } from "@angular/cdk/collections";
-import { merge } from "rxjs";
+import { merge, fromEvent } from "rxjs";
 import { DeleteUserDialogComponent } from "../dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
 import { EditUserDialogComponent } from "../dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
 import { AddUserDialogComponent } from "../dialogs/add-dialog/add-user-dialog/add-user-dialog.component";
+import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
 
 @Component({
   selector: "app-users-table",
@@ -28,6 +29,8 @@ export class UsersTableComponent implements OnInit {
   paginator: MatPaginator;
   @ViewChild(MatSort)
   sort: MatSort;
+  @ViewChild("filterLogin")
+  filterLogin: ElementRef;
 
   constructor(private userProvider: UserProvider, private dialog: MatDialog) {}
   ngOnInit() {
@@ -50,6 +53,21 @@ export class UsersTableComponent implements OnInit {
   }
   ngAfterViewInit() {
     this.dataSource.loadUsers();
+
+    fromEvent(this.filterLogin.nativeElement, "keyup")
+      .pipe(
+        debounceTime(350),
+        distinctUntilChanged(),
+        tap(() => {
+          this.paginator.pageIndex = 0;
+        })
+      )
+      .subscribe(() => {
+        if (this.filterLogin.nativeElement.value !== "") {
+          this.dataSource.loadUserByLogin(this.filterLogin.nativeElement.value);
+        } else this.dataSource.loadUsers();
+      });
+
     this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
     merge(this.sort.sortChange, this.paginator.page).subscribe(() =>
       this.dataSource.loadUsers()

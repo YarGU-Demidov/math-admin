@@ -14,6 +14,7 @@ import { Person } from "src/app/enteties/Person";
   providedIn: "root"
 })
 export class UserValidatorService implements ValidatorService<User> {
+  constructor(private fb: FormBuilder) {}
   getDataObjectPopulatedWithValues(formGroup: FormGroup): User {
     const controls = formGroup.controls;
     let user = new User();
@@ -63,7 +64,7 @@ export class UserValidatorService implements ValidatorService<User> {
                 data.name !== undefined &&
                 data.surname !== undefined
               ) {
-                return data.name + " " + data.surname;
+                return data.surname + " " + data.name;
               }
               return data;
             }
@@ -72,7 +73,6 @@ export class UserValidatorService implements ValidatorService<User> {
     });
     return formGroup;
   }
-  constructor(private fb: FormBuilder) {}
 }
 function ValidatePerson(control: FormControl) {
   if (!control.value || !control.value.id) {

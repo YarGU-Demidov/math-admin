@@ -8,6 +8,8 @@ import { Observable } from "rxjs";
 import { Person } from "src/app/enteties/Person";
 import { startWith, map, debounceTime } from "rxjs/operators";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
+import { GroupProvider } from "src/app/services/group-services/GroupProvider.abstract";
+import Group from "src/app/enteties/Group";
 
 @Component({
   selector: "app-add-user-dialog",
@@ -16,17 +18,20 @@ import { PersonProvider } from "src/app/services/person-services/person-provider
 })
 export class AddUserDialogComponent extends Dialog<User> {
   private persons: Observable<Person[]>;
+  private groups: Observable<Group[]>;
   constructor(
+    private groupProvider: GroupProvider,
     private personProvider: PersonProvider,
     protected dialogRef: MatDialogRef<AddUserDialogComponent>,
     protected dataProvider: UserProvider,
     protected validator: UserValidatorService
   ) {
     super(dialogRef, dataProvider, validator);
-    this.updatePersons();
+    this.getInitialData();
   }
   ngOnInit() {
     this.formGroup = this.validator.getInitialFormGroup();
+
     this.formGroup.controls.person.valueChanges
       .pipe(
         debounceTime(500),
@@ -38,14 +43,27 @@ export class AddUserDialogComponent extends Dialog<User> {
         )
       )
       .subscribe(value => (this.persons = value));
+
+    this.formGroup.controls.group.valueChanges
+      .pipe(
+        debounceTime(500),
+        map(
+          value =>
+            value !== ""
+              ? (value = this.groupProvider.getGroupsByAlias(value))
+              : (value = this.groupProvider.getAll())
+        )
+      )
+      .subscribe(value => (this.groups = value));
   }
-  updatePersons() {
+  protected getInitialData() {
     this.persons = this.personProvider.getAllWithoutUsers();
+    this.groups = this.groupProvider.getAll();
   }
   public onConfirm(): void {
     const person = this.validator.getDataObjectPopulatedWithValues(
       this.formGroup
     );
-    this.dataProvider.addData(person);
+    this.dataProvider.addData(person).subscribe();
   }
 }

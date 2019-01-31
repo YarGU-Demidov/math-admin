@@ -2,7 +2,6 @@ export const server = "http://localhost:5002";
 export enum global {
   getCount = "get-count",
   getPaged = "get-all-by-page",
-  getPagedWithPerson = "get-all-by-page-with-person",
   create = "create",
   update = "update",
   delete = "delete",
@@ -19,7 +18,8 @@ export enum users {
   hasRight = "has-right",
   hasCurrentUserRight = "has-current-user-right",
   getCurrentUser = "get-current-user",
-  doesCurrentUserGuest = "does-current-user-is-guest"
+  doesCurrentUserGuest = "does-current-user-is-guest",
+  getPagedWithPerson = "get-all-by-page-with-person"
 }
 
 export enum persons {

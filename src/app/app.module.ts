@@ -39,6 +39,8 @@ import { EditUserDialogComponent } from "./routes-components/dialogs/edit-dialog
 import { DeleteUserDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
 import { UserHttpDataProvider } from "./services/user-services/user-http-data-provider/UserHttpDataProvider";
 import { PersonHttpDataProvider } from "./services/person-services/person-http-data-provider/person-http-data-provider.service";
+import { GroupProvider } from "./services/group-services/GroupProvider.abstract";
+import { GroupHttpDataProvider } from "./services/group-services/group-http-data-provider/GroupHttpDataProvider";
 
 @NgModule({
   declarations: [
@@ -84,7 +86,8 @@ import { PersonHttpDataProvider } from "./services/person-services/person-http-d
   ],
   providers: [
     { provide: PersonProvider, useClass: PersonHttpDataProvider },
-    { provide: UserProvider, useClass: UserHttpDataProvider }
+    { provide: UserProvider, useClass: UserHttpDataProvider },
+    { provide: GroupProvider, useClass: GroupHttpDataProvider }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

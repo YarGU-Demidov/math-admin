@@ -21,8 +21,18 @@
     </div>
     <div class="form">
       <mat-form-field>
-        <input matInput placeholder="Лицо*" formControlName="person" type="formControl" name="person" [matAutocomplete]="auto">
-        <mat-autocomplete #auto="matAutocomplete">
+        <input matInput placeholder="Группа*" formControlName="group" name="group" [matAutocomplete]="auto1">
+        <mat-autocomplete #auto1="matAutocomplete">
+          <mat-option *ngFor="let group of groups | async" [value]="group">
+            {{group.alias}}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+    </div>
+    <div class="form">
+      <mat-form-field>
+        <input matInput placeholder="Лицо*" formControlName="person" name="person" [matAutocomplete]="auto2">
+        <mat-autocomplete #auto2="matAutocomplete">
           <mat-option *ngFor="let person of persons | async" [value]="person">
             {{person.surname}} {{person.name}} {{person.birthday}}
           </mat-option>

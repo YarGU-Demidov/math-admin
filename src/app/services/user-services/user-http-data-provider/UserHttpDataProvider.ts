@@ -28,7 +28,7 @@ export class UserHttpDataProvider extends UserProvider {
   }
   getPaged(page?: number, perPage?: number): Observable<User[]> {
     return this.http
-      .get(`${server}/${version}/${users.users}/${global.getPagedWithPerson}`, {
+      .get(`${server}/${version}/${users.users}/${users.getPagedWithPerson}`, {
         params: new HttpParams()
           .set("page", page.toString())
           .set("perPage", perPage.toString())
@@ -42,8 +42,10 @@ export class UserHttpDataProvider extends UserProvider {
       })
       .pipe(map(res => res["data"]));
   }
-  addData(user: User): void {
-    throw new Error("Method not implemented.");
+  addData(user: User): Observable<any> {
+    return this.http
+      .post(`${server}/${version}/${users.users}/${global.create}`, user)
+      .pipe(map(res => res["status"]));
   }
   editData(newUser: User): void {
     throw new Error("Method not implemented.");

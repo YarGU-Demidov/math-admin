@@ -61,9 +61,10 @@ export class PersonInMemoryDataProviderService extends PersonProvider {
     return of(Math.round(Math.random() * 10));
   }
 
-  addData(person: Person) {
+  addData(person: Person): Observable<any> {
     console.log(`person added ${person}`);
     getPersons().push(person);
+    return;
   }
   editData(newPerson: Person) {
     console.log(`person edited ${newPerson}`);

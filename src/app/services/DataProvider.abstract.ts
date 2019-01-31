@@ -1,7 +1,7 @@
 import { Observable } from "rxjs";
 
 export abstract class DataProvider<T> {
-  abstract addData(data: T): void;
+  abstract addData(data: T): Observable<any>;
   abstract editData(newData: T): void;
   abstract deleteData(data: T[]): void;
   abstract getAll(): Observable<T[]>;

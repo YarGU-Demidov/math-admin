@@ -18,24 +18,24 @@ export class UserValidatorService implements ValidatorService<User> {
   getDataObjectPopulatedWithValues(formGroup: FormGroup): User {
     const controls = formGroup.controls;
     let user = new User();
-    user.login = controls.login.value;
-    user.password = controls.password.value;
-    user.personId = controls.personId.value;
-    user.groupId = controls.groupId.value;
-    user.creationDate = controls.creationDate.value;
-    user.person = controls.person.value;
+    user.Login = controls.login.value;
+    user.Password = controls.password.value;
+    user.PersonId = controls.personId.value;
+    user.Group = controls.group.value;
+    user.CreationDate = controls.creationDate.value;
+    user.Person = controls.person.value;
     return user;
   }
   populateInitalFormValuesWithData(data: User): FormGroup {
     const formGroup = this.getInitialFormGroup();
     formGroup.setValue({
-      login: data.login,
-      password: data.password,
-      personId: data.personId,
-      groupId: data.groupId,
-      creationDate: data.creationDate,
-      person: data.person,
-      passwordRepeat: data.password
+      login: data.Login,
+      password: data.Password,
+      personId: data.PersonId,
+      group: data.Group,
+      creationDate: data.CreationDate,
+      person: data.Person,
+      passwordRepeat: data.Password
     });
     return formGroup;
   }
@@ -46,9 +46,9 @@ export class UserValidatorService implements ValidatorService<User> {
         password: ["", Validators.required],
         passwordRepeat: ["", Validators.required],
         personId: [""],
-        groupId: ["", Validators.required],
+        group: ["", ValidateObjectWithId],
         creationDate: [""],
-        person: ["", [ValidatePerson]]
+        person: ["", [ValidateObjectWithId]]
       },
       { validator: PasswordsMatch }
     );
@@ -71,10 +71,25 @@ export class UserValidatorService implements ValidatorService<User> {
           });
       }
     });
+    formGroup.controls.group.valueChanges.subscribe(data => {
+      if (data) {
+        if (!data.set)
+          formGroup.get("group").setValue({
+            ...data,
+            set: true,
+            toString: () => {
+              if (data !== null && data.alias !== undefined) {
+                return data.alias;
+              }
+              return data;
+            }
+          });
+      }
+    });
     return formGroup;
   }
 }
-function ValidatePerson(control: FormControl) {
+function ValidateObjectWithId(control: FormControl) {
   if (!control.value || !control.value.id) {
     return { valid: false };
   }

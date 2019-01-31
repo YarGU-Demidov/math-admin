@@ -8,4 +8,5 @@ import Group from "src/app/enteties/Group";
 })
 export abstract class GroupProvider extends DataProvider<Group> {
   abstract getGroupsByType(groupTypeAlias: string): Observable<Group[]>;
+  abstract getGroupsByAlias(alias: string): Observable<Group[]>;
 }

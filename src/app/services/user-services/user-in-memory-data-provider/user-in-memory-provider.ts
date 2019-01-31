@@ -30,14 +30,15 @@ export class UserInMemoryDataProvider extends UserProvider {
     return of(Math.round(Math.random() * 10));
   }
   getUsersCount() {}
-  addData(user: User) {
+  addData(user: User): Observable<any> {
     console.log(`user added ${user}`);
     getUsers().push(user);
+    return;
   }
   editData(newUser: User) {
     console.log(`user edited ${newUser}`);
     const data = getUsers();
-    const index = data.findIndex(user => user.login == newUser.login);
+    const index = data.findIndex(user => user.Login == newUser.Login);
     data[index] = newUser;
   }
   deleteData(data: User[]) {

@@ -26,18 +26,18 @@ export class UserDataSource extends AbstractDataSource<User> {
       .subscribe(users => this.dataSubject.next(users));
   }
 
-  loadUserByLogin(login: string) {
+  loadUsersByLogin(login: string) {
     setTimeout(() => this.loadingSubject.next(true), 0);
     this.userService
       .getByLogin(login)
-      .pipe<User, User>(
-        catchError<User, User>(() => of<User>()),
+      .pipe<User[], User[]>(
+        catchError<User[], User[]>(() => of<User[]>()),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(user => {
-        if (user) {
-          this.dataCount.next(1);
-          this.dataSubject.next([user]);
+      .subscribe(data => {
+        if (data) {
+          this.dataCount.next(data.length);
+          this.dataSubject.next(data);
         } else {
           this.dataCount.next(0);
           this.dataSubject.next([]);

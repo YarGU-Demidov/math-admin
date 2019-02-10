@@ -19,7 +19,7 @@ export enum users {
   hasCurrentUserRight = "has-current-user-right",
   getCurrentUser = "get-current-user",
   doesCurrentUserGuest = "does-current-user-is-guest",
-  getPagedWithPerson = "get-all-by-page-with-person"
+  getPagedWithNested = "get-all-by-page-nested"
 }
 
 export enum persons {

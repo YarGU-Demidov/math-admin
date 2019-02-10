@@ -2,13 +2,13 @@ import { User } from "src/app/enteties/User";
 
 let userList: User[] = [
   {
-    Id: "2",
-    Login: "1",
-    Password: "Bob",
-    PersonId: "Firsy",
-    Group: "Bobchinsky",
-    CreationDate: new Date(),
-    Person: null,
+    id: "2",
+    login: "1",
+    password: "Bob",
+    personId: "Firsy",
+    group: null,
+    creationDate: new Date(),
+    person: null,
     snm: null
   }
 ];

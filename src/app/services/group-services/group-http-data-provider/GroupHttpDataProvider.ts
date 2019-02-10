@@ -55,10 +55,10 @@ export class GroupHttpDataProvider extends GroupProvider {
   addData(group: Group): Observable<any> {
     throw new Error("Method not implemented.");
   }
-  editData(group: Group): void {
+  editData(group: Group): Observable<any> {
     throw new Error("Method not implemented.");
   }
-  deleteData(group: Group[]): void {
+  deleteData(group: Group[]): Observable<any> {
     throw new Error("Method not implemented.");
   }
 }

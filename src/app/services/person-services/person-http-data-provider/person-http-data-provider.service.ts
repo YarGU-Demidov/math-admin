@@ -70,11 +70,11 @@ export class PersonHttpDataProvider extends PersonProvider {
     throw new Error("Method not implemented.");
   }
 
-  editData(newPerson: Person): void {
+  editData(newPerson: Person): Observable<any> {
     throw new Error("Method not implemented.");
   }
 
-  deleteData(persons: Person[]): void {
+  deleteData(persons: Person[]): Observable<any> {
     throw new Error("Method not implemented.");
   }
 }

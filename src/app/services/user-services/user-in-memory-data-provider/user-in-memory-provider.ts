@@ -11,8 +11,8 @@ export class UserInMemoryDataProvider extends UserProvider {
   constructor() {
     super();
   }
-  getByLogin(login: string): Observable<User> {
-    return of(getUsers()[0]);
+  getByLogin(login: string): Observable<User[]> {
+    return;
   }
   getAll(): Observable<User[]> {
     let userList = getUsers();
@@ -35,13 +35,15 @@ export class UserInMemoryDataProvider extends UserProvider {
     getUsers().push(user);
     return;
   }
-  editData(newUser: User) {
+  editData(newUser: User): Observable<any> {
     console.log(`user edited ${newUser}`);
     const data = getUsers();
-    const index = data.findIndex(user => user.Login == newUser.Login);
+    const index = data.findIndex(user => user.login == newUser.login);
     data[index] = newUser;
+    return;
   }
-  deleteData(data: User[]) {
+  deleteData(data: User[]): Observable<any> {
     console.log(`users deleted ${data}`);
+    return;
   }
 }

@@ -7,5 +7,5 @@ import { User } from "src/app/enteties/User";
   providedIn: "root"
 })
 export abstract class UserProvider extends DataProvider<User> {
-  abstract getByLogin(login: string): Observable<User>;
+  abstract getByLogin(login: string): Observable<User[]>;
 }

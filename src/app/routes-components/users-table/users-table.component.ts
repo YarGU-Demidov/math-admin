@@ -64,7 +64,9 @@ export class UsersTableComponent implements OnInit {
       )
       .subscribe(() => {
         if (this.filterLogin.nativeElement.value !== "") {
-          this.dataSource.loadUserByLogin(this.filterLogin.nativeElement.value);
+          this.dataSource.loadUsersByLogin(
+            this.filterLogin.nativeElement.value
+          );
         } else this.dataSource.loadUsers();
       });
 

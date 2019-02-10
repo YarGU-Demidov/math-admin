@@ -19,7 +19,7 @@ export class PersonValidatorService implements ValidatorService<Person> {
     person.additionalPhone = controls.phone.value.replace(/[^0-9+]+/g, "");
     person.birthday = controls.birthday.value;
     person.id = controls.id.value;
-    person.CreationDate = controls.creationDate.value;
+    person.creationDate = controls.creationDate.value;
     person.photoId = controls.photoId.value;
     return person;
   }
@@ -35,7 +35,7 @@ export class PersonValidatorService implements ValidatorService<Person> {
       phone: person.phone,
       additionalPhone: person.additionalPhone,
       birthday: person.birthday,
-      creationDate: person.CreationDate,
+      creationDate: person.creationDate,
       photoId: person.photoId,
       user: person.user
     });

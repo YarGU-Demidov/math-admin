@@ -34,6 +34,6 @@ export class EditPersonDialogComponent extends Dialog<Person> {
     const data = this.validator.getDataObjectPopulatedWithValues(
       this.formGroup
     );
-    this.dataProvider.editData(data);
+    this.dataProvider.editData(data).subscribe(x => x);
   }
 }

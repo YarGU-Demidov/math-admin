@@ -1,16 +1,17 @@
 import { Person } from "./Person";
 import Entity from "./Entity";
+import Group from "./Group";
 
 export class User extends Entity<string> {
-  public Login: string = null;
-  public Password: string = null;
-  public PersonId: string = null;
-  public Group: string = null;
-  public Person: Person = null;
+  public login: string = null;
+  public password: string = null;
+  public personId: string = null;
+  public group: Group = null;
+  public person: Person = null;
   //Surname Name Middlename
   get snm(): string {
-    return `${this.Person.surname} ${this.Person.name} ${
-      this.Person.middleName
+    return `${this.person.surname} ${this.person.name} ${
+      this.person.middleName
     }`;
   }
 }

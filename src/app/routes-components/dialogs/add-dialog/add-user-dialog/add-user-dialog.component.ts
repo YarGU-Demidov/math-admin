@@ -64,6 +64,6 @@ export class AddUserDialogComponent extends Dialog<User> {
     const person = this.validator.getDataObjectPopulatedWithValues(
       this.formGroup
     );
-    this.dataProvider.addData(person).subscribe();
+    this.dataProvider.addData(person).subscribe(() => this.dialogRef.close(1));
   }
 }

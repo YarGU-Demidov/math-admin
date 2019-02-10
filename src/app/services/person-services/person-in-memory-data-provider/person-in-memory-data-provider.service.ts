@@ -66,13 +66,15 @@ export class PersonInMemoryDataProviderService extends PersonProvider {
     getPersons().push(person);
     return;
   }
-  editData(newPerson: Person) {
+  editData(newPerson: Person): Observable<any> {
     console.log(`person edited ${newPerson}`);
     const data = getPersons();
     const index = data.findIndex(person => person.id == newPerson.id);
     data[index] = newPerson;
+    return;
   }
-  deleteData(data: Person[]) {
+  deleteData(data: Person[]): Observable<any> {
     console.log(`persons deleted ${data}`);
+    return;
   }
 }

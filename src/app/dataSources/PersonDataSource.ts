@@ -6,28 +6,41 @@ import { PersonProvider } from "../services/person-services/person-provider.abst
 import { AbstractDataSource } from "./DataSource.abstract";
 
 export class PersonDataSource extends AbstractDataSource<Person> {
-  filterName: string;
-  filterSurname: string;
-
   constructor(
     private personService: PersonProvider,
-    public paginator: MatPaginator,
-    public sort: MatSort
+    public paginator: MatPaginator
   ) {
     super();
   }
 
   loadPersons() {
-    this.loadingSubject.next(true);
+    setTimeout(() => this.loadingSubject.next(true), 0);
     this.personService.getCount().subscribe(res => this.dataCount.next(res));
     this.personService
       .getPaged(this.paginator.pageIndex, this.paginator.pageSize)
       .pipe(
         catchError(() => of([])),
-        finalize(() => setTimeout(() => this.loadingSubject.next(false), 1000))
+        finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(persons =>
-        setTimeout(() => this.dataSubject.next(persons), 1000)
-      );
+      .subscribe(persons => this.dataSubject.next(persons));
+  }
+
+  loadPersonsBySurname(surname: string) {
+    setTimeout(() => this.loadingSubject.next(true), 0);
+    this.personService
+      .getBySurname(surname)
+      .pipe<Person[], Person[]>(
+        catchError<Person[], Person[]>(() => of<Person[]>()),
+        finalize(() => this.loadingSubject.next(false))
+      )
+      .subscribe(data => {
+        if (data) {
+          this.dataCount.next(data.length);
+          this.dataSubject.next(data);
+        } else {
+          this.dataCount.next(0);
+          this.dataSubject.next([]);
+        }
+      });
   }
 }

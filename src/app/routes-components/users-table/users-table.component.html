@@ -7,7 +7,7 @@
   <div *ngIf="dataSource.loading$ | async">
     Загрузка...
   </div>
-  <mat-table matSort [dataSource]="dataSource">
+  <mat-table [dataSource]="dataSource">
     <!-- выбор -->
     <ng-container matColumnDef="select">
         <mat-header-cell *matHeaderCellDef>
@@ -23,7 +23,7 @@
       </ng-container>
       <!-- логин -->
       <ng-container matColumnDef="login">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>
+        <mat-header-cell *matHeaderCellDef>
         <div>Логин</div></mat-header-cell>
         <mat-cell *matCellDef="let user">
           {{user.login}}
@@ -31,14 +31,14 @@
       </ng-container>
       <!-- фио -->
       <ng-container matColumnDef="snm">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>ФИО</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>ФИО</mat-header-cell>
         <mat-cell *matCellDef="let user">
           {{user.person.surname}} {{user.person.name}}
         </mat-cell>
       </ng-container>
       <!-- Дата создания -->
       <ng-container matColumnDef="creationDate">
-        <mat-header-cell mat-sort-header *matHeaderCellDef>Дата создания</mat-header-cell>
+        <mat-header-cell *matHeaderCellDef>Дата создания</mat-header-cell>
         <mat-cell *matCellDef="let user">
           {{user.creationDate | date}}
         </mat-cell>

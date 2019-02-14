@@ -1,6 +1,6 @@
 import { of } from "rxjs";
 import { finalize, catchError } from "rxjs/operators";
-import { MatPaginator, MatSort } from "@angular/material";
+import { MatPaginator } from "@angular/material";
 import { AbstractDataSource } from "./DataSource.abstract";
 import { User } from "../enteties/User";
 import { UserProvider } from "../services/user-services/user-provider.abstract";
@@ -8,8 +8,7 @@ import { UserProvider } from "../services/user-services/user-provider.abstract";
 export class UserDataSource extends AbstractDataSource<User> {
   constructor(
     private userService: UserProvider,
-    public paginator: MatPaginator,
-    public sort: MatSort
+    public paginator: MatPaginator
   ) {
     super();
   }

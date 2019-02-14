@@ -8,7 +8,8 @@ export enum global {
   getOne = "get-by-id",
   getByAlias = "get-by-alias",
   getAll = "get-all",
-  hasRight = "has-right"
+  hasRight = "has-right",
+  getByPageNested = "get-all-by-page-nested"
 }
 
 export enum users {

@@ -4,7 +4,7 @@ import { Person } from "src/app/enteties/Person";
 import { MatPaginator } from "@angular/material/paginator";
 import { tap, debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { merge, fromEvent } from "rxjs";
-import { MatSort, MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material";
 import { PersonDataSource } from "src/app/dataSources/PersonDataSource";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 import { EditPersonDialogComponent } from "../dialogs/edit-dialog/edit-person-dialog/edit-person-dialog.component";
@@ -34,10 +34,6 @@ export class PersonsTableComponent implements OnInit {
   dataSource: PersonDataSource;
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
-  @ViewChild(MatSort)
-  sort: MatSort;
-  @ViewChild("filterName")
-  filterName: ElementRef;
   @ViewChild("filterSurname")
   filterSurname: ElementRef;
 
@@ -49,42 +45,29 @@ export class PersonsTableComponent implements OnInit {
   ngOnInit() {
     this.dataSource = new PersonDataSource(
       this.personsProvider,
-      this.paginator,
-      this.sort
+      this.paginator
     );
-    this.dataSource.loadPersons();
   }
   ngAfterViewInit() {
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
+    this.dataSource.loadPersons();
 
-    fromEvent(this.filterName.nativeElement, "keyup")
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(() => {
-          this.dataSource.filterName = this.filterName.nativeElement.value;
-          this.paginator.pageIndex = 0;
-        })
-      )
-      .subscribe(() => {
-        this.dataSource.loadPersons();
-      });
     fromEvent(this.filterSurname.nativeElement, "keyup")
       .pipe(
-        debounceTime(150),
+        debounceTime(500),
         distinctUntilChanged(),
         tap(() => {
           this.paginator.pageIndex = 0;
-          this.dataSource.filterSurname = this.filterSurname.nativeElement.value;
         })
       )
       .subscribe(() => {
-        this.dataSource.loadPersons();
+        if (this.filterSurname.nativeElement.value !== "") {
+          this.dataSource.loadPersonsBySurname(
+            this.filterSurname.nativeElement.value
+          );
+        } else this.dataSource.loadPersons();
       });
 
-    merge(this.sort.sortChange, this.paginator.page).subscribe(() =>
-      this.dataSource.loadPersons()
-    );
+    this.paginator.page.subscribe(() => this.dataSource.loadPersons());
   }
   isAllSelected() {
     const numSelected = this.selection.selected.length;

@@ -6,7 +6,6 @@ import { UserProvider } from "../user-provider.abstract";
 import { User } from "src/app/enteties/User";
 import version from "./../../../version/version";
 import { global, users, server } from "./../../../api-endpoints/methodNames";
-import reciever from "../../../utils/lowerCasePropToUpperCase";
 
 @Injectable({
   providedIn: "root"
@@ -29,7 +28,7 @@ export class UserHttpDataProvider extends UserProvider {
   }
   getPaged(page?: number, perPage?: number): Observable<User[]> {
     return this.http
-      .get(`${server}/${version}/${users.users}/${users.getPagedWithNested}`, {
+      .get(`${server}/${version}/${users.users}/${global.getByPageNested}`, {
         params: new HttpParams()
           .set("page", page.toString())
           .set("perPage", perPage.toString())

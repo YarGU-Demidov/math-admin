@@ -1,9 +1,6 @@
 <div class="mat-elevation-z8">
   <div class="form">
     <mat-form-field>
-      <input matInput #filterName placeholder="Поиск по имени" #input>
-    </mat-form-field>
-    <mat-form-field>
       <input matInput #filterSurname placeholder="Поиск по фамилии" #input>
     </mat-form-field>
   </div>
@@ -26,7 +23,7 @@
     </ng-container>
     <!-- имя -->
     <ng-container matColumnDef="name">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>
+      <mat-header-cell  *matHeaderCellDef>
         <div>Имя</div>
       </mat-header-cell>
       <mat-cell *matCellDef="let person">
@@ -35,28 +32,28 @@
     </ng-container>
     <!-- фамилия -->
     <ng-container matColumnDef="surname">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Фамилия</mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef>Фамилия</mat-header-cell>
       <mat-cell *matCellDef="let person">
         {{person.surname}}
       </mat-cell>
     </ng-container>
     <!-- отчество -->
     <ng-container matColumnDef="middleName">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Отчество</mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef>Отчество</mat-header-cell>
       <mat-cell *matCellDef="let person">
         {{person.middleName}}
       </mat-cell>
     </ng-container>
     <!-- Почта -->
     <ng-container matColumnDef="email">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Почта</mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef>Почта</mat-header-cell>
       <mat-cell *matCellDef="let person">
         {{person.email}}
       </mat-cell>
     </ng-container>
     <!-- телефон -->
     <ng-container matColumnDef="phone">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Телефон</mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef>Телефон</mat-header-cell>
       <mat-cell *matCellDef="let person">
         {{person.phone}}
       </mat-cell>
@@ -64,23 +61,23 @@
 
     <!-- Доп. телефон -->
     <ng-container matColumnDef="additionalPhone">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Доп. телефон</mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef>Доп. телефон</mat-header-cell>
       <mat-cell *matCellDef="let person">
         {{person.additionalPhone}}
       </mat-cell>
     </ng-container>
     <!-- Дата рождения -->
     <ng-container matColumnDef="birthday">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Дата рождения</mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef>Дата рождения</mat-header-cell>
       <mat-cell *matCellDef="let person">
         {{person.birthday | date}}
       </mat-cell>
-    </ng-container>
+    </ng-container>\
     <!-- Есть ли пользователь -->
     <ng-container matColumnDef="isUser">
-      <mat-header-cell mat-sort-header *matHeaderCellDef>Есть пользователь</mat-header-cell>
+      <mat-header-cell  *matHeaderCellDef>Есть пользователь</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-checkbox [disabled]="true" [checked]="person.isUser"></mat-checkbox>
+        <mat-checkbox [disabled]="true" [checked]="person.user"></mat-checkbox>
       </mat-cell>
     </ng-container>
     <!-- колонка с кнопками-->

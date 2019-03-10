@@ -44,11 +44,24 @@ export class PersonHttpDataProvider extends PersonProvider {
   }
 
   getPaged(page?: number, perPage?: number): Observable<Person[]> {
-    throw new Error("Method not implemented.");
+    return this.http
+      .get(
+        `${server}/${version}/${persons.persons}/${global.getByPageNested}`,
+        {
+          params: new HttpParams()
+            .set("page", page.toString())
+            .set("perPage", perPage.toString())
+        }
+      )
+      .pipe(map(res => res["data"]));
   }
 
   getCount(): Observable<number> {
-    throw new Error("Method not implemented.");
+    return this.http
+      .get(`${server}/${version}/${persons.persons}/${global.getCount}`, {
+        params: new HttpParams()
+      })
+      .pipe(map(res => res["data"]));
   }
 
   getBySurname(surname: string): Observable<Person[]> {

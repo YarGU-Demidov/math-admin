@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { UserDataSource } from "src/app/dataSources/UserDataSource";
 import { UserProvider } from "src/app/services/user-services/user-provider.abstract";
-import { MatPaginator, MatSort, MatDialog } from "@angular/material";
+import { MatPaginator, MatDialog } from "@angular/material";
 import { User } from "src/app/enteties/User";
 import { SelectionModel } from "@angular/cdk/collections";
-import { merge, fromEvent } from "rxjs";
+import { fromEvent } from "rxjs";
 import { DeleteUserDialogComponent } from "../dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
 import { EditUserDialogComponent } from "../dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
 import { AddUserDialogComponent } from "../dialogs/add-dialog/add-user-dialog/add-user-dialog.component";
@@ -27,18 +27,12 @@ export class UsersTableComponent implements OnInit {
   dataSource: UserDataSource;
   @ViewChild(MatPaginator)
   paginator: MatPaginator;
-  @ViewChild(MatSort)
-  sort: MatSort;
   @ViewChild("filterLogin")
   filterLogin: ElementRef;
 
   constructor(private userProvider: UserProvider, private dialog: MatDialog) {}
   ngOnInit() {
-    this.dataSource = new UserDataSource(
-      this.userProvider,
-      this.paginator,
-      this.sort
-    );
+    this.dataSource = new UserDataSource(this.userProvider, this.paginator);
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
@@ -70,10 +64,7 @@ export class UsersTableComponent implements OnInit {
         } else this.dataSource.loadUsers();
       });
 
-    this.sort.sortChange.subscribe(() => (this.paginator.pageIndex = 0));
-    merge(this.sort.sortChange, this.paginator.page).subscribe(() =>
-      this.dataSource.loadUsers()
-    );
+    this.paginator.page.subscribe(() => this.dataSource.loadUsers());
   }
   deleteUser() {
     const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
@@ -82,8 +73,8 @@ export class UsersTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.dataSource.loadUsers();
-        this.selection.clear();
       }
+      this.selection.clear();
     });
   }
   editUser(user: User) {
@@ -95,6 +86,7 @@ export class UsersTableComponent implements OnInit {
       if (result === 1) {
         this.dataSource.loadUsers();
       }
+      this.selection.clear();
     });
   }
   addUser() {
@@ -104,6 +96,7 @@ export class UsersTableComponent implements OnInit {
       if (result === 1) {
         this.dataSource.loadUsers();
       }
+      this.selection.clear();
     });
   }
 }

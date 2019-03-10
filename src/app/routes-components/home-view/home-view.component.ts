@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef
-} from "@angular/core";
+import { Component, ViewChild, ElementRef } from "@angular/core";
 
 @Component({
   selector: "app-home-view",

@@ -19,6 +19,8 @@ export class DeleteUserDialogComponent extends Dialog<User> {
   }
 
   onConfirm(): void {
-    this.userDataService.deleteData(this.data).subscribe(x => x);
+    this.userDataService
+      .deleteData(this.data)
+      .subscribe(() => this.dialogRef.close(1));
   }
 }

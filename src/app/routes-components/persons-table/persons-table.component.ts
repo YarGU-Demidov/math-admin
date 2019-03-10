@@ -89,6 +89,7 @@ export class PersonsTableComponent implements OnInit {
       if (result === 1) {
         this.dataSource.loadPersons();
       }
+      this.selection.clear();
     });
   }
 
@@ -99,8 +100,8 @@ export class PersonsTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.dataSource.loadPersons();
-        this.selection.clear();
       }
+      this.selection.clear();
     });
   }
 
@@ -111,6 +112,7 @@ export class PersonsTableComponent implements OnInit {
       if (result === 1) {
         this.dataSource.loadPersons();
       }
+      this.selection.clear();
     });
   }
 }

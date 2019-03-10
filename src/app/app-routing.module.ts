@@ -6,8 +6,7 @@ import { UsersTableComponent } from "./routes-components/users-table/users-table
 const routes: Routes = [
   {
     path: "",
-    component: HomeViewComponent,
-    children: []
+    component: HomeViewComponent
   },
   {
     path: "persons",

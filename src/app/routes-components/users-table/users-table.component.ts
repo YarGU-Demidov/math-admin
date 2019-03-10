@@ -73,8 +73,8 @@ export class UsersTableComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result === 1) {
         this.dataSource.loadUsers();
-        this.selection.clear();
       }
+      this.selection.clear();
     });
   }
   editUser(user: User) {
@@ -86,6 +86,7 @@ export class UsersTableComponent implements OnInit {
       if (result === 1) {
         this.dataSource.loadUsers();
       }
+      this.selection.clear();
     });
   }
   addUser() {
@@ -95,6 +96,7 @@ export class UsersTableComponent implements OnInit {
       if (result === 1) {
         this.dataSource.loadUsers();
       }
+      this.selection.clear();
     });
   }
 }

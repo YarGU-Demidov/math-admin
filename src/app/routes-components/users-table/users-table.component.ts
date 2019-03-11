@@ -9,13 +9,15 @@ import { DeleteUserDialogComponent } from "../dialogs/delete-dialog/delete-user-
 import { EditUserDialogComponent } from "../dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";
 import { AddUserDialogComponent } from "../dialogs/add-dialog/add-user-dialog/add-user-dialog.component";
 import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
+import { DataTableWithSelection } from "src/app/services/tables/DataTableWithSelection";
 
 @Component({
   selector: "app-users-table",
   templateUrl: "./users-table.component.html",
   styleUrls: ["./users-table.component.css"]
 })
-export class UsersTableComponent implements OnInit {
+export class UsersTableComponent extends DataTableWithSelection<User>
+  implements OnInit {
   columnsToDisplay: string[] = [
     "select",
     "login",
@@ -23,27 +25,15 @@ export class UsersTableComponent implements OnInit {
     "creationDate",
     "actionsColumn"
   ];
-  selection = new SelectionModel<User>(true, []);
-  dataSource: UserDataSource;
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
   @ViewChild("filterLogin")
   filterLogin: ElementRef;
-
-  constructor(private userProvider: UserProvider, private dialog: MatDialog) {}
+  dataSource: UserDataSource;
+  dataProvider: UserProvider;
+  constructor(userProvider: UserProvider, dialog: MatDialog) {
+    super(userProvider, dialog);
+  }
   ngOnInit() {
-    this.dataSource = new UserDataSource(this.userProvider, this.paginator);
-  }
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+    this.dataSource = new UserDataSource(this.dataProvider, this.paginator);
   }
   ngAfterViewInit() {
     this.dataSource.loadUsers();

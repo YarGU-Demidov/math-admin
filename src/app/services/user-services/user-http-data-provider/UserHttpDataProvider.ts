@@ -28,7 +28,7 @@ export class UserHttpDataProvider extends UserProvider {
   }
   getPaged(page?: number, perPage?: number): Observable<User[]> {
     return this.http
-      .get(`${server}/${version}/${users.users}/${global.getByPageNested}`, {
+      .get(`${server}/${version}/${users.users}/${users.getPagedWithNested}`, {
         params: new HttpParams()
           .set("page", page.toString())
           .set("perPage", perPage.toString())

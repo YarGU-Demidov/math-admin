@@ -5,7 +5,6 @@ export class Person extends Entity<string> {
   public surname: string = null;
   public middleName: string = null;
   public phone: string = null;
-  public email: string = null;
   public additionalPhone: string = null;
   public birthday: Date = null;
   public photoId: string = null;

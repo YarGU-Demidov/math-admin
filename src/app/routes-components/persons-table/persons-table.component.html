@@ -44,13 +44,6 @@
         {{person.middleName}}
       </mat-cell>
     </ng-container>
-    <!-- Почта -->
-    <ng-container matColumnDef="email">
-      <mat-header-cell  *matHeaderCellDef>Почта</mat-header-cell>
-      <mat-cell *matCellDef="let person">
-        {{person.email}}
-      </mat-cell>
-    </ng-container>
     <!-- телефон -->
     <ng-container matColumnDef="phone">
       <mat-header-cell  *matHeaderCellDef>Телефон</mat-header-cell>
@@ -74,10 +67,10 @@
       </mat-cell>
     </ng-container>\
     <!-- Есть ли пользователь -->
-    <ng-container matColumnDef="isUser">
-      <mat-header-cell  *matHeaderCellDef>Есть пользователь</mat-header-cell>
+    <ng-container matColumnDef="userLogin">
+      <mat-header-cell  *matHeaderCellDef>Пользователь</mat-header-cell>
       <mat-cell *matCellDef="let person">
-        <mat-checkbox [disabled]="true" [checked]="person.user"></mat-checkbox>
+        {{person.user?person.user.login:"Нет пользователя"}}
       </mat-cell>
     </ng-container>
     <!-- колонка с кнопками-->

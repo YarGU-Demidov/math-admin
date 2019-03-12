@@ -41,6 +41,7 @@ import { UserHttpDataProvider } from "./services/user-services/user-http-data-pr
 import { PersonHttpDataProvider } from "./services/person-services/person-http-data-provider/person-http-data-provider.service";
 import { GroupProvider } from "./services/group-services/GroupProvider.abstract";
 import { GroupHttpDataProvider } from "./services/group-services/group-http-data-provider/GroupHttpDataProvider";
+import { ProfessorsTableComponent } from "./professors-table/professors-table.component";
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { GroupHttpDataProvider } from "./services/group-services/group-http-data
     AddUserDialogComponent,
     EditUserDialogComponent,
     DeleteUserDialogComponent,
-    AddUserDialogComponent
+    AddUserDialogComponent,
+    ProfessorsTableComponent
   ],
   imports: [
     BrowserModule,

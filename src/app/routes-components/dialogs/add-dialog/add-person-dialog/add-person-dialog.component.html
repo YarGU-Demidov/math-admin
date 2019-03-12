@@ -33,14 +33,6 @@
 			<mat-datepicker #dataPicker></mat-datepicker>
 		  </mat-form-field>
 		</div>
-		<div class="form">
-			<mat-form-field>
-				<input matInput placeholder="Почта*" formControlName="email" type="email" name="email" id="person-email">
-				<mat-error *ngIf="formGroup.controls['email'].invalid">
-					Пожалуйста, введите правильный e-mail.
-				</mat-error>
-			</mat-form-field>
-    </div>
     <div mat-dialog-actions>
       <button mat-button [disabled]="formGroup.invalid" [mat-dialog-close]="1" (click)="onConfirm()">Добавить</button>
       <button mat-button (click)="onCancel()" tabindex="-1">Отменить</button>

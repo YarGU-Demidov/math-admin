@@ -5,7 +5,7 @@
         </mat-form-field>
       </div>
   <div *ngIf="dataSource.loading$ | async">
-    Загрузка...
+      <mat-progress-bar mode="query"></mat-progress-bar>
   </div>
   <mat-table [dataSource]="dataSource">
     <!-- выбор -->

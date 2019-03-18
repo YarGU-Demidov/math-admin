@@ -8,7 +8,6 @@ import {
   AbstractControl,
   FormControl
 } from "@angular/forms";
-import { Person } from "src/app/enteties/Person";
 
 @Injectable({
   providedIn: "root"
@@ -20,7 +19,6 @@ export class UserValidatorService implements ValidatorService<User> {
     let user = new User();
     user.login = controls.login.value;
     user.password = controls.password.value;
-    user.personId = controls.personId.value;
     user.group = controls.group.value;
     user.creationDate = controls.creationDate.value;
     user.person = controls.person.value;
@@ -32,7 +30,6 @@ export class UserValidatorService implements ValidatorService<User> {
     formGroup.setValue({
       login: data.login,
       password: data.password,
-      personId: data.personId,
       group: data.group,
       creationDate: data.creationDate,
       person: data.person,
@@ -47,7 +44,6 @@ export class UserValidatorService implements ValidatorService<User> {
         login: ["", Validators.required],
         password: ["", Validators.required],
         passwordRepeat: ["", Validators.required],
-        personId: [""],
         group: ["", ValidateObjectWithId],
         creationDate: [""],
         person: ["", [ValidateObjectWithId]],
@@ -62,11 +58,7 @@ export class UserValidatorService implements ValidatorService<User> {
             ...data,
             set: true,
             toString: () => {
-              if (
-                data !== null &&
-                data.name !== undefined &&
-                data.surname !== undefined
-              ) {
+              if (data && data.name && data.surname) {
                 return data.surname + " " + data.name;
               }
               return data;

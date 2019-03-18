@@ -1,6 +1,14 @@
 import { Component, OnInit } from "@angular/core";
 import { Professor } from "src/app/enteties/Professor";
 import { DataTableWithSelection } from "src/app/services/tables/DataTableWithSelection";
+import { UserDataSource } from "src/app/dataSources/UserDataSource";
+import { UserProvider } from "src/app/services/user-services/user-provider.abstract";
+import { MatDialog } from "@angular/material";
+import { fromEvent } from "rxjs";
+import { debounceTime, distinctUntilChanged, tap } from "rxjs/operators";
+import { DeleteUserDialogComponent } from "../dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
+import { ProfessorDataSource } from "src/app/dataSources/ProfessorDataSource";
+import { ProfessorProvider } from "src/app/services/professor-services/ProfessorProvider";
 
 @Component({
   selector: "app-professors-table",
@@ -16,46 +24,20 @@ export class ProfessorsTableComponent extends DataTableWithSelection<Professor>
     "creationDate",
     "actionsColumn"
   ];
-  @ViewChild("filterLogin")
-  filterLogin: ElementRef;
-  dataSource: UserDataSource;
-  dataProvider: UserProvider;
-  constructor(userProvider: UserProvider, dialog: MatDialog) {
-    super(userProvider, dialog);
+  dataSource: ProfessorDataSource;
+  dataProvider: ProfessorProvider;
+  constructor(dataProvider: ProfessorProvider, dialog: MatDialog) {
+    super(dataProvider, dialog);
   }
   ngOnInit() {
-    this.dataSource = new UserDataSource(this.dataProvider, this.paginator);
+    this.dataSource = new ProfessorDataSource(
+      this.dataProvider,
+      this.paginator
+    );
   }
   ngAfterViewInit() {
-    this.dataSource.loadUsers();
+    this.dataSource.loadProfessors();
 
-    fromEvent(this.filterLogin.nativeElement, "keyup")
-      .pipe(
-        debounceTime(350),
-        distinctUntilChanged(),
-        tap(() => {
-          this.paginator.pageIndex = 0;
-        })
-      )
-      .subscribe(() => {
-        if (this.filterLogin.nativeElement.value !== "") {
-          this.dataSource.loadUsersByLogin(
-            this.filterLogin.nativeElement.value
-          );
-        } else this.dataSource.loadUsers();
-      });
-
-    this.paginator.page.subscribe(() => this.dataSource.loadUsers());
-  }
-  deleteUser() {
-    const dialogRef = this.dialog.open(DeleteUserDialogComponent, {
-      data: this.selection.selected
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 1) {
-        this.dataSource.loadUsers();
-      }
-      this.selection.clear();
-    });
+    this.paginator.page.subscribe(() => this.dataSource.loadProfessors());
   }
 }

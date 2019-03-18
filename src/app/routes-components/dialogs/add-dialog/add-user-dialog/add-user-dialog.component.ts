@@ -61,9 +61,9 @@ export class AddUserDialogComponent extends Dialog<User> {
     this.groups = this.groupProvider.getAll();
   }
   public onConfirm(): void {
-    const person = this.validator.getDataObjectPopulatedWithValues(
+    const user = this.validator.getDataObjectPopulatedWithValues(
       this.formGroup
     );
-    this.dataProvider.addData(person).subscribe(() => this.dialogRef.close(1));
+    this.dataProvider.addData(user).subscribe(() => this.dialogRef.close(1));
   }
 }

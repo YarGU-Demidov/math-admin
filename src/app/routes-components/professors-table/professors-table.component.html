@@ -1,3 +1,15 @@
-<p>
-  professors-table works!
-</p>
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <mat-nav-list>
+      <ul>
+        <li >
+          <a [routerLink]="['/addProfessors']">Добавить преподавателя</a>
+        </li>
+      </ul>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    
+  <mat-paginator [length]="(dataSource.dataCount$ | async)" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+  </mat-sidenav-content>
+</mat-sidenav-container>

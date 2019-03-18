@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TextMaskModule } from "angular2-text-mask";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { HttpClientModule } from "@angular/common/http";
+import { NgxTinymceModule } from "ngx-tinymce";
+import { MatProgressBarModule } from "@angular/material/progress-bar";
 import {
   MatDatepickerModule,
   MatIconModule,
@@ -41,7 +43,8 @@ import { UserHttpDataProvider } from "./services/user-services/user-http-data-pr
 import { PersonHttpDataProvider } from "./services/person-services/person-http-data-provider/person-http-data-provider.service";
 import { GroupProvider } from "./services/group-services/GroupProvider.abstract";
 import { GroupHttpDataProvider } from "./services/group-services/group-http-data-provider/GroupHttpDataProvider";
-import { ProfessorsTableComponent } from "./professors-table/professors-table.component";
+import { ProfessorsTableComponent } from "./routes-components/professors-table/professors-table.component";
+import { AddProfessorComponent } from "./add-professor/add-professor.component";
 
 @NgModule({
   declarations: [
@@ -58,10 +61,12 @@ import { ProfessorsTableComponent } from "./professors-table/professors-table.co
     EditUserDialogComponent,
     DeleteUserDialogComponent,
     AddUserDialogComponent,
-    ProfessorsTableComponent
+    ProfessorsTableComponent,
+    AddProfessorComponent
   ],
   imports: [
     BrowserModule,
+    MatProgressBarModule,
     MatAutocompleteModule,
     CommonModule,
     MatCardModule,
@@ -84,7 +89,10 @@ import { ProfessorsTableComponent } from "./professors-table/professors-table.co
     TextMaskModule,
     MatDatepickerModule,
     MatMomentDateModule,
-    MatCheckboxModule
+    MatCheckboxModule,
+    NgxTinymceModule.forRoot({
+      baseURL: "//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.0/"
+    })
   ],
   providers: [
     { provide: PersonProvider, useClass: PersonHttpDataProvider },

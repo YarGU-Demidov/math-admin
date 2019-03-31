@@ -11,37 +11,101 @@
   <mat-sidenav-content>
     <div class="md-dialog-container">
       <h3 mat-dialog-title>Добавление преподавателя</h3>
+      <div *ngIf="loading$ | async">
+        <mat-progress-bar mode="query"></mat-progress-bar>
+      </div>
       <form [formGroup]="formGroup">
-        <div class='column'>
-          <div class="form">
+        <div class="row">
+          <div class="form col-md-5">
             <mat-form-field>
               <input matInput placeholder="Лицо*" formControlName="person" name="person" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngIf="(persons | async)?.length==0">
+                  <div>Нет подходящих лиц.</div>
+                </mat-option>
                 <mat-option *ngFor="let person of persons | async" [value]="person">
                   {{person.surname}} {{person.name?person.name:''}} {{person.birthday?person.birthday:''}}
                 </mat-option>
               </mat-autocomplete>
             </mat-form-field>
           </div>
-        </div>
-        <div class='column'>
-          <div class="form">
+
+          <div class="form col-md-5 ">
             <mat-form-field>
               <input matInput placeholder="Факультет*" formControlName="faculty" type="text" name="faculty">
             </mat-form-field>
           </div>
-          <div class="form">
+        </div>
+        <div class="row">
+          <div class="form form col-md-5">
+            <mat-form-field>
+              <input matInput placeholder="Ссылка на Mathnet" formControlName="mathNetLink" type="text"
+                name="mathNetLink">
+            </mat-form-field>
+          </div>
+          <div class="form col-md-5">
+            <mat-form-field>
+              <input matInput placeholder="Научное звание" formControlName="scientificTitle" type="text"
+                name="scientificTitle">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form col-md-5">
+            <mat-form-field>
+              <input matInput placeholder="Статус преподавателя" formControlName="status" type="text" name="status">
+            </mat-form-field>
+          </div>
+          <div class="form col-md-5 ">
             <mat-form-field>
               <input matInput placeholder="Кафедра*" formControlName="department" type="text" name="department">
             </mat-form-field>
           </div>
-          <div class="text">
-            Описание*
+        </div>
+        <div class="row">
+          <div formArrayName="graduated" class="col-md-5">
+            <div class="text">Окончил:</div>
+            <div *ngFor="let item of graduated.controls; let graduatedInstanceIndex=index"
+              [formGroupName]="graduatedInstanceIndex">
+              <mat-form-field>
+                <input matInput formControlName="graduatedInstance" type="text" name="graduatedInstance">
+              </mat-form-field>
+            </div>
+            <button type="button" (click)="addGraduatedInstance()">Добавить</button>
+            <button type="button" (click)="deleteGraduatedInstance(graduatedInstanceIndex)">Удалить</button>
           </div>
-          <div class="form">		
-            <tinymce formControlName="description" [config]="config"></tinymce>
+          <div class="col-md-5 ">
+            <div class="text">
+              Описание*:
+            </div>
+            <div class="form">
+              <tinymce formControlName="description" [config]="config"></tinymce>
+            </div>
           </div>
-
+        </div>
+        <div class="row">
+          <div formArrayName="theses" class="col-md-5">
+            <div class="text">Диссертации:</div>
+            <div *ngFor="let item of theses.controls; let thesisIndex=index"
+              [formGroupName]="thesisIndex">
+              <mat-form-field>
+                <input matInput formControlName="thesis" type="text" name="thesis">
+              </mat-form-field>
+            </div>
+            <button type="button" (click)="addThesis()">Добавить</button>
+            <button type="button" (click)="deleteThesis(thesisIndex)">Удалить</button>
+          </div>
+              <div formArrayName="termPapers" class="col-md-5">
+                  <div class="text">Темы курсовых и дипломных работ:</div>
+                  <div *ngFor="let item of termPapers.controls; let termPaperIndex=index"
+                    [formGroupName]="termPaperIndex">
+                    <mat-form-field>
+                      <input matInput formControlName="termPaper" type="text" name="termPaper">
+                    </mat-form-field>
+                  </div>
+                  <button type="button" (click)="addTermPaper()">Добавить</button>
+                  <button type="button" (click)="deleteTermPaper(termPaperIndex)">Удалить</button>
+                </div>
         </div>
         <div mat-dialog-actions>
           <button mat-button [disabled]="formGroup.invalid" (click)="onConfirm()">Сохранить</button>

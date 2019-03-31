@@ -21,6 +21,11 @@ export class ProfessorValidator implements ValidatorService<Professor> {
     professor.faculty = controls.faculty.value;
     professor.department = controls.department.value;
     professor.description = controls.description.value;
+    professor.scientificTitle = controls.scientificTitle.value;
+    professor.mathNetLink = controls.mathNetLink.value;
+    professor.graduated = controls.graduated.value;
+    professor.termPapers = controls.termPapers.value;
+    professor.theses = controls.theses.value;
     return professor;
   }
   populateInitalFormValuesWithData(data: Professor): FormGroup {
@@ -29,7 +34,13 @@ export class ProfessorValidator implements ValidatorService<Professor> {
       person: data.person,
       faculty: data.faculty,
       department: data.department,
-      description: data.description
+      description: data.description,
+      scientificTitle: data.scientificTitle,
+      status: data.status,
+      mathNetLink: data.mathNetLink,
+      graduated: data.graduated,
+      theses: data.theses,
+      termPapers: data.termPapers
     });
     return formGroup;
   }
@@ -38,7 +49,13 @@ export class ProfessorValidator implements ValidatorService<Professor> {
       person: ["", [this.ValidateObjectWithId]],
       faculty: ["", [Validators.required]],
       department: ["", [Validators.required]],
-      description: ["", [Validators.required]]
+      description: ["", [Validators.required]],
+      scientificTitle: [""],
+      mathNetLink: [""],
+      status: [""],
+      graduated: this.fb.array([this.fb.group({ graduatedInstance: "" })]),
+      termPapers: this.fb.array([this.fb.group({ termPaper: "" })]),
+      theses: this.fb.array([this.fb.group({ thesis: "" })])
     });
     formGroup.controls.person.valueChanges.subscribe(data => {
       if (data) {

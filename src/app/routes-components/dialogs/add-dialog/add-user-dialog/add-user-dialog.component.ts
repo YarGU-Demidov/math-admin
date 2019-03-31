@@ -10,13 +10,15 @@ import { startWith, map, debounceTime } from "rxjs/operators";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 import { GroupProvider } from "src/app/services/group-services/GroupProvider.abstract";
 import Group from "src/app/enteties/Group";
+import { persons } from "src/app/api-endpoints/methodNames";
+import { AddDialogComponent } from "../../addDialogComponent";
 
 @Component({
   selector: "app-add-user-dialog",
   templateUrl: "./add-user-dialog.component.html",
   styleUrls: ["./add-user-dialog.component.css"]
 })
-export class AddUserDialogComponent extends Dialog<User> {
+export class AddUserDialogComponent extends AddDialogComponent<User> {
   private persons: Observable<Person[]>;
   private groups: Observable<Group[]>;
   constructor(
@@ -59,11 +61,5 @@ export class AddUserDialogComponent extends Dialog<User> {
   protected getInitialData() {
     this.persons = this.personProvider.getAllWithoutUsers();
     this.groups = this.groupProvider.getAll();
-  }
-  public onConfirm(): void {
-    const user = this.validator.getDataObjectPopulatedWithValues(
-      this.formGroup
-    );
-    this.dataProvider.addData(user).subscribe(() => this.dialogRef.close(1));
   }
 }

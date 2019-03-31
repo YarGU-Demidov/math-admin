@@ -6,13 +6,14 @@ import phoneMask from "src/app/constants/masks/phone-mask";
 import { PersonProvider } from "src/app/services/person-services/person-provider.abstract";
 import { PersonValidatorService } from "src/app/services/validator-services/person-validator/person-validator.service";
 import { Dialog } from "../../DialogComponent.abastract";
+import { EditDialogComponent } from "../../editDialogComponent";
 
 @Component({
   selector: "app-edit-person-dialog",
   templateUrl: "./edit-person-dialog.component.html",
   styleUrls: ["./edit-person-dialog.component.css"]
 })
-export class EditPersonDialogComponent extends Dialog<Person> {
+export class EditPersonDialogComponent extends EditDialogComponent<Person> {
   private phoneMask = phoneMask;
 
   constructor(
@@ -28,12 +29,5 @@ export class EditPersonDialogComponent extends Dialog<Person> {
     this.formGroup = this.validator.populateInitalFormValuesWithData(
       this.dataObject
     );
-  }
-
-  onConfirm(): void {
-    const data = this.validator.getDataObjectPopulatedWithValues(
-      this.formGroup
-    );
-    this.dataProvider.editData(data).subscribe(x => x);
   }
 }

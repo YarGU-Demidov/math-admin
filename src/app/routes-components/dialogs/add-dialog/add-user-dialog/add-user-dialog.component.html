@@ -1,5 +1,8 @@
 <div class="md-dialog-container">
   <h3 mat-dialog-title>Добавление пользователя</h3>
+  <div *ngIf="loading$ | async">
+      <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
   <form [formGroup]="formGroup">
     <div class="form">
       <mat-form-field>
@@ -33,6 +36,9 @@
       <mat-form-field>
         <input matInput placeholder="Лицо*" formControlName="person" name="person" [matAutocomplete]="auto2">
         <mat-autocomplete #auto2="matAutocomplete">
+            <mat-option *ngIf="(persons | async)?.length==0">
+                <div >Нет подходящих лиц.</div>
+            </mat-option>
           <mat-option *ngFor="let person of persons | async" [value]="person">
             {{person.surname}} {{person.name}} {{person.birthday}}
           </mat-option>

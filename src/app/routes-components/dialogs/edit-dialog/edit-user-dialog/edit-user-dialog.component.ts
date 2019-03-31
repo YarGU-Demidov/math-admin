@@ -11,13 +11,14 @@ import { Observable, BehaviorSubject } from "rxjs";
 import { GroupProvider } from "src/app/services/group-services/GroupProvider.abstract";
 import Group from "src/app/enteties/Group";
 import { FormControl } from "@angular/forms";
+import { EditDialogComponent } from "../../editDialogComponent";
 
 @Component({
   selector: "app-edit-user-dialog",
   templateUrl: "./edit-user-dialog.component.html",
   styleUrls: ["./edit-user-dialog.component.css"]
 })
-export class EditUserDialogComponent extends Dialog<User> {
+export class EditUserDialogComponent extends EditDialogComponent<User> {
   private persons: Observable<Person[]>;
   private groups: Observable<Group[]>;
   constructor(
@@ -65,11 +66,5 @@ export class EditUserDialogComponent extends Dialog<User> {
   protected getInitialData() {
     this.persons = this.personProvider.getAllWithoutUsers();
     this.groups = this.groupProvider.getAll();
-  }
-  onConfirm(): void {
-    const data = this.validator.getDataObjectPopulatedWithValues(
-      this.formGroup
-    );
-    this.dataProvider.editData(data).subscribe(() => this.dialogRef.close(1));
   }
 }

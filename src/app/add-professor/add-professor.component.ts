@@ -2,7 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ProfessorValidator } from "../services/validator-services/ProfessorValidator";
 import { ProfessorProvider } from "../services/professor-services/ProfessorProvider";
 import { PersonProvider } from "../services/person-services/person-provider.abstract";
-import { FormGroup } from "@angular/forms";
+import { FormGroup, FormArray, FormBuilder } from "@angular/forms";
 import { Observable } from "rxjs";
 import { Person } from "../enteties/Person";
 import { debounceTime, map } from "rxjs/operators";
@@ -35,7 +35,8 @@ export class AddProfessorComponent implements OnInit {
   constructor(
     protected professorProvider: ProfessorProvider,
     protected personProvider: PersonProvider,
-    protected validator: ProfessorValidator
+    protected validator: ProfessorValidator,
+    private fb: FormBuilder
   ) {
     this.getInitialData();
   }
@@ -48,20 +49,50 @@ export class AddProfessorComponent implements OnInit {
         map(
           value =>
             value.length > 0
-              ? (value = this.personProvider.getBySurnameWithoutUsers(value))
-              : (value = this.personProvider.getAllWithoutUsers())
+              ? (value = this.personProvider.getBySurname(value))
+              : (value = this.personProvider.getAll())
         )
       )
       .subscribe(value => (this.persons = value));
   }
 
   protected getInitialData() {
-    this.persons = this.personProvider.getAllWithoutUsers();
+    this.persons = this.personProvider.getAll();
   }
   public onConfirm(): void {
     const professor = this.validator.getDataObjectPopulatedWithValues(
       this.formGroup
     );
     this.professorProvider.addData(professor).subscribe();
+  }
+  get graduated() {
+    return this.formGroup.get("graduated") as FormArray;
+  }
+  get termPapers() {
+    return this.formGroup.get("termPapers") as FormArray;
+  }
+  get theses() {
+    return this.formGroup.get("theses") as FormArray;
+  }
+
+  addGraduatedInstance() {
+    this.graduated.push(this.fb.group({ graduatedInstance: "" }));
+  }
+  deleteGraduatedInstance(index) {
+    this.graduated.removeAt(index);
+  }
+
+  addTermPaper() {
+    this.termPapers.push(this.fb.group({ termPaper: "" }));
+  }
+  deleteTermPaper(index) {
+    this.termPapers.removeAt(index);
+  }
+
+  addThesis() {
+    this.theses.push(this.fb.group({ thesis: "" }));
+  }
+  deleteThesis(index) {
+    this.theses.removeAt(index);
   }
 }

@@ -5,6 +5,7 @@ export enum global {
   create = "create",
   update = "update",
   delete = "delete",
+  deleteMany = "delete-many",
   getOne = "get-by-id",
   getByAlias = "get-by-alias",
   getAll = "get-all",
@@ -19,8 +20,7 @@ export enum users {
   hasRight = "has-right",
   hasCurrentUserRight = "has-current-user-right",
   getCurrentUser = "get-current-user",
-  doesCurrentUserGuest = "does-current-user-is-guest",
-  getPagedWithNested = "get-all-by-page-nested"
+  doesCurrentUserGuest = "does-current-user-is-guest"
 }
 
 export enum persons {

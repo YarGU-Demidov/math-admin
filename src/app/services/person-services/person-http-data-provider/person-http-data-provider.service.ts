@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Person } from "src/app/enteties/Person";
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { PersonProvider } from "../person-provider.abstract";
@@ -75,19 +75,58 @@ export class PersonHttpDataProvider extends PersonProvider {
       .pipe(map(res => res["data"]));
   }
 
-  getPersonsCount(): Observable<number> {
-    throw new Error("Method not implemented.");
-  }
-
   addData(person: Person): Observable<any> {
-    throw new Error("Method not implemented.");
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http
+      .post(
+        `${server}/${version}/${persons.persons}/${global.create}`,
+        this.personToPersonDto(person),
+        { headers }
+      )
+      .pipe(map(res => res["status"]));
   }
 
   editData(newPerson: Person): Observable<any> {
-    throw new Error("Method not implemented.");
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http
+      .put(
+        `${server}/${version}/${persons.persons}/${global.update}`,
+        this.personToPersonDto(newPerson),
+        { headers }
+      )
+      .pipe(map(res => res["status"]));
   }
 
-  deleteData(persons: Person[]): Observable<any> {
-    throw new Error("Method not implemented.");
+  deleteData(personsToDelete: Person[]): Observable<any> {
+    return this.http
+      .request(
+        "delete",
+        `${server}/${version}/${persons.persons}/${global.deleteMany}`,
+        {
+          body: personsToDelete.map(person => person.id)
+        }
+      )
+      .pipe(map(res => res["status"]));
+  }
+  private personToPersonDto(person: Person) {
+    if (person.id) {
+      return {
+        Id: person.id,
+        Name: person.name,
+        MiddleName: person.middleName,
+        Surname: person.surname,
+        Phone: person.phone,
+        AdditionalPhone: person.additionalPhone,
+        Birthday: person.birthday
+      };
+    }
+    return {
+      Name: person.name,
+      MiddleName: person.middleName,
+      Surname: person.surname,
+      Phone: person.phone,
+      AdditionalPhone: person.additionalPhone,
+      Birthday: person.birthday
+    };
   }
 }

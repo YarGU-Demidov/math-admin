@@ -23,9 +23,14 @@ export class ProfessorValidator implements ValidatorService<Professor> {
     professor.description = controls.description.value;
     professor.scientificTitle = controls.scientificTitle.value;
     professor.mathNetLink = controls.mathNetLink.value;
-    professor.graduated = controls.graduated.value;
-    professor.termPapers = controls.termPapers.value;
-    professor.theses = controls.theses.value;
+    professor.graduated = controls.graduated.value.map(
+      x => x.graduatedInstance
+    );
+    professor.termPapers = controls.termPapers.value.map(x => x.termPaper);
+    professor.theses = controls.theses.value.map(x => x.thesis);
+    professor.bibliographicIndexOfWorks = controls.bibliographicIndexOfWorks.value.map(
+      x => x.bibliographicIndex
+    );
     return professor;
   }
   populateInitalFormValuesWithData(data: Professor): FormGroup {
@@ -38,9 +43,18 @@ export class ProfessorValidator implements ValidatorService<Professor> {
       scientificTitle: data.scientificTitle,
       status: data.status,
       mathNetLink: data.mathNetLink,
-      graduated: data.graduated,
-      theses: data.theses,
-      termPapers: data.termPapers
+      graduated: data.graduated.map(x => {
+        return { graduatedInstance: x };
+      }),
+      theses: data.theses.map(x => {
+        return { termPaper: x };
+      }),
+      termPapers: data.termPapers.map(x => {
+        return { thesis: x };
+      }),
+      bibliographicIndexOfWorks: data.bibliographicIndexOfWorks.map(x => {
+        return { bibliographicIndex: x };
+      })
     });
     return formGroup;
   }
@@ -55,7 +69,10 @@ export class ProfessorValidator implements ValidatorService<Professor> {
       status: [""],
       graduated: this.fb.array([this.fb.group({ graduatedInstance: "" })]),
       termPapers: this.fb.array([this.fb.group({ termPaper: "" })]),
-      theses: this.fb.array([this.fb.group({ thesis: "" })])
+      theses: this.fb.array([this.fb.group({ thesis: "" })]),
+      bibliographicIndexOfWorks: this.fb.array([
+        this.fb.group({ bibliographicIndex: "" })
+      ])
     });
     formGroup.controls.person.valueChanges.subscribe(data => {
       if (data) {

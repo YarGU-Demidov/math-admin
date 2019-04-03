@@ -28,7 +28,6 @@ export class PersonsTableComponent extends DataTableWithSelection<Person>
     "additionalPhone",
     "birthday",
     "userLogin",
-    "professor",
     "actionsColumn"
   ];
   dataSource: PersonDataSource;

@@ -45,6 +45,7 @@ import { GroupProvider } from "./services/group-services/GroupProvider.abstract"
 import { GroupHttpDataProvider } from "./services/group-services/group-http-data-provider/GroupHttpDataProvider";
 import { ProfessorsTableComponent } from "./routes-components/professors-table/professors-table.component";
 import { AddProfessorComponent } from "./add-professor/add-professor.component";
+import { MatToolbarModule } from "@angular/material/toolbar";
 
 @NgModule({
   declarations: [
@@ -66,6 +67,7 @@ import { AddProfessorComponent } from "./add-professor/add-professor.component";
   ],
   imports: [
     BrowserModule,
+    MatToolbarModule,
     MatProgressBarModule,
     MatAutocompleteModule,
     CommonModule,

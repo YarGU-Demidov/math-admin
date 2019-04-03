@@ -14,7 +14,6 @@ import { debounceTime, map } from "rxjs/operators";
 })
 export class AddProfessorComponent implements OnInit {
   config: any = {
-    height: 100,
     theme: "modern",
     // powerpaste advcode toc tinymcespellchecker a11ychecker mediaembed linkchecker help
     plugins:
@@ -71,6 +70,10 @@ export class AddProfessorComponent implements OnInit {
   get termPapers() {
     return this.formGroup.get("termPapers") as FormArray;
   }
+  get bibliographicIndexOfWorks() {
+    return this.formGroup.get("bibliographicIndexOfWorks") as FormArray;
+  }
+
   get theses() {
     return this.formGroup.get("theses") as FormArray;
   }
@@ -94,5 +97,14 @@ export class AddProfessorComponent implements OnInit {
   }
   deleteThesis(index) {
     this.theses.removeAt(index);
+  }
+
+  addBibliographicIndex() {
+    this.bibliographicIndexOfWorks.push(
+      this.fb.group({ bibliographicIndex: "" })
+    );
+  }
+  deleteBibliographicIndex(index) {
+    this.bibliographicIndexOfWorks.removeAt(index);
   }
 }

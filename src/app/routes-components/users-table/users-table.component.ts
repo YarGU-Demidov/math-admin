@@ -1,9 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { UserDataSource } from "src/app/dataSources/UserDataSource";
 import { UserProvider } from "src/app/services/user-services/user-provider.abstract";
-import { MatPaginator, MatDialog } from "@angular/material";
+import { MatDialog } from "@angular/material";
 import { User } from "src/app/enteties/User";
-import { SelectionModel } from "@angular/cdk/collections";
 import { fromEvent } from "rxjs";
 import { DeleteUserDialogComponent } from "../dialogs/delete-dialog/delete-user-dialog/delete-user-dialog.component";
 import { EditUserDialogComponent } from "../dialogs/edit-dialog/edit-user-dialog/edit-user-dialog.component";

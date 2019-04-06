@@ -28,10 +28,16 @@ export enum persons {
   getAllWithoutUsers = "get-all-without-users",
   getAllWithoutProfessors = "get-all-without-professors",
   getAllBySurname = "get-all-by-surname",
-  getAllBySurnameWithoutUsers = "get-all-by-surname-without-users"
+  getAllBySurnameWithoutUsers = "get-all-by-surname-without-users",
+  getAllBySurnameWithoutProfessors = "get-all-by-surname-without-professors"
 }
 
 export enum groups {
   groups = "groups",
   getGroupsByType = "get-groups-by-type"
+}
+
+export enum professors {
+  professors = "professors",
+  getAllBySurname = "get-all-by-surname"
 }

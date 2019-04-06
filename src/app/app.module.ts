@@ -44,8 +44,10 @@ import { PersonHttpDataProvider } from "./services/person-services/person-http-d
 import { GroupProvider } from "./services/group-services/GroupProvider.abstract";
 import { GroupHttpDataProvider } from "./services/group-services/group-http-data-provider/GroupHttpDataProvider";
 import { ProfessorsTableComponent } from "./routes-components/professors-table/professors-table.component";
-import { AddProfessorComponent } from "./add-professor/add-professor.component";
+import { AddProfessorComponent } from "./routes-components/add-professor/add-professor.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
+import { DeleteProfessorDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-professor-dialog/delete-professor-dialog.component";
+import { EditProfessorComponent } from "./routes-components/edit-professor/edit-professor.component";
 
 @NgModule({
   declarations: [
@@ -63,7 +65,9 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     DeleteUserDialogComponent,
     AddUserDialogComponent,
     ProfessorsTableComponent,
-    AddProfessorComponent
+    AddProfessorComponent,
+    DeleteProfessorDialogComponent,
+    EditProfessorComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +112,8 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     AddPersonDialogComponent,
     EditUserDialogComponent,
     AddUserDialogComponent,
-    DeleteUserDialogComponent
+    DeleteUserDialogComponent,
+    DeleteProfessorDialogComponent
   ]
 })
 export class AppModule {}

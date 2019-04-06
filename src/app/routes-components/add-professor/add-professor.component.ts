@@ -1,10 +1,10 @@
 import { Component, OnInit } from "@angular/core";
-import { ProfessorValidator } from "../services/validator-services/ProfessorValidator";
-import { ProfessorProvider } from "../services/professor-services/ProfessorProvider";
-import { PersonProvider } from "../services/person-services/person-provider.abstract";
+import { ProfessorValidator } from "../../services/validator-services/ProfessorValidator";
+import { ProfessorDataProvider } from "../../services/professor-services/ProfessorDataProvider";
+import { PersonProvider } from "../../services/person-services/person-provider.abstract";
 import { FormGroup, FormArray, FormBuilder } from "@angular/forms";
-import { Observable } from "rxjs";
-import { Person } from "../enteties/Person";
+import { Observable, BehaviorSubject } from "rxjs";
+import { Person } from "../../enteties/Person";
 import { debounceTime, map } from "rxjs/operators";
 
 @Component({
@@ -13,6 +13,8 @@ import { debounceTime, map } from "rxjs/operators";
   styleUrls: ["./add-professor.component.css"]
 })
 export class AddProfessorComponent implements OnInit {
+  protected loadingSubject = new BehaviorSubject<boolean>(false);
+  public loading$ = this.loadingSubject.asObservable();
   config: any = {
     theme: "modern",
     // powerpaste advcode toc tinymcespellchecker a11ychecker mediaembed linkchecker help
@@ -32,7 +34,7 @@ export class AddProfessorComponent implements OnInit {
   private persons: Observable<Person[]>;
 
   constructor(
-    protected professorProvider: ProfessorProvider,
+    protected professorProvider: ProfessorDataProvider,
     protected personProvider: PersonProvider,
     protected validator: ProfessorValidator,
     private fb: FormBuilder
@@ -48,21 +50,26 @@ export class AddProfessorComponent implements OnInit {
         map(
           value =>
             value.length > 0
-              ? (value = this.personProvider.getBySurname(value))
-              : (value = this.personProvider.getAll())
+              ? (value = this.personProvider.getBySurnameWithoutProfessors(
+                  value
+                ))
+              : (value = this.personProvider.getAllWithoutProfessors())
         )
       )
       .subscribe(value => (this.persons = value));
   }
 
   protected getInitialData() {
-    this.persons = this.personProvider.getAll();
+    this.persons = this.personProvider.getAllWithoutProfessors();
   }
   public onConfirm(): void {
     const professor = this.validator.getDataObjectPopulatedWithValues(
       this.formGroup
     );
-    this.professorProvider.addData(professor).subscribe();
+    this.loadingSubject.next(true);
+    this.professorProvider.addData(professor).subscribe(x => {
+      this.loadingSubject.next(false);
+    });
   }
   get graduated() {
     return this.formGroup.get("graduated") as FormArray;

@@ -4,7 +4,7 @@ import { NgModule } from "@angular/core";
 import { PersonsTableComponent } from "./routes-components/persons-table/persons-table.component";
 import { UsersTableComponent } from "./routes-components/users-table/users-table.component";
 import { ProfessorsTableComponent } from "./routes-components/professors-table/professors-table.component";
-import { AddProfessorComponent } from "./add-professor/add-professor.component";
+import { AddProfessorComponent } from "./routes-components/add-professor/add-professor.component";
 const routes: Routes = [
   {
     path: "",

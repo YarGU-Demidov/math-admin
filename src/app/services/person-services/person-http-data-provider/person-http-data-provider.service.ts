@@ -74,6 +74,28 @@ export class PersonHttpDataProvider extends PersonProvider {
       )
       .pipe(map(res => res["data"]));
   }
+  getBySurnameWithoutProfessors(surname: string): Observable<Person[]> {
+    return this.http
+      .get(
+        `${server}/${version}/${persons.persons}/${
+          persons.getAllBySurnameWithoutProfessors
+        }`,
+        {
+          params: new HttpParams().set("surname", surname)
+        }
+      )
+      .pipe(map(res => res["data"]));
+  }
+
+  getAllWithoutProfessors(): Observable<Person[]> {
+    return this.http
+      .get(
+        `${server}/${version}/${persons.persons}/${
+          persons.getAllWithoutProfessors
+        }`
+      )
+      .pipe(map(res => res["data"]));
+  }
 
   addData(person: Person): Observable<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json");

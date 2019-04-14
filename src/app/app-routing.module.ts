@@ -5,6 +5,7 @@ import { PersonsTableComponent } from "./routes-components/persons-table/persons
 import { UsersTableComponent } from "./routes-components/users-table/users-table.component";
 import { ProfessorsTableComponent } from "./routes-components/professors-table/professors-table.component";
 import { AddProfessorComponent } from "./routes-components/add-professor/add-professor.component";
+import { EditProfessorComponent } from "./routes-components/edit-professor/edit-professor.component";
 const routes: Routes = [
   {
     path: "",
@@ -25,6 +26,11 @@ const routes: Routes = [
   {
     path: "addProfessors",
     component: AddProfessorComponent
+  },
+  {
+    path: "editProfessor/:id",
+    component: EditProfessorComponent,
+    children: []
   }
 ];
 

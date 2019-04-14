@@ -76,4 +76,7 @@ export class ProfessorsTableComponent extends DataTableWithSelection<Professor>
   addProfessor() {
     this.router.navigate(["/addProfessors"]);
   }
+  editProfessor(id: string) {
+    this.router.navigate(["/editProfessor", id]);
+  }
 }

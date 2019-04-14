@@ -47,10 +47,10 @@ export class ProfessorValidator implements ValidatorService<Professor> {
         return { graduatedInstance: x };
       }),
       theses: data.theses.map(x => {
-        return { termPaper: x };
+        return { thesis: x };
       }),
       termPapers: data.termPapers.map(x => {
-        return { thesis: x };
+        return { termPaper: x };
       }),
       bibliographicIndexOfWorks: data.bibliographicIndexOfWorks.map(x => {
         return { bibliographicIndex: x };

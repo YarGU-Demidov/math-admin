@@ -13,14 +13,15 @@
     <div class="md-dialog-container">
       <h1 class="mat-headline">Добавление преподавателя</h1>
       <div *ngIf="loading$ | async">
-        <mat-progress-bar mode="query"></mat-progress-bar>
+        rektnb
       </div>
-      <form [formGroup]="formGroup">
+    <div *ngIf="isFormReady">
+      <form  [formGroup]="formGroup">
         <div class="row">
           <div class="form col-md-5">
             <mat-form-field appearance="outline">
               <mat-label>Лицо*</mat-label>
-              <input matInput formControlName="person" name="person" [matAutocomplete]="auto">
+              <input matInput [disabled]="true" formControlName="person" name="person" [matAutocomplete]="auto">
               <mat-autocomplete #auto="matAutocomplete">
                 <mat-option *ngIf="(persons | async)?.length==0">
                   <div>Нет подходящих лиц.</div>
@@ -145,6 +146,7 @@
             </div>
           </div>
       </form>
+      </div>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

@@ -10,7 +10,8 @@ export enum global {
   getByAlias = "get-by-alias",
   getAll = "get-all",
   hasRight = "has-right",
-  getByPageNested = "get-all-by-page-nested"
+  getByPageNested = "get-all-by-page-nested",
+  getById = "get-by-id"
 }
 
 export enum users {
@@ -39,5 +40,6 @@ export enum groups {
 
 export enum professors {
   professors = "professors",
-  getAllBySurname = "get-all-by-surname"
+  getAllBySurname = "get-all-by-surname",
+  getByIdWithPerson = "get-by-id-with-person"
 }

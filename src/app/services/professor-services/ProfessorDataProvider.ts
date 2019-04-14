@@ -14,6 +14,20 @@ export class ProfessorDataProvider extends DataProvider<Professor> {
   constructor(private http: HttpClient) {
     super();
   }
+
+  getById(professorId: string): Observable<Professor> {
+    return this.http
+      .get(
+        `${server}/${version}/${professors.professors}/${
+          professors.getByIdWithPerson
+        }`,
+        {
+          params: new HttpParams().set("id", professorId)
+        }
+      )
+      .pipe(map(res => res["data"]));
+  }
+
   addData(data: Professor): Observable<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.http

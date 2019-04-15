@@ -3,7 +3,12 @@ import { Professor } from "src/app/enteties/Professor";
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { server, professors, global } from "src/app/api-endpoints/methodNames";
+import {
+  server,
+  professors,
+  global,
+  persons
+} from "src/app/api-endpoints/methodNames";
 import version from "./../../version/version";
 import { map } from "rxjs/operators";
 
@@ -33,25 +38,38 @@ export class ProfessorDataProvider extends DataProvider<Professor> {
     return this.http
       .post(
         `${server}/${version}/${professors.professors}/${global.create}`,
-        {
-          PersonId: data.person.id,
-          Faculty: data.faculty,
-          Department: data.department,
-          Description: data.description,
-          MathNetLink: data.mathNetLink,
-          Status: data.status,
-          ScientificTitle: data.scientificTitle,
-          Graduated: data.graduated,
-          Theses: data.theses,
-          TermPapers: data.termPapers,
-          BibliographicIndexOfWorks: data.bibliographicIndexOfWorks
-        },
+        this.getProfessorObject(data),
         { headers }
       )
       .pipe(map(res => res["status"]));
   }
-  editData(newData: Professor): Observable<any> {
-    throw new Error("Method not implemented.");
+  getProfessorObject(data: Professor): object {
+    const result = {};
+    if (data.id) {
+      result["id"] = data.id;
+    }
+    result["PersonId"] = data.person.id;
+    result["Faculty"] = data.faculty;
+    result["Department"] = data.department;
+    result["Description"] = data.description;
+    result["MathNetLink"] = data.mathNetLink;
+    result["Status"] = data.status;
+    result["ScientificTitle"] = data.scientificTitle;
+    result["Graduated"] = data.graduated;
+    result["Theses"] = data.theses;
+    result["TermPapers"] = data.termPapers;
+    result["BibliographicIndexOfWorks"] = data.bibliographicIndexOfWorks;
+    return result;
+  }
+  editData(newProfessor: Professor): Observable<any> {
+    let headers = new HttpHeaders().set("Content-Type", "application/json");
+    return this.http
+      .put(
+        `${server}/${version}/${professors.professors}/${global.update}`,
+        this.getProfessorObject(newProfessor),
+        { headers }
+      )
+      .pipe(map(res => res["status"]));
   }
   deleteData(data: Professor[]): Observable<any> {
     return this.http

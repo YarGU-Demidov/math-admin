@@ -35,27 +35,45 @@ export class ProfessorValidator implements ValidatorService<Professor> {
   }
   populateInitalFormValuesWithData(data: Professor): FormGroup {
     const formGroup = this.getInitialFormGroup();
-    formGroup.setValue({
-      person: data.person,
-      faculty: data.faculty,
-      department: data.department,
-      description: data.description,
-      scientificTitle: data.scientificTitle,
-      status: data.status,
-      mathNetLink: data.mathNetLink,
-      graduated: data.graduated.map(x => {
-        return { graduatedInstance: x };
-      }),
-      theses: data.theses.map(x => {
-        return { thesis: x };
-      }),
-      termPapers: data.termPapers.map(x => {
-        return { termPaper: x };
-      }),
-      bibliographicIndexOfWorks: data.bibliographicIndexOfWorks.map(x => {
-        return { bibliographicIndex: x };
-      })
-    });
+    formGroup.patchValue({ person: data.person });
+    formGroup.patchValue({ faculty: data.faculty });
+    formGroup.patchValue({ department: data.department });
+    formGroup.patchValue({ description: data.description });
+    formGroup.patchValue({ scientificTitle: data.scientificTitle });
+    formGroup.patchValue({ status: data.status });
+    formGroup.patchValue({ mathNetLink: data.mathNetLink });
+    formGroup.setControl(
+      "graduated",
+      this.fb.array(
+        data.graduated.map(x => {
+          return this.fb.group({ graduatedInstance: x });
+        }) || []
+      )
+    );
+    formGroup.setControl(
+      "theses",
+      this.fb.array(
+        data.theses.map(x => {
+          return this.fb.group({ thesis: x });
+        }) || []
+      )
+    );
+    formGroup.setControl(
+      "termPapers",
+      this.fb.array(
+        data.termPapers.map(x => {
+          return this.fb.group({ termPaper: x });
+        }) || []
+      )
+    );
+    formGroup.setControl(
+      "bibliographicIndexOfWorks",
+      this.fb.array(
+        data.bibliographicIndexOfWorks.map(x => {
+          return this.fb.group({ bibliographicIndex: x });
+        }) || []
+      )
+    );
     return formGroup;
   }
   getInitialFormGroup(): FormGroup {

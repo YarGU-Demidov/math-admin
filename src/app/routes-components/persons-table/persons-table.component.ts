@@ -10,46 +10,40 @@ import { PersonProvider } from "src/app/services/person-services/person-provider
 import { EditPersonDialogComponent } from "../dialogs/edit-dialog/edit-person-dialog/edit-person-dialog.component";
 import { DeletePersonDialogComponent } from "../dialogs/delete-dialog/delete-person-dialog/delete-person-dialog.component";
 import { AddPersonDialogComponent } from "../dialogs/add-dialog/add-person-dialog/add-person-dialog.component";
+import { DataTableWithSelection } from "src/app/services/tables/DataTableWithSelection";
 
 @Component({
   selector: "app-table-persons",
   templateUrl: "./persons-table.component.html",
   styleUrls: ["./persons-table.component.css", "./persons-table.component.scss"]
 })
-export class PersonsTableComponent implements OnInit {
+export class PersonsTableComponent extends DataTableWithSelection<Person>
+  implements OnInit {
   columnsToDisplay: string[] = [
     "select",
     "name",
     "surname",
     "middleName",
-    "email",
     "phone",
     "additionalPhone",
     "birthday",
-    "isUser",
+    "userLogin",
     "actionsColumn"
   ];
-
-  selection = new SelectionModel<Person>(true, []);
   dataSource: PersonDataSource;
-  @ViewChild(MatPaginator)
-  paginator: MatPaginator;
+  dataProvider: PersonProvider;
   @ViewChild("filterSurname")
   filterSurname: ElementRef;
 
-  constructor(
-    private personsProvider: PersonProvider,
-    private dialog: MatDialog
-  ) {}
+  constructor(personsProvider: PersonProvider, dialog: MatDialog) {
+    super(personsProvider, dialog);
+  }
 
   ngOnInit() {
-    this.dataSource = new PersonDataSource(
-      this.personsProvider,
-      this.paginator
-    );
+    this.dataSource = new PersonDataSource(this.dataProvider, this.paginator);
   }
   ngAfterViewInit() {
-    this.dataSource.loadPersons();
+    setTimeout(() => this.dataSource.loadPersons());
 
     fromEvent(this.filterSurname.nativeElement, "keyup")
       .pipe(
@@ -68,17 +62,6 @@ export class PersonsTableComponent implements OnInit {
       });
 
     this.paginator.page.subscribe(() => this.dataSource.loadPersons());
-  }
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected()
-      ? this.selection.clear()
-      : this.dataSource.data.forEach(row => this.selection.select(row));
   }
   editPerson(person: Person) {
     const dialogRef = this.dialog.open(EditPersonDialogComponent, {

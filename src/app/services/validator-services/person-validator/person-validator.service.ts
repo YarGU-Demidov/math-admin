@@ -14,7 +14,6 @@ export class PersonValidatorService implements ValidatorService<Person> {
     person.name = controls.name.value;
     person.surname = controls.surname.value;
     person.middleName = controls.middleName.value;
-    person.email = controls.email.value;
     person.phone = controls.phone.value.replace(/[^0-9+]+/g, "");
     person.additionalPhone = controls.phone.value.replace(/[^0-9+]+/g, "");
     person.birthday = controls.birthday.value;
@@ -31,7 +30,6 @@ export class PersonValidatorService implements ValidatorService<Person> {
       name: person.name,
       surname: person.surname,
       middleName: person.middleName,
-      email: person.email,
       phone: person.phone,
       additionalPhone: person.additionalPhone,
       birthday: person.birthday,
@@ -46,7 +44,6 @@ export class PersonValidatorService implements ValidatorService<Person> {
       name: ["", Validators.required],
       surname: ["", Validators.required],
       middleName: [""],
-      email: ["", [Validators.required, Validators.email]],
       phone: [
         "",
         [

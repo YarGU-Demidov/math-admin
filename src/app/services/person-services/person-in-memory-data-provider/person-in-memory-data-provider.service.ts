@@ -9,6 +9,12 @@ import { PersonProvider } from "../person-provider.abstract";
   providedIn: "root"
 })
 export class PersonInMemoryDataProviderService extends PersonProvider {
+  getBySurnameWithoutProfessors(surname: string): Observable<Person[]> {
+    throw new Error("Method not implemented.");
+  }
+  getAllWithoutProfessors(): Observable<Person[]> {
+    throw new Error("Method not implemented.");
+  }
   getBySurnameWithoutUsers(surname: string): Observable<Person[]> {
     throw new Error("Method not implemented.");
   }

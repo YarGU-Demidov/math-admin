@@ -15,9 +15,16 @@ body {
 
 .mat-form-field {
   font-size: 16px;
-  flex-grow: 1;
+  width: 100%;
 }
-
+.md-dialog-container {
+  margin-left: 4%;
+}
+.column {
+  display: inline-block;
+  width: 50%;
+  padding-right: 10%;
+}
 .mat-dialog-container {
   width: 30vw !important;
 }

@@ -1,5 +1,8 @@
 <div class="md-dialog-container">
   <h3 mat-dialog-title>Редактирование: {{user.login}}</h3>
+  <div *ngIf="loading$ | async">
+      <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
 	<form [formGroup]="formGroup">
 		<div class="form">
 			<mat-form-field>

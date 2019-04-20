@@ -14,7 +14,7 @@ export class UserDataSource extends AbstractDataSource<User> {
   }
 
   loadUsers() {
-    setTimeout(() => this.loadingSubject.next(true), 0);
+    this.loadingSubject.next(true);
     this.userService.getCount().subscribe(res => this.dataCount.next(res));
     this.userService
       .getPaged(this.paginator.pageIndex, this.paginator.pageSize)
@@ -26,7 +26,7 @@ export class UserDataSource extends AbstractDataSource<User> {
   }
 
   loadUsersByLogin(login: string) {
-    setTimeout(() => this.loadingSubject.next(true), 0);
+    this.loadingSubject.next(true);
     this.userService
       .getByLogin(login)
       .pipe<User[], User[]>(

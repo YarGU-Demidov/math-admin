@@ -1,0 +1,152 @@
+<mat-sidenav-container>
+  <mat-sidenav mode="side" opened>
+    <mat-list>
+        <mat-list-item> 
+          <a [routerLink]="['/addProfessors']">Добавить преподавателя</a> 
+        </mat-list-item>
+        <mat-list-item> 
+          <a [routerLink]="['/professors']">Преподаватели</a> 
+        </mat-list-item>
+    </mat-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="md-dialog-container">
+      <h1 class="mat-headline">Редактирование преподавателя</h1>
+      <div *ngIf="loading$ | async">
+        <mat-progress-bar mode="query"></mat-progress-bar>
+      </div>
+    <div *ngIf="isFormReady">
+      <form  [formGroup]="formGroup">
+        <div class="row">
+          <div class="form col-md-5">
+            <mat-form-field appearance="outline">
+              <mat-label>Лицо*</mat-label>
+              <input matInput formControlName="person" name="person" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngIf="(persons | async)?.length==0">
+                  <div>Нет подходящих лиц.</div>
+                </mat-option>
+                <mat-option *ngFor="let person of persons | async" [value]="person">
+                  {{person.surname}} {{person.name?person.name:''}} {{person.birthday?person.birthday:''}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+
+          <div class="form col-md-5 ">
+            <mat-form-field appearance="outline">
+              <mat-label>Факультет*</mat-label>
+              <input matInput formControlName="faculty" type="text" name="faculty">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form form col-md-5">
+            <mat-form-field appearance="outline">
+              <mat-label>Ссылка на Mathnet</mat-label>
+              <input matInput formControlName="mathNetLink" type="text" name="mathNetLink">
+            </mat-form-field>
+          </div>
+          <div class="form col-md-5">
+            <mat-form-field appearance="outline">
+              <mat-label>Научное звание</mat-label>
+              <input matInput formControlName="scientificTitle" type="text" name="scientificTitle">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form col-md-5">
+            <mat-form-field appearance="outline">
+              <mat-label>Статус преподавателя</mat-label>
+              <input matInput formControlName="status" type="text" name="status">
+            </mat-form-field>
+          </div>
+          <div class="form col-md-5 ">
+            <mat-form-field appearance="outline">
+              <mat-label>Кафедра*</mat-label>
+              <input matInput formControlName="department" type="text" name="department">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div formArrayName="graduated" class="col-md-5">
+            <h3 class="mat-h3">Окончил:</h3>
+            <div *ngFor="let item of graduated.controls; let graduatedInstanceIndex=index"
+              [formGroupName]="graduatedInstanceIndex">
+              <mat-form-field appearance="outline">
+                <mat-label>Окончил</mat-label>
+                <input matInput formControlName="graduatedInstance" type="text" name="graduatedInstance">
+              </mat-form-field>
+            </div>
+            <button mat-icon-button color="primary" (click)="addGraduatedInstance()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteGraduatedInstance(graduatedInstanceIndex)">
+              <mat-icon>remove</mat-icon>
+            </button>
+          </div>
+          <div formArrayName="bibliographicIndexOfWorks" class="col-md-5">
+            <h3 class="mat-h3">Библиографический указатель трудов:</h3>
+            <div *ngFor="let item of bibliographicIndexOfWorks.controls; let index2=index" [formGroupName]="index2">
+              <mat-form-field appearance="outline">
+                <mat-label>Библиографический указатель трудов</mat-label>
+                <input matInput formControlName="bibliographicIndex" type="text" name="bibliographicIndex">
+              </mat-form-field>
+            </div>
+            <button mat-icon-button color="primary" (click)="addBibliographicIndex()">
+              <mat-icon>add</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteBibliographicIndex(index2)">
+              <mat-icon>remove</mat-icon>
+            </button>
+            </div>
+          </div>
+          <div class="row">
+            <div formArrayName="theses" class="col-md-5">
+              <h3 class="mat-h3">Диссертации:</h3>
+              <div *ngFor="let item of theses.controls; let thesisIndex=index" [formGroupName]="thesisIndex">
+                <mat-form-field appearance="outline">
+                  <mat-label>Диссертация</mat-label>
+                  <input matInput formControlName="thesis" type="text" name="thesis">
+                </mat-form-field>
+              </div>
+              <button mat-icon-button color="primary" (click)="addThesis()">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteThesis(thesisIndex)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+
+            <div formArrayName="termPapers" class="col-md-5">
+              <h3 class="mat-h3">Темы курсовых и дипломных работ:</h3>
+              <div *ngFor="let item of termPapers.controls; let termPaperIndex=index" [formGroupName]="termPaperIndex">
+                <mat-form-field appearance="outline">
+                  <mat-label>Тема курсовой или дипломной работы</mat-label>
+                  <input matInput formControlName="termPaper" type="text" name="termPaper">
+                </mat-form-field>
+              </div>
+              <button mat-icon-button color="primary" (click)="addTermPaper()">
+                <mat-icon>add</mat-icon>
+              </button>
+              <button mat-icon-button color="warn" (click)="deleteTermPaper(termPaperIndex)">
+                <mat-icon>remove</mat-icon>
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form">
+                <tinymce formControlName="description" [config]="textEditorConfig"></tinymce>
+              </div>
+            </div>
+            <div class="row col-md-1">
+              <button mat-raised-button color="primary" [disabled]="formGroup.invalid" (click)="onConfirm()">Добавить</button>
+            </div>
+          </div>
+      </form>
+      </div>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

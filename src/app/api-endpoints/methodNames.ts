@@ -5,11 +5,13 @@ export enum global {
   create = "create",
   update = "update",
   delete = "delete",
+  deleteMany = "delete-many",
   getOne = "get-by-id",
   getByAlias = "get-by-alias",
   getAll = "get-all",
   hasRight = "has-right",
-  getByPageNested = "get-all-by-page-nested"
+  getByPageNested = "get-all-by-page-nested",
+  getById = "get-by-id"
 }
 
 export enum users {
@@ -19,8 +21,7 @@ export enum users {
   hasRight = "has-right",
   hasCurrentUserRight = "has-current-user-right",
   getCurrentUser = "get-current-user",
-  doesCurrentUserGuest = "does-current-user-is-guest",
-  getPagedWithNested = "get-all-by-page-nested"
+  doesCurrentUserGuest = "does-current-user-is-guest"
 }
 
 export enum persons {
@@ -28,10 +29,17 @@ export enum persons {
   getAllWithoutUsers = "get-all-without-users",
   getAllWithoutProfessors = "get-all-without-professors",
   getAllBySurname = "get-all-by-surname",
-  getAllBySurnameWithoutUsers = "get-all-by-surname-without-users"
+  getAllBySurnameWithoutUsers = "get-all-by-surname-without-users",
+  getAllBySurnameWithoutProfessors = "get-all-by-surname-without-professors"
 }
 
 export enum groups {
   groups = "groups",
   getGroupsByType = "get-groups-by-type"
+}
+
+export enum professors {
+  professors = "professors",
+  getAllBySurname = "get-all-by-surname",
+  getByIdWithPerson = "get-by-id-with-person"
 }

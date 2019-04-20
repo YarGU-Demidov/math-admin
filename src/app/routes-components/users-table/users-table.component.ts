@@ -35,7 +35,7 @@ export class UsersTableComponent extends DataTableWithSelection<User>
     this.dataSource = new UserDataSource(this.dataProvider, this.paginator);
   }
   ngAfterViewInit() {
-    this.dataSource.loadUsers();
+    setTimeout(() => this.dataSource.loadUsers());
 
     fromEvent(this.filterLogin.nativeElement, "keyup")
       .pipe(

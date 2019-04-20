@@ -42,7 +42,7 @@ export class ProfessorsTableComponent extends DataTableWithSelection<Professor>
     );
   }
   ngAfterViewInit() {
-    this.dataSource.loadProfessors();
+    setTimeout(() => this.dataSource.loadProfessors());
 
     fromEvent(this.filterSurname.nativeElement, "keyup")
       .pipe(

@@ -43,7 +43,7 @@ export class PersonsTableComponent extends DataTableWithSelection<Person>
     this.dataSource = new PersonDataSource(this.dataProvider, this.paginator);
   }
   ngAfterViewInit() {
-    this.dataSource.loadPersons();
+    setTimeout(() => this.dataSource.loadPersons());
 
     fromEvent(this.filterSurname.nativeElement, "keyup")
       .pipe(

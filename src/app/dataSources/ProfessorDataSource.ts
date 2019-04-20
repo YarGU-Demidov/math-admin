@@ -14,7 +14,7 @@ export class ProfessorDataSource extends AbstractDataSource<Professor> {
     super();
   }
   loadProfessors() {
-    setTimeout(() => this.loadingSubject.next(true), 0);
+    this.loadingSubject.next(true);
     this.professorProvider
       .getCount()
       .subscribe(res => this.dataCount.next(res));
@@ -24,10 +24,12 @@ export class ProfessorDataSource extends AbstractDataSource<Professor> {
         catchError(() => of([])),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(professors => this.dataSubject.next(professors));
+      .subscribe(professors => {
+        this.dataSubject.next(professors);
+      });
   }
   loadProfessorsBySurname(surname: string): any {
-    setTimeout(() => this.loadingSubject.next(true), 0);
+    this.loadingSubject.next(true);
     this.professorProvider
       .getAllBySurname(surname)
       .pipe<Professor[], Professor[]>(

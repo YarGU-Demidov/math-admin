@@ -6,7 +6,7 @@ export abstract class AbstractDataSource<T> implements DataSource<T> {
   protected dataSubject = new BehaviorSubject<T[]>([]);
   public data: T[];
   protected dataCount = new BehaviorSubject<number>(0);
-  protected loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
   public dataCount$ = this.dataCount.asObservable();
 

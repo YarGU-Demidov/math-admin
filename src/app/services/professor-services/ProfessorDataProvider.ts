@@ -85,7 +85,7 @@ export class ProfessorDataProvider extends DataProvider<Professor> {
   getAll(): Observable<Professor[]> {
     throw new Error("Method not implemented.");
   }
-  getAllBySurname(surname: string) {
+  getAllBySurname(surname: string): Observable<Professor[]> {
     return this.http
       .get(
         `${server}/${version}/${professors.professors}/${

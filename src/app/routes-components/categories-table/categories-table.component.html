@@ -1,0 +1,67 @@
+<div class="mat-elevation-z8">
+  <div class="form">
+    <mat-form-field>
+      <input matInput #filterAlias placeholder="Поиск по псевдониму" #input>
+    </mat-form-field>
+  </div>
+  <div *ngIf="dataSource.loading$ | async">
+      <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
+  <mat-table matSort [dataSource]="dataSource">
+    <!-- выбор -->
+    <ng-container matColumnDef="select">
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox color="primary" (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+          [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <mat-checkbox color="primary" (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+          [checked]="selection.isSelected(row)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="name">
+      <mat-header-cell  *matHeaderCellDef>
+        <div>Название</div>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.name}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="alias">
+      <mat-header-cell  *matHeaderCellDef>Псевдоним</mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.alias}}
+      </mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="description">
+      <mat-header-cell  *matHeaderCellDef>Описание</mat-header-cell>
+      <mat-cell *matCellDef="let category">
+        {{category.description}}
+      </mat-cell>
+    </ng-container>
+
+    <!-- колонка с кнопками-->
+    <ng-container matColumnDef="actionsColumn">
+      <mat-header-cell *matHeaderCellDef>
+        <button mat-icon-button color="primary" (click)="addCategory()">
+          <mat-icon aria-label="Example icon-button with a heart icon">add</mat-icon>
+        </button>
+        <button mat-icon-button [disabled]="selection.selected.length == 0" color="primary" (click)="deleteCategory()">
+          <mat-icon aria-label="Delete">delete</mat-icon>
+        </button>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let row">
+        <button mat-icon-button color="primary" (click)="editCategory(row)">
+          <mat-icon aria-label="Edit">edit</mat-icon>
+        </button>
+
+      </mat-cell>
+    </ng-container>
+    <mat-header-row *matHeaderRowDef="columnsToDisplay"></mat-header-row>
+    <mat-row (click)="selection.toggle(row)" *matRowDef="let row; columns: columnsToDisplay;"></mat-row>
+  </mat-table>
+  <mat-paginator [length]="(dataSource.dataCount$ | async)" [pageIndex]="0" [pageSize]="10" [pageSizeOptions]="[5, 10, 20]"
+    showFirstLastButtons></mat-paginator>
+</div>

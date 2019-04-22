@@ -48,6 +48,9 @@ import { AddProfessorComponent } from "./routes-components/add-professor/add-pro
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { DeleteProfessorDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-professor-dialog/delete-professor-dialog.component";
 import { EditProfessorComponent } from "./routes-components/edit-professor/edit-professor.component";
+import { CategoriesTableComponent } from "./routes-components/categories-table/categories-table.component";
+import { CategoryDataProvider } from "./services/category-services/data-provider/category-data-provider.service";
+import { CategoryProvider } from "./services/category-services/data-provider/CategoryProvider.abstract";
 
 @NgModule({
   declarations: [
@@ -67,7 +70,8 @@ import { EditProfessorComponent } from "./routes-components/edit-professor/edit-
     ProfessorsTableComponent,
     AddProfessorComponent,
     DeleteProfessorDialogComponent,
-    EditProfessorComponent
+    EditProfessorComponent,
+    CategoriesTableComponent
   ],
   imports: [
     BrowserModule,
@@ -103,7 +107,8 @@ import { EditProfessorComponent } from "./routes-components/edit-professor/edit-
   providers: [
     { provide: PersonProvider, useClass: PersonHttpDataProvider },
     { provide: UserProvider, useClass: UserHttpDataProvider },
-    { provide: GroupProvider, useClass: GroupHttpDataProvider }
+    { provide: GroupProvider, useClass: GroupHttpDataProvider },
+    { provide: CategoryProvider, useClass: CategoryDataProvider }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

@@ -1,0 +1,27 @@
+<div class="md-dialog-container">
+	<h3 mat-dialog-title>Добавление пользователя</h3>
+  <div *ngIf="loading$ | async">
+      <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
+	<form [formGroup]="formGroup">
+		<div class="form">
+			<mat-form-field>
+				<input matInput placeholder="Название*" formControlName="name" type="text">
+			</mat-form-field>
+		</div>
+		<div class="form">
+			<mat-form-field>
+				<input matInput placeholder="Псевдоним*" formControlName="alias" type="text" >
+			</mat-form-field>
+		</div>
+		<div class="form">
+			<mat-form-field>
+				<textarea matInput placeholder="Описание" formControlName="description" type="text" ></textarea>
+			</mat-form-field>
+		</div>
+    <div mat-dialog-actions>
+      <button mat-button [disabled]="formGroup.invalid" (click)="onConfirm()">Добавить</button>
+      <button mat-button (click)="onCancel()" tabindex="-1">Отменить</button>
+    </div>
+	</form>
+</div>

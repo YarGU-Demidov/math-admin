@@ -17,7 +17,7 @@ export abstract class DeleteDialogComponent<T> extends Dialog<T> {
   }
 
   onConfirm(): void {
-    setTimeout(() => this.loadingSubject.next(true), 0);
+    this.loadingSubject.next(true);
     this.dataProvider.deleteData(this.data).subscribe(() => {
       this.loadingSubject.next(false);
       this.dialogRef.close(1);

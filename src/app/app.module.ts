@@ -49,8 +49,11 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { DeleteProfessorDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-professor-dialog/delete-professor-dialog.component";
 import { EditProfessorComponent } from "./routes-components/edit-professor/edit-professor.component";
 import { CategoriesTableComponent } from "./routes-components/categories-table/categories-table.component";
-import { CategoryDataProvider } from "./services/category-services/data-provider/category-data-provider.service";
+import { AddCategoryDialogComponent } from "./routes-components/dialogs/add-dialog/add-category-dialog/add-category-dialog.component";
 import { CategoryProvider } from "./services/category-services/data-provider/CategoryProvider.abstract";
+import { CategoryHttpDataProvider } from "./services/category-services/data-provider/CategoryHttpDataProvider.service";
+import { DeleteCategoryDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-category-dialog/delete-category-dialog.component";
+import { EditCategoryDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-category-dialog/edit-category-dialog.component";
 
 @NgModule({
   declarations: [
@@ -71,7 +74,10 @@ import { CategoryProvider } from "./services/category-services/data-provider/Cat
     AddProfessorComponent,
     DeleteProfessorDialogComponent,
     EditProfessorComponent,
-    CategoriesTableComponent
+    CategoriesTableComponent,
+    AddCategoryDialogComponent,
+    DeleteCategoryDialogComponent,
+    EditCategoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -108,7 +114,7 @@ import { CategoryProvider } from "./services/category-services/data-provider/Cat
     { provide: PersonProvider, useClass: PersonHttpDataProvider },
     { provide: UserProvider, useClass: UserHttpDataProvider },
     { provide: GroupProvider, useClass: GroupHttpDataProvider },
-    { provide: CategoryProvider, useClass: CategoryDataProvider }
+    { provide: CategoryProvider, useClass: CategoryHttpDataProvider }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -118,7 +124,10 @@ import { CategoryProvider } from "./services/category-services/data-provider/Cat
     EditUserDialogComponent,
     AddUserDialogComponent,
     DeleteUserDialogComponent,
-    DeleteProfessorDialogComponent
+    DeleteProfessorDialogComponent,
+    AddCategoryDialogComponent,
+    DeleteCategoryDialogComponent,
+    EditCategoryDialogComponent
   ]
 })
 export class AppModule {}

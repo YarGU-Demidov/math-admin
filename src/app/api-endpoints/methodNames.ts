@@ -23,6 +23,9 @@ export enum users {
   getCurrentUser = "get-current-user",
   doesCurrentUserGuest = "does-current-user-is-guest"
 }
+export enum categories {
+  categories = "categories"
+}
 
 export enum persons {
   persons = "persons",

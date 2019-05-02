@@ -7,6 +7,7 @@ import { Observable, BehaviorSubject } from "rxjs";
 import { Person } from "../../enteties/Person";
 import { debounceTime, map } from "rxjs/operators";
 import config from "src/app/utils/textEditor.config";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-add-professor",
@@ -23,7 +24,8 @@ export class AddProfessorComponent implements OnInit {
     protected professorProvider: ProfessorDataProvider,
     protected personProvider: PersonProvider,
     protected validator: ProfessorValidator,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.getInitialData();
   }
@@ -55,6 +57,7 @@ export class AddProfessorComponent implements OnInit {
     this.loadingSubject.next(true);
     this.professorProvider.addData(professor).subscribe(x => {
       this.loadingSubject.next(false);
+      this.router.navigate(["/professors"]);
     });
   }
   get graduated() {

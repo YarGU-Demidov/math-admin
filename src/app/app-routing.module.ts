@@ -6,6 +6,7 @@ import { UsersTableComponent } from "./routes-components/users-table/users-table
 import { ProfessorsTableComponent } from "./routes-components/professors-table/professors-table.component";
 import { AddProfessorComponent } from "./routes-components/add-professor/add-professor.component";
 import { EditProfessorComponent } from "./routes-components/edit-professor/edit-professor.component";
+import { CategoriesTableComponent } from "./routes-components/categories-table/categories-table.component";
 const routes: Routes = [
   {
     path: "",
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: "professors",
     component: ProfessorsTableComponent
+  },
+  {
+    path: "categories",
+    component: CategoriesTableComponent
   },
   {
     path: "addProfessors",

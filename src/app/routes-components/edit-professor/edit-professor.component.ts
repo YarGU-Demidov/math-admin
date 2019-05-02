@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute, Router } from "@angular/router";
 import { ProfessorValidator } from "src/app/services/validator-services/ProfessorValidator";
 import { FormGroup, FormArray, FormBuilder } from "@angular/forms";
 import { ProfessorDataProvider } from "src/app/services/professor-services/ProfessorDataProvider";
@@ -23,7 +23,8 @@ export class EditProfessorComponent implements OnInit {
     private route: ActivatedRoute,
     protected validator: ProfessorValidator,
     protected professorProvider: ProfessorDataProvider,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) {
     this.isFormReady = false;
   }
@@ -49,6 +50,7 @@ export class EditProfessorComponent implements OnInit {
     this.loadingSubject.next(true);
     this.professorProvider.editData(professor).subscribe(x => {
       this.loadingSubject.next(false);
+      this.router.navigate(["/professors"]);
     });
   }
 

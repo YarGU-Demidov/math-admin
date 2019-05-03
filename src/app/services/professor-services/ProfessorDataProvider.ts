@@ -75,7 +75,7 @@ export class ProfessorDataProvider extends DataProvider<Professor> {
     return this.http
       .request(
         "delete",
-        `${server}/${version}/${professors.professors}/delete-many`,
+        `${server}/${version}/${professors.professors}/${global.deleteMany}`,
         {
           body: data.map(professor => professor.id)
         }

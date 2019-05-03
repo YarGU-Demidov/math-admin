@@ -1,4 +1,4 @@
-export const server = "http://localhost:5002";
+export const server = "http://localhost:80";
 export enum global {
   getCount = "get-count",
   getPaged = "get-all-by-page",

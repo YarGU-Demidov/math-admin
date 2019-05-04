@@ -43,24 +43,6 @@ export class ProfessorDataProvider extends DataProvider<Professor> {
       )
       .pipe(map(res => res["status"]));
   }
-  getProfessorObject(data: Professor): object {
-    const result = {};
-    if (data.id) {
-      result["id"] = data.id;
-    }
-    result["PersonId"] = data.person.id;
-    result["Faculty"] = data.faculty;
-    result["Department"] = data.department;
-    result["Description"] = data.description;
-    result["MathNetLink"] = data.mathNetLink;
-    result["Status"] = data.status;
-    result["ScientificTitle"] = data.scientificTitle;
-    result["Graduated"] = data.graduated;
-    result["Theses"] = data.theses;
-    result["TermPapers"] = data.termPapers;
-    result["BibliographicIndexOfWorks"] = data.bibliographicIndexOfWorks;
-    return result;
-  }
   editData(newProfessor: Professor): Observable<any> {
     let headers = new HttpHeaders().set("Content-Type", "application/json");
     return this.http
@@ -117,5 +99,23 @@ export class ProfessorDataProvider extends DataProvider<Professor> {
         params: new HttpParams()
       })
       .pipe(map(res => res["data"]));
+  }
+  getProfessorObject(data: Professor): object {
+    const result = {};
+    if (data.id) {
+      result["id"] = data.id;
+    }
+    result["PersonId"] = data.person.id;
+    result["Faculty"] = data.faculty;
+    result["Department"] = data.department;
+    result["Description"] = data.description;
+    result["MathNetLink"] = data.mathNetLink;
+    result["Status"] = data.status;
+    result["ScientificTitle"] = data.scientificTitle;
+    result["Graduated"] = data.graduated;
+    result["Theses"] = data.theses;
+    result["TermPapers"] = data.termPapers;
+    result["BibliographicIndexOfWorks"] = data.bibliographicIndexOfWorks;
+    return result;
   }
 }

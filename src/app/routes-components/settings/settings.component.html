@@ -1,0 +1,33 @@
+
+<div *ngIf="isFormReady" class="form col-md-offset-4 col-md-4">
+  <form [formGroup]="formGroup">
+      <mat-form-field appearance="outline">
+        <mat-label>Имя сайта</mat-label>
+        <input matInput formControlName="siteName" name="siteName">
+        <mat-hint>Имя сайта отображается в заголовке браузера после имени страницы.</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Заголовок главной страницы</mat-label>
+        <input matInput formControlName="defaultTitleForHomePage" type="text" name="defaultTitleForHomePage">
+        <mat-hint>Заголовок главной страницы отображается в заголовке браузера в самом начале имени страницы. Если пустой, то отображается только имя сайта.</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Заголовок страницы новостей</mat-label>
+        <input matInput formControlName="defaultTitleForNewsPage" type="text" name="defaultTitleForNewsPage">
+        <mat-hint>Заголовок страницы новостей отображается в заголовке браузера в самом начале имени страницы. Если пустой, то отображается только имя сайта.</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Количество постов на страницу</mat-label>
+        <input matInput formControlName="perPageCount" type="text" name="perPageCount">
+        <mat-hint>Количество постов на страницу. Работает для всех типов постов.</mat-hint>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Разделитель заголовка страницы и имени сайта</mat-label>
+        <input matInput formControlName="titleDelimiter" type="text" name="titleDelimiter">
+        <mat-hint>Разделитель заголовка страницы и имени сайта. Пустым быть не может.</mat-hint>
+      </mat-form-field>
+      <div class="row col-md-1">
+        <button mat-raised-button color="primary" [disabled]="formGroup.invalid" (click)="onConfirm()">Сохранить</button>
+      </div>
+</form>
+</div>

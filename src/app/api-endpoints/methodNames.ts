@@ -26,6 +26,11 @@ export enum users {
 export enum categories {
   categories = "categories"
 }
+export enum settings {
+  settings = "site-settings",
+  setSettings = "set-site-settings",
+  getSettings = "get-site-settings"
+}
 
 export enum persons {
   persons = "persons",

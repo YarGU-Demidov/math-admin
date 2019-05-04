@@ -54,6 +54,7 @@ import { CategoryProvider } from "./services/category-services/data-provider/Cat
 import { CategoryHttpDataProvider } from "./services/category-services/data-provider/CategoryHttpDataProvider.service";
 import { DeleteCategoryDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-category-dialog/delete-category-dialog.component";
 import { EditCategoryDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-category-dialog/edit-category-dialog.component";
+import { SettingsComponent } from "./routes-components/settings/settings.component";
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { EditCategoryDialogComponent } from "./routes-components/dialogs/edit-di
     CategoriesTableComponent,
     AddCategoryDialogComponent,
     DeleteCategoryDialogComponent,
-    EditCategoryDialogComponent
+    EditCategoryDialogComponent,
+    SettingsComponent
   ],
   imports: [
     BrowserModule,

@@ -41,7 +41,7 @@
     "lint-staged": "^7.3.0",
     "moment": "^2.22.2",
     "ngx-tinymce": "^7.0.0",
-    "rxjs": "~6.3.3",
+    "rxjs": "^6.3.3",
     "zone.js": "~0.8.26"
   },
   "devDependencies": {

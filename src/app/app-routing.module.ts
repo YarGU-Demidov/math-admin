@@ -8,6 +8,7 @@ import { AddProfessorComponent } from "./routes-components/add-professor/add-pro
 import { EditProfessorComponent } from "./routes-components/edit-professor/edit-professor.component";
 import { CategoriesTableComponent } from "./routes-components/categories-table/categories-table.component";
 import { SettingsComponent } from "./routes-components/settings/settings.component";
+import { TreeComponent } from "./routes-components/tree/tree.component";
 const routes: Routes = [
   {
     path: "",
@@ -36,6 +37,10 @@ const routes: Routes = [
   {
     path: "settings",
     component: SettingsComponent
+  },
+  {
+    path: "files",
+    component: TreeComponent
   },
   {
     path: "editProfessor/:id",

@@ -51,3 +51,12 @@ export enum professors {
   getAllBySurname = "get-all-by-surname",
   getByIdWithPerson = "get-by-id-with-person"
 }
+export enum directories {
+  directories = "directories",
+  getRootDirectories = "get-root-directories",
+  getChildDirectories = "get-child-directories-by-parent-id"
+}
+export enum files {
+  files = "files",
+  getByDirectoryId = "get-by-directory-id"
+}

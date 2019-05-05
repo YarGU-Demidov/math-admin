@@ -55,7 +55,9 @@ import { CategoryHttpDataProvider } from "./services/category-services/data-prov
 import { DeleteCategoryDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-category-dialog/delete-category-dialog.component";
 import { EditCategoryDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-category-dialog/edit-category-dialog.component";
 import { SettingsComponent } from "./routes-components/settings/settings.component";
-
+import { TreeComponent } from "./routes-components/tree/tree.component";
+import { MatTreeModule } from "@angular/material/tree";
+import { DeleteDirectoryDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-directory-dialog/delete-directory-dialog.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -79,7 +81,9 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
     AddCategoryDialogComponent,
     DeleteCategoryDialogComponent,
     EditCategoryDialogComponent,
-    SettingsComponent
+    SettingsComponent,
+    TreeComponent,
+    DeleteDirectoryDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -108,6 +112,7 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
     MatDatepickerModule,
     MatMomentDateModule,
     MatCheckboxModule,
+    MatTreeModule,
     NgxTinymceModule.forRoot({
       baseURL: "//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.0/"
     })
@@ -129,7 +134,8 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
     DeleteProfessorDialogComponent,
     AddCategoryDialogComponent,
     DeleteCategoryDialogComponent,
-    EditCategoryDialogComponent
+    EditCategoryDialogComponent,
+    DeleteDirectoryDialogComponent
   ]
 })
 export class AppModule {}

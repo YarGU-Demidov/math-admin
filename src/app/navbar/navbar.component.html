@@ -3,13 +3,17 @@
     <div>
       <a class="navbar-brand" [routerLink]="['/']">Mathsite admin page.</a>
     </div>
-    <ul class="nav navbar-nav">
+    <ul *ngIf="app.localStorageItem('role')=='admin'" class="nav navbar-nav">
       <li> <a [routerLink]="['/users']" routerLinkActive="active">Пользователи</a></li>
       <li> <a [routerLink]="['/persons']" routerLinkActive="active">Лица</a></li>
       <li> <a [routerLink]="['/professors']" routerLinkActive="active">Преподаватели</a></li>
       <li> <a [routerLink]="['/categories']" routerLinkActive="active">Категории</a></li>
       <li> <a [routerLink]="['/files']" routerLinkActive="active">Файлы</a></li>
       <li> <a [routerLink]="['/settings']" routerLinkActive="active">Настройки</a></li>
+      <li><a *ngIf="app.localStorageItem('jwt')" class="navbar-brand" [routerLink]="['/logout']">Выйти</a></li>       
     </ul>
+    <mat-label *ngIf="app.localStorageItem('jwt')" >
+      Welcome, {{app.localStorageItem('login')}}! 
+    </mat-label>
   </div>
 </nav>

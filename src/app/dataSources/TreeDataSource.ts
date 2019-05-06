@@ -58,13 +58,15 @@ export class TreeDataSource {
         catchError<Directory[], Directory[]>(() => of<Directory[]>()),
         finalize(() => this.loadingSubject.next(false))
       )
-      .subscribe(res =>
-        this.dataChange.next(
-          res.map(directory => {
-            return new TreeNode(directory);
-          })
-        )
-      );
+      .subscribe(res => {
+        this.data = res.map(directory => {
+          return new TreeNode(directory);
+        });
+        this.filesProvider.getRootFiles().subscribe(res => {
+          this.data.push(...res.map(file => new TreeNode(file)));
+          this.dataChange.next(this.data);
+        });
+      });
   }
 
   handleTreeControl(change: SelectionChange<TreeNode>) {
@@ -80,6 +82,7 @@ export class TreeDataSource {
   }
 
   toggleNode(node: TreeNode, expand: boolean) {
+    if (!node) return;
     const index = this.data.indexOf(node);
     if (expand) {
       this.filesProvider.getByDirectoryId(node.item.id).subscribe(res => {

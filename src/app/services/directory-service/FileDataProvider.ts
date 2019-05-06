@@ -1,4 +1,10 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import {
+  HttpClient,
+  HttpHeaders,
+  HttpParams,
+  HttpRequest,
+  HttpEvent
+} from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
 import { server, settings, files } from "src/app/api-endpoints/methodNames";
@@ -18,23 +24,23 @@ export class FileDataProvider {
       })
       .pipe(map(res => res["data"]));
   }
-  getDirectoriesByPath(path: string): Observable<Settings> {
+  getRootFiles(): Observable<any> {
     return this.http
-      .get(
-        `${server}/${version}/${settings.settings}/${settings.getSettings}`,
-        {
-          params: new HttpParams().set("path", path)
-        }
-      )
+      .get(`${server}/${version}/${files.files}/${files.getRootFiles}`)
       .pipe(map(res => res["data"]));
   }
-  private settingsToSettingsDto(data: Settings): any {
-    return {
-      DefaultTitleForHomePage: data.defaultTitleForHomePage,
-      DefaultTitleForNewsPage: data.defaultTitleForNewsPage,
-      PerPageCount: data.perPageCount,
-      SiteName: data.siteName,
-      TitleDelimiter: data.titleDelimiter
-    };
+  uploadFile(
+    formData: FormData,
+    directoryId: string
+  ): Observable<HttpEvent<{}>> {
+    return this.http.post(
+      `${server}/${version}/${files.files}/${files.uploadFile}`,
+      formData,
+      {
+        reportProgress: true,
+        observe: "events",
+        params: new HttpParams().set("directoryId", directoryId)
+      }
+    );
   }
 }

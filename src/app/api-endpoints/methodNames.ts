@@ -58,5 +58,11 @@ export enum directories {
 }
 export enum files {
   files = "files",
-  getByDirectoryId = "get-by-directory-id"
+  getByDirectoryId = "get-by-directory-id",
+  getRootFiles = "get-root-files",
+  uploadFile = "upload-file"
+}
+export enum auth {
+  auth = "auth",
+  login = "get-token"
 }

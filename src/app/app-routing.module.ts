@@ -9,42 +9,64 @@ import { EditProfessorComponent } from "./routes-components/edit-professor/edit-
 import { CategoriesTableComponent } from "./routes-components/categories-table/categories-table.component";
 import { SettingsComponent } from "./routes-components/settings/settings.component";
 import { TreeComponent } from "./routes-components/tree/tree.component";
+import { LoginComponent } from "./components/login-component/login-component.component";
+import { AuthGuard } from "./services/guard/auth-guard.service";
+import { LogoutComponent } from "./components/logout/logout.component";
 const routes: Routes = [
   {
     path: "",
-    component: HomeViewComponent
+    component: HomeViewComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "persons",
-    component: PersonsTableComponent
+    component: PersonsTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "users",
-    component: UsersTableComponent
+    component: UsersTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "professors",
-    component: ProfessorsTableComponent
+    component: ProfessorsTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "categories",
-    component: CategoriesTableComponent
+    component: CategoriesTableComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "addProfessors",
-    component: AddProfessorComponent
+    component: AddProfessorComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "settings",
-    component: SettingsComponent
+    component: SettingsComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "files",
-    component: TreeComponent
+    component: TreeComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: "editProfessor/:id",
     component: EditProfessorComponent,
+    canActivate: [AuthGuard],
+    children: []
+  },
+  {
+    path: "login",
+    component: LoginComponent,
+    children: []
+  },
+  {
+    path: "logout",
+    component: LogoutComponent,
     children: []
   }
 ];

@@ -1,38 +1,42 @@
-
-  <div class="col-md-offset-1">
+<div class="col-md-offset-1">
   <div *ngIf="dataSource.loading$ | async">
-  <mat-progress-bar mode="query"></mat-progress-bar>
+    <mat-progress-bar mode="query"></mat-progress-bar>
   </div>
-    <mat-form-field>
-      <input matInput #itemValue placeholder="New directory...">
-    </mat-form-field>
-    <button mat-button (click)="saveNode(null, itemValue.value)">Save</button>
-    <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-      <mat-tree-node *matTreeNodeDef="let node" matTreeNodePadding>
-        <button mat-icon-button></button>
-        {{node.item.name}}
-      </mat-tree-node>
-      <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
-        <mat-form-field>
-          <input matInput #itemValue placeholder="New directory...">
-        </mat-form-field>
-        <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
-      </mat-tree-node>
-      <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding>
-        <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
-          <mat-icon class="mat-icon-rtl-mirror">
-            {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
-          </mat-icon>
+  <mat-form-field>
+    <input matInput #itemValue placeholder="New directory...">
+  </mat-form-field>
+  <button mat-button (click)="saveNode(null, itemValue.value)">Save</button>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node  *matTreeNodeDef="let node; when: isFile" matTreeNodePadding>
+      <mat-icon color="primary">insert_drive_file</mat-icon>
+      {{node.item.name}}
+    </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
+      <mat-form-field>
+        <input matInput #itemValue placeholder="New directory...">
+      </mat-form-field>
+      <button mat-button (click)="saveNode(node, itemValue.value)">Save</button>
+    </mat-tree-node>
+    <mat-tree-node *matTreeNodeDef="let node; when: isFolder" matTreeNodePadding>
+      <button mat-icon-button [attr.aria-label]="'toggle ' + node.filename" matTreeNodeToggle>
+        <mat-icon color="primary">{{treeControl.isExpanded(node) ? 'folder_open' : 'folder'}}</mat-icon>
+      </button>
+      {{node.item.name}}
+      <div *ngIf="treeControl.isExpanded(node)">
+        <button mat-icon-button color="primary" (click)="addNewDirectory(node)">
+          <mat-icon>add</mat-icon>
         </button>
-        {{node.item.name}}
-        <div *ngIf="treeControl.isExpanded(node)">
-            <button  mat-icon-button color="primary" (click)="addNewDirectory(node)">
-              <mat-icon>add</mat-icon>
-            </button>
-            <button mat-icon-button color="primary"  (click)="deleteDirectory(node)">
-                <mat-icon>delete</mat-icon>
-              </button>
-        </div>
-      </mat-tree-node>
-    </mat-tree>
-  </div>
+        <button mat-icon-button color="primary" (click)="deleteDirectory(node)">
+          <mat-icon>delete</mat-icon>
+        </button>
+            <input type="file" #file placeholder="Choose file" (change)="fileChange($event, node)" style="display:none;">
+            <button mat-icon-button color="primary" (click)="file.click()">
+              <mat-icon>cloud_upload</mat-icon>
+            </button> 
+          <span class="upload" *ngIf="message">
+            {{message}}
+          </span>
+      </div>
+    </mat-tree-node>
+  </mat-tree>
+</div>

@@ -1,6 +1,12 @@
 import { CollectionViewer, SelectionChange } from "@angular/cdk/collections";
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { Component, Injectable, OnInit } from "@angular/core";
+import {
+  Component,
+  Injectable,
+  OnInit,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { BehaviorSubject, merge, Observable } from "rxjs";
 import { map } from "rxjs/operators";
 import { TreeDataSource } from "src/app/dataSources/TreeDataSource";
@@ -9,6 +15,7 @@ import { FileDataProvider } from "src/app/services/directory-service/FileDataPro
 import { TreeNode } from "./treeNode";
 import { MatDialog } from "@angular/material";
 import { DeleteDirectoryDialogComponent } from "../dialogs/delete-dialog/delete-directory-dialog/delete-directory-dialog.component";
+import { HttpEventType } from "@angular/common/http";
 
 @Component({
   selector: "app-tree",
@@ -16,9 +23,13 @@ import { DeleteDirectoryDialogComponent } from "../dialogs/delete-dialog/delete-
   styleUrls: ["./tree.component.css"]
 })
 export class TreeComponent {
+  public progress: number;
+  public message: string;
+  @Output()
+  public onUploadFinished = new EventEmitter();
   constructor(
     private directoriesProvider: DirectoryDataProiver,
-    filesProvider: FileDataProvider,
+    private filesProvider: FileDataProvider,
     private dialog: MatDialog
   ) {
     this.treeControl = new FlatTreeControl<TreeNode>(
@@ -39,7 +50,8 @@ export class TreeComponent {
 
   isExpandable = (node: TreeNode) => node.isExpandable;
   getLevel = (node: TreeNode) => node.level;
-  hasChild = (_: number, _nodeData: TreeNode) => _nodeData.isExpandable;
+  isFolder = (_: number, _nodeData: TreeNode) => _nodeData.isExpandable;
+  isFile = (_: number, _nodeData: TreeNode) => !_nodeData.isExpandable;
   hasNoContent = (_: number, _nodeData: TreeNode) => _nodeData.item.name === "";
 
   addNewDirectory(node: TreeNode) {
@@ -73,5 +85,24 @@ export class TreeComponent {
           this.treeControl.expand(node.parentItem);
         }
       });
+  }
+  fileChange(event, node) {
+    let fileList: FileList = event.target.files;
+    if (fileList.length > 0) {
+      let file: File = fileList[0];
+      let formData: FormData = new FormData();
+      formData.append("uploadFile", file, file.name);
+      this.filesProvider.uploadFile(formData, node.item.id).subscribe(event => {
+        if (event.type === HttpEventType.UploadProgress)
+          this.dataSource.loadingSubject.next(true);
+        else if (event.type === HttpEventType.Response) {
+          this.message = "Upload successfull.";
+          this.onUploadFinished.emit(event.body);
+          this.dataSource.loadingSubject.next(false);
+          this.treeControl.collapse(node.parentItem);
+          this.treeControl.expand(node.parentItem);
+        }
+      });
+    }
   }
 }

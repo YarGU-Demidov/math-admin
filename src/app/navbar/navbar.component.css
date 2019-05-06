@@ -1,1 +1,8 @@
-li{ list-style: none;}
+li {
+  list-style: none;
+}
+mat-label {
+  float: right;
+  font-size: large;
+  margin-top: 15px;
+}

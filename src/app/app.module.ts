@@ -58,10 +58,14 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
 import { TreeComponent } from "./routes-components/tree/tree.component";
 import { MatTreeModule } from "@angular/material/tree";
 import { DeleteDirectoryDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-directory-dialog/delete-directory-dialog.component";
+import { LoginComponent } from "./components/login-component/login-component.component";
+import { DialogLogin } from "./components/login-component/dialogLogin.component";
+import { LogoutComponent } from "./components/logout/logout.component";
 @NgModule({
   declarations: [
     AppComponent,
     HomeViewComponent,
+    DialogLogin,
     NavbarComponent,
     PersonsTableComponent,
     GlobalSidebarComponent,
@@ -83,7 +87,9 @@ import { DeleteDirectoryDialogComponent } from "./routes-components/dialogs/dele
     EditCategoryDialogComponent,
     SettingsComponent,
     TreeComponent,
-    DeleteDirectoryDialogComponent
+    DeleteDirectoryDialogComponent,
+    LoginComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,
@@ -135,7 +141,8 @@ import { DeleteDirectoryDialogComponent } from "./routes-components/dialogs/dele
     AddCategoryDialogComponent,
     DeleteCategoryDialogComponent,
     EditCategoryDialogComponent,
-    DeleteDirectoryDialogComponent
+    DeleteDirectoryDialogComponent,
+    DialogLogin
   ]
 })
 export class AppModule {}

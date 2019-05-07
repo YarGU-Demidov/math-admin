@@ -7,7 +7,12 @@ import {
 } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { server, settings, files } from "src/app/api-endpoints/methodNames";
+import {
+  server,
+  settings,
+  files,
+  global
+} from "src/app/api-endpoints/methodNames";
 import version from "./../../version/version";
 import { map } from "rxjs/operators";
 import Settings from "src/app/enteties/Settings";
@@ -42,5 +47,16 @@ export class FileDataProvider {
         params: new HttpParams().set("directoryId", directoryId)
       }
     );
+  }
+  delete(fileId: string): Observable<any> {
+    return this.http
+      .request(
+        "delete",
+        `${server}/${version}/${files.files}/${global.delete}`,
+        {
+          params: new HttpParams().set("id", fileId)
+        }
+      )
+      .pipe(map(res => res["status"]));
   }
 }

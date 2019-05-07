@@ -10,6 +10,12 @@
     <mat-tree-node  *matTreeNodeDef="let node; when: isFile" matTreeNodePadding>
       <mat-icon color="primary">insert_drive_file</mat-icon>
       {{node.item.name}}
+      <button mat-icon-button color="primary" (click)="downloadFile(node)">
+        <mat-icon>file_download</mat-icon>
+      </button>
+      <button mat-icon-button color="primary" (click)="deleteFile(node)">
+        <mat-icon>delete</mat-icon>
+      </button>
     </mat-tree-node>
     <mat-tree-node *matTreeNodeDef="let node; when: hasNoContent" matTreeNodePadding>
       <mat-form-field>
@@ -33,9 +39,6 @@
             <button mat-icon-button color="primary" (click)="file.click()">
               <mat-icon>cloud_upload</mat-icon>
             </button> 
-          <span class="upload" *ngIf="message">
-            {{message}}
-          </span>
       </div>
     </mat-tree-node>
   </mat-tree>

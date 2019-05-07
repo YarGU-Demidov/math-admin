@@ -23,8 +23,6 @@ import { HttpEventType } from "@angular/common/http";
   styleUrls: ["./tree.component.css"]
 })
 export class TreeComponent {
-  public progress: number;
-  public message: string;
   @Output()
   public onUploadFinished = new EventEmitter();
   constructor(
@@ -73,6 +71,16 @@ export class TreeComponent {
       }
     });
   }
+  deleteFile(node: TreeNode) {
+    this.filesProvider.delete(node.item.id).subscribe(x => {
+      if (!node.parentItem) {
+        this.dataSource.getInitialData();
+      } else {
+        this.treeControl.collapse(node.parentItem);
+        this.treeControl.expand(node.parentItem);
+      }
+    });
+  }
   /** Save the node to database */
   saveNode(node: TreeNode, directoryName: string) {
     this.directoriesProvider
@@ -96,11 +104,9 @@ export class TreeComponent {
         if (event.type === HttpEventType.UploadProgress)
           this.dataSource.loadingSubject.next(true);
         else if (event.type === HttpEventType.Response) {
-          this.message = "Upload successfull.";
-          this.onUploadFinished.emit(event.body);
           this.dataSource.loadingSubject.next(false);
-          this.treeControl.collapse(node.parentItem);
-          this.treeControl.expand(node.parentItem);
+          this.treeControl.collapse(node);
+          this.treeControl.expand(node);
         }
       });
     }

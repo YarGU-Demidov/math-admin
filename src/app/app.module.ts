@@ -7,7 +7,7 @@ import { MatListModule } from "@angular/material/list";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TextMaskModule } from "angular2-text-mask";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgxTinymceModule } from "ngx-tinymce";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import {
@@ -61,6 +61,7 @@ import { DeleteDirectoryDialogComponent } from "./routes-components/dialogs/dele
 import { LoginComponent } from "./components/login-component/login-component.component";
 import { DialogLogin } from "./components/login-component/dialogLogin.component";
 import { LogoutComponent } from "./components/logout/logout.component";
+import { HttpInterceptor } from "./utils/HttpInterceptor";
 @NgModule({
   declarations: [
     AppComponent,
@@ -127,7 +128,12 @@ import { LogoutComponent } from "./components/logout/logout.component";
     { provide: PersonProvider, useClass: PersonHttpDataProvider },
     { provide: UserProvider, useClass: UserHttpDataProvider },
     { provide: GroupProvider, useClass: GroupHttpDataProvider },
-    { provide: CategoryProvider, useClass: CategoryHttpDataProvider }
+    { provide: CategoryProvider, useClass: CategoryHttpDataProvider },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [

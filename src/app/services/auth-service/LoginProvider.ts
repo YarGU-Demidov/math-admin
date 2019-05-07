@@ -16,9 +16,8 @@ export class LoginProvider {
       `${server}/${version}/${auth.auth}/${
         auth.login
       }?login=${login}&password=${password}`,
-      {
-        headers
-      }
+      {},
+      { headers }
     );
   }
 }

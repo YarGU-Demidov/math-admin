@@ -6,7 +6,6 @@ import { ValidatorService } from "src/app/services/validator-services/ValidatorS
 import { Dialog } from "./DialogComponent.abastract";
 
 export abstract class DeleteDialogComponent<T> extends Dialog<T> {
-  formGroup: FormGroup;
   constructor(
     protected dialogRef: MatDialogRef<Dialog<T>>,
     protected dataProvider: DataProvider<T>,

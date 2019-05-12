@@ -1,14 +1,14 @@
 <nav class="navbar navbar-default">
   <div class="container-fluid">
-    <div>
-      <a class="navbar-brand" [routerLink]="['/']">Mathsite admin page.</a>
-    </div>
-    <ul class="nav navbar-nav">
+    <ul *ngIf="app.localStorageItem('role')=='admin'" class="nav navbar-nav">
+      <li><a class="navbar-brand" [routerLink]="['/']">Mathsite admin page.</a></li>
       <li> <a [routerLink]="['/users']" routerLinkActive="active">Пользователи</a></li>
       <li> <a [routerLink]="['/persons']" routerLinkActive="active">Лица</a></li>
       <li> <a [routerLink]="['/professors']" routerLinkActive="active">Преподаватели</a></li>
       <li> <a [routerLink]="['/categories']" routerLinkActive="active">Категории</a></li>
+      <li> <a [routerLink]="['/files']" routerLinkActive="active">Файлы</a></li>
       <li> <a [routerLink]="['/settings']" routerLinkActive="active">Настройки</a></li>
+      <li><a *ngIf="app.localStorageItem('jwt')" [routerLink]="['/logout']">Выйти</a></li>
     </ul>
   </div>
 </nav>

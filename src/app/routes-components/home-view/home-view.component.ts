@@ -6,13 +6,5 @@ import { Component, ViewChild, ElementRef } from "@angular/core";
   styleUrls: ["./home-view.component.css"]
 })
 export class HomeViewComponent {
-  private pageTitle: string = "Пользовательская Панель";
-
-  public name: string;
-  @ViewChild("homeView")
-  public homeView: ElementRef;
-
-  constructor() {
-    this.name = "Dmitry";
-  }
+  constructor() {}
 }

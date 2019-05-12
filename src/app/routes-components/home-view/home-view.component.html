@@ -1,8 +1,59 @@
-<div class="welcome-wrapper" #homeView>
-	<div class="welcome">
-		<i class="material-icons">weekend</i> &nbsp;
-		<div class="text">
-			Welcome, {{ name }}!
-		</div>
-	</div>
+<div class="form col-md-offset-1">
+	<p class="md-title">Добро пожаловать на текущую версию административной панели сайта математического факультета.
+		С помощью таблицы ниже вы можете ознакомится с тем, что есть на сайте и для чего.</p>
+
+</div>
+<mat-tab-group class="form col-md-offset-1" >
+	<mat-tab>
+		<ng-template mat-tab-label>
+			<p class="md-headline">Пользователи</p>
+		</ng-template>
+		<p class="md-body-1">Пользователи, они же юзеры. Модель взаимодействующая с сайтом на основе прав. </p>
+		<p class="md-body-1"> У каждого пользователя должна быть логин, пароль, группа и лицо.</p>
+
+	</mat-tab>
+	<mat-tab>
+		<ng-template mat-tab-label>
+				<p class="md-headline">Лица</p>
+		</ng-template>
+		<p class="md-body-1">Лица представляют собой непосредстенно студентов и хранят их личную информацию. </p>
+		<p class="md-body-1">Обязательными параметрами являются: имя, фамилия, номер мобильного телефона.</p>
+	</mat-tab>
+	<mat-tab>
+		<ng-template mat-tab-label>
+		<p class="md-headline">Преподаватели</p>
+		</ng-template>
+		<p class="md-body-1">Хранят дополнительную информации, касающуюся преподавательского состава.</p>
+	</mat-tab>
+	<mat-tab>
+		<ng-template mat-tab-label>
+		<p class="md-headline">Категории</p>
+		</ng-template>
+		<p class="md-body-1">Представляют собой различные "теги" по которым будут фильтроваться новости.</p>
+	</mat-tab>
+	<mat-tab>
+		<ng-template mat-tab-label>
+		<p class="md-headline">Файлы</p>
+		</ng-template>
+		<p class="md-body-1">Возможность загружат/удалять/скачивать различные файлы на сервер.</p>
+		<p class="md-body-1">Для удобства администрирования имеется возможность создавать и удалять директории для файлов.</p>
+		<p class="md-body-1">Директории никак не связаны с файловой структурой сервера. Файлы потребуются в дальнейшем для добавления картинок к новостям,</p>
+		<p class="md-body-1">аватаров для пользователей и других целей.</p>
+		<p class="md-body-1">Вне зависимости от добавленных копий, на сервере файлы храняться только в одном экземпляре.</p>
+		<p class="md-body-1">Использующийся файл невозможно удалить.</p>
+	</mat-tab>
+	<mat-tab>
+		<ng-template mat-tab-label>
+		<p class="md-headline">Настройки</p>
+		</ng-template>
+		<p class="md-body-1">Список все возможных настроек для работы сайта.</p>
+	</mat-tab>
+</mat-tab-group>
+<div class="form col-md-offset-1">
+		<p class=".md-headline">TODO:</p>
+		<mat-list role="list">
+				<mat-list-item role="listitem">Добавление и редактирование новостей/событий.</mat-list-item>
+				<mat-list-item role="listitem">Добавление и редактирование имеющихся у пользователя/группы прав.</mat-list-item>
+				<mat-list-item role="listitem">Добавление аватарок пользователей.</mat-list-item>
+		</mat-list>
 </div>

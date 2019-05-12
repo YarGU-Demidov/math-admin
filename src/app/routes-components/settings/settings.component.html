@@ -1,6 +1,9 @@
 
 <div *ngIf="isFormReady" class="form col-md-offset-4 col-md-4">
   <form [formGroup]="formGroup">
+    <div *ngIf="loading$ | async">
+        <mat-progress-bar mode="query"></mat-progress-bar>
+    </div>
       <mat-form-field appearance="outline">
         <mat-label>Имя сайта</mat-label>
         <input matInput formControlName="siteName" name="siteName">

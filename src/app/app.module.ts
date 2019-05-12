@@ -7,9 +7,10 @@ import { MatListModule } from "@angular/material/list";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TextMaskModule } from "angular2-text-mask";
 import { MatMomentDateModule } from "@angular/material-moment-adapter";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgxTinymceModule } from "ngx-tinymce";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatTabsModule } from "@angular/material/tabs";
 import {
   MatDatepickerModule,
   MatIconModule,
@@ -55,11 +56,19 @@ import { CategoryHttpDataProvider } from "./services/category-services/data-prov
 import { DeleteCategoryDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-category-dialog/delete-category-dialog.component";
 import { EditCategoryDialogComponent } from "./routes-components/dialogs/edit-dialog/edit-category-dialog/edit-category-dialog.component";
 import { SettingsComponent } from "./routes-components/settings/settings.component";
-
+import { TreeComponent } from "./routes-components/tree/tree.component";
+import { MatTreeModule } from "@angular/material/tree";
+import { DeleteDirectoryDialogComponent } from "./routes-components/dialogs/delete-dialog/delete-directory-dialog/delete-directory-dialog.component";
+import { LoginComponent } from "./components/login-component/login-component.component";
+import { DialogLogin } from "./components/login-component/dialogLogin.component";
+import { LogoutComponent } from "./components/logout/logout.component";
+import { HttpInterceptor } from "./utils/HttpInterceptor";
+import { ErrorDialogComponent } from "./routes-components/dialogs/error-dialog/error-dialog.component";
 @NgModule({
   declarations: [
     AppComponent,
     HomeViewComponent,
+    DialogLogin,
     NavbarComponent,
     PersonsTableComponent,
     GlobalSidebarComponent,
@@ -79,7 +88,12 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
     AddCategoryDialogComponent,
     DeleteCategoryDialogComponent,
     EditCategoryDialogComponent,
-    SettingsComponent
+    SettingsComponent,
+    TreeComponent,
+    DeleteDirectoryDialogComponent,
+    LoginComponent,
+    LogoutComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -107,7 +121,9 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
     TextMaskModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatTabsModule,
     MatCheckboxModule,
+    MatTreeModule,
     NgxTinymceModule.forRoot({
       baseURL: "//cdnjs.cloudflare.com/ajax/libs/tinymce/4.9.0/"
     })
@@ -116,7 +132,12 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
     { provide: PersonProvider, useClass: PersonHttpDataProvider },
     { provide: UserProvider, useClass: UserHttpDataProvider },
     { provide: GroupProvider, useClass: GroupHttpDataProvider },
-    { provide: CategoryProvider, useClass: CategoryHttpDataProvider }
+    { provide: CategoryProvider, useClass: CategoryHttpDataProvider },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: HttpInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [AppComponent],
   entryComponents: [
@@ -129,7 +150,10 @@ import { SettingsComponent } from "./routes-components/settings/settings.compone
     DeleteProfessorDialogComponent,
     AddCategoryDialogComponent,
     DeleteCategoryDialogComponent,
-    EditCategoryDialogComponent
+    EditCategoryDialogComponent,
+    DeleteDirectoryDialogComponent,
+    DialogLogin,
+    ErrorDialogComponent
   ]
 })
 export class AppModule {}

@@ -3,6 +3,8 @@ import { SettingsDataProvider } from "src/app/services/settings-services/Setting
 import { FormGroup } from "@angular/forms";
 import { SettingsValidatorService } from "src/app/services/validator-services/settings-validator/settings-validator.service";
 import { BehaviorSubject } from "rxjs";
+import { pipe } from "@angular/core/src/render3";
+import { finalize } from "rxjs/operators";
 
 @Component({
   selector: "app-settings",
@@ -21,12 +23,24 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
     this.formGroup = this.validator.getInitialFormGroup();
     this.loadingSubject.next(true);
-    this.dataProvider.getSettings().subscribe(settings => {
-      this.formGroup = this.validator.populateInitalFormValuesWithData(
-        settings
-      );
-      this.loadingSubject.next(false);
-      this.isFormReady = true;
-    });
+    this.dataProvider
+      .getSettings()
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe(settings => {
+        this.formGroup = this.validator.populateInitalFormValuesWithData(
+          settings
+        );
+        this.isFormReady = true;
+      });
+  }
+  onConfirm() {
+    const data = this.validator.getDataObjectPopulatedWithValues(
+      this.formGroup
+    );
+    this.loadingSubject.next(true);
+    this.dataProvider
+      .addSettings(data)
+      .pipe(finalize(() => this.loadingSubject.next(false)))
+      .subscribe();
   }
 }

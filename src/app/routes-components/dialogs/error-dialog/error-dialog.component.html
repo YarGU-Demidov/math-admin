@@ -1,0 +1,10 @@
+<div class="md-dialog-container">
+  <h3 mat-dialog-title>{{data}}
+  </h3>
+  <div *ngIf="loading$ | async">
+      <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
+  <div mat-dialog-actions>
+    <button mat-button [mat-dialog-close]>Ок</button>
+  </div>
+</div>

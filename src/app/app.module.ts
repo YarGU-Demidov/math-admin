@@ -10,6 +10,7 @@ import { MatMomentDateModule } from "@angular/material-moment-adapter";
 import { HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { NgxTinymceModule } from "ngx-tinymce";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatTabsModule } from "@angular/material/tabs";
 import {
   MatDatepickerModule,
   MatIconModule,
@@ -62,6 +63,7 @@ import { LoginComponent } from "./components/login-component/login-component.com
 import { DialogLogin } from "./components/login-component/dialogLogin.component";
 import { LogoutComponent } from "./components/logout/logout.component";
 import { HttpInterceptor } from "./utils/HttpInterceptor";
+import { ErrorDialogComponent } from "./routes-components/dialogs/error-dialog/error-dialog.component";
 @NgModule({
   declarations: [
     AppComponent,
@@ -90,7 +92,8 @@ import { HttpInterceptor } from "./utils/HttpInterceptor";
     TreeComponent,
     DeleteDirectoryDialogComponent,
     LoginComponent,
-    LogoutComponent
+    LogoutComponent,
+    ErrorDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -118,6 +121,7 @@ import { HttpInterceptor } from "./utils/HttpInterceptor";
     TextMaskModule,
     MatDatepickerModule,
     MatMomentDateModule,
+    MatTabsModule,
     MatCheckboxModule,
     MatTreeModule,
     NgxTinymceModule.forRoot({
@@ -148,7 +152,8 @@ import { HttpInterceptor } from "./utils/HttpInterceptor";
     DeleteCategoryDialogComponent,
     EditCategoryDialogComponent,
     DeleteDirectoryDialogComponent,
-    DialogLogin
+    DialogLogin,
+    ErrorDialogComponent
   ]
 })
 export class AppModule {}

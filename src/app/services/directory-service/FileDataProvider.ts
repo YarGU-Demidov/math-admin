@@ -34,19 +34,25 @@ export class FileDataProvider {
       .get(`${server}/${version}/${files.files}/${files.getRootFiles}`)
       .pipe(map(res => res["data"]));
   }
-  uploadFile(
-    formData: FormData,
-    directoryId: string
-  ): Observable<HttpEvent<{}>> {
-    return this.http.post(
-      `${server}/${version}/${files.files}/${files.uploadFile}`,
-      formData,
+  downloadFileById(fileID: string): Observable<any> {
+    return this.http.get(
+      `${server}/${version}/${files.files}/${files.getFileById}`,
       {
-        reportProgress: true,
-        observe: "events",
-        params: new HttpParams().set("directoryId", directoryId)
+        params: new HttpParams().set("id", fileID),
+        responseType: "blob"
       }
     );
+  }
+  uploadFile(formData: FormData, directoryId: string): Observable<any> {
+    return this.http
+      .post(
+        `${server}/${version}/${files.files}/${files.uploadFile}`,
+        formData,
+        {
+          params: new HttpParams().set("directoryId", directoryId)
+        }
+      )
+      .pipe(map(res => res["status"]));
   }
   delete(fileId: string): Observable<any> {
     return this.http

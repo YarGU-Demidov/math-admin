@@ -8,7 +8,7 @@ import {
   EventEmitter
 } from "@angular/core";
 import { BehaviorSubject, merge, Observable } from "rxjs";
-import { map } from "rxjs/operators";
+import { map, finalize } from "rxjs/operators";
 import { TreeDataSource } from "src/app/dataSources/TreeDataSource";
 import { DirectoryDataProiver } from "src/app/services/directory-service/DirectoryDataProvider";
 import { FileDataProvider } from "src/app/services/directory-service/FileDataProvider";
@@ -16,6 +16,8 @@ import { TreeNode } from "./treeNode";
 import { MatDialog } from "@angular/material";
 import { DeleteDirectoryDialogComponent } from "../dialogs/delete-dialog/delete-directory-dialog/delete-directory-dialog.component";
 import { HttpEventType } from "@angular/common/http";
+import { ErrorDialogComponent } from "../dialogs/error-dialog/error-dialog.component";
+import { saveAs } from "file-saver";
 
 @Component({
   selector: "app-tree",
@@ -72,16 +74,30 @@ export class TreeComponent {
     });
   }
   deleteFile(node: TreeNode) {
-    this.filesProvider.delete(node.item.id).subscribe(x => {
-      if (!node.parentItem) {
-        this.dataSource.getInitialData();
-      } else {
-        this.treeControl.collapse(node.parentItem);
-        this.treeControl.expand(node.parentItem);
-      }
-    });
+    this.dataSource.loadingSubject.next(true);
+    this.filesProvider
+      .delete(node.item.id)
+      .pipe(finalize(() => this.dataSource.loadingSubject.next(false)))
+      .subscribe(
+        res => {
+          if (res !== "ok")
+            this.dialog.open(ErrorDialogComponent, {
+              data: "Невозвомжно удалить объект, так как он используется."
+            });
+          else if (!node.parentItem) {
+            this.dataSource.getInitialData();
+          } else {
+            this.treeControl.collapse(node.parentItem);
+            this.treeControl.expand(node.parentItem);
+          }
+        },
+        err => {
+          this.dialog.open(ErrorDialogComponent, {
+            data: "Невозможно удалить файл."
+          });
+        }
+      );
   }
-  /** Save the node to database */
   saveNode(node: TreeNode, directoryName: string) {
     this.directoriesProvider
       .addNewDirectory(node && node.parentItem.item.id, directoryName)
@@ -100,15 +116,26 @@ export class TreeComponent {
       let file: File = fileList[0];
       let formData: FormData = new FormData();
       formData.append("uploadFile", file, file.name);
-      this.filesProvider.uploadFile(formData, node.item.id).subscribe(event => {
-        if (event.type === HttpEventType.UploadProgress)
-          this.dataSource.loadingSubject.next(true);
-        else if (event.type === HttpEventType.Response) {
-          this.dataSource.loadingSubject.next(false);
-          this.treeControl.collapse(node);
-          this.treeControl.expand(node);
-        }
-      });
+      this.dataSource.loadingSubject.next(true);
+      this.filesProvider
+        .uploadFile(formData, node.item.id)
+        .pipe(finalize(() => this.dataSource.loadingSubject.next(false)))
+        .subscribe(
+          res => {
+            this.treeControl.collapse(node);
+            this.treeControl.expand(node);
+          },
+          err => {
+            this.dialog.open(ErrorDialogComponent, {
+              data: "Невозможно загрузить файл."
+            });
+          }
+        );
     }
+  }
+  downloadFile(node: TreeNode) {
+    this.filesProvider.downloadFileById(node.item.id).subscribe((res: any) => {
+      saveAs(res, node.item.name);
+    });
   }
 }

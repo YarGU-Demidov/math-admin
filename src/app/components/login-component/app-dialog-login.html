@@ -1,4 +1,7 @@
 <div class="md-dialog-container">
+    <div *ngIf="loading$ | async">
+      <mat-progress-bar mode="query"></mat-progress-bar>
+    </div>
     <h1 mat-dialog-title>Sign in to leave comments</h1>
     <div mat-dialog-content>
         <mat-error *ngIf="!loginValid">{{errorText}}</mat-error>

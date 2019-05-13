@@ -30,8 +30,8 @@ export class PersonValidatorService implements ValidatorService<Person> {
       name: person.name,
       surname: person.surname,
       middleName: person.middleName,
-      phone: person.phone,
-      additionalPhone: person.additionalPhone,
+      phone: person.phone.replace(/[^0-9+]+/g, ""),
+      additionalPhone: person.additionalPhone.replace(/[^0-9+]+/g, ""),
       birthday: person.birthday,
       creationDate: person.creationDate,
       photoId: person.photoId,
@@ -48,7 +48,9 @@ export class PersonValidatorService implements ValidatorService<Person> {
         "",
         [
           Validators.required,
-          Validators.pattern("\\+7 \\([0-9]{3}\\) [0-9]{3} [0-9]{2} [0-9]{2}")
+          Validators.pattern(
+            "\\+7-?\\(?[0-9]{3}\\)?-?[0-9]{3}-?[0-9]{2}-?[0-9]{2}"
+          )
         ]
       ],
       additionalPhone: [""],

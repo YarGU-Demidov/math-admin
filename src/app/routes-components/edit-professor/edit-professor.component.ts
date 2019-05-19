@@ -13,9 +13,9 @@ import config from "src/app/utils/textEditor.config";
   styleUrls: ["./edit-professor.component.css"]
 })
 export class EditProfessorComponent implements OnInit {
-  protected loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
-  protected isFormReady: boolean;
+  public isFormReady: boolean;
   textEditorConfig = config;
   formGroup: FormGroup;
   professorId: string;

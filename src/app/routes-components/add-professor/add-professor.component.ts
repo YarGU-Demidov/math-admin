@@ -15,10 +15,10 @@ import { Router } from "@angular/router";
   styleUrls: ["./add-professor.component.css"]
 })
 export class AddProfessorComponent implements OnInit {
-  protected loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
   formGroup: FormGroup;
-  private persons: Observable<Person[]>;
+  public persons: Observable<Person[]>;
   textEditorConfig = config;
   constructor(
     protected professorProvider: ProfessorDataProvider,
@@ -77,22 +77,22 @@ export class AddProfessorComponent implements OnInit {
   addGraduatedInstance() {
     this.graduated.push(this.fb.group({ graduatedInstance: "" }));
   }
-  deleteGraduatedInstance(index) {
-    this.graduated.removeAt(index);
+  deleteGraduatedInstance() {
+    this.graduated.removeAt(this.bibliographicIndexOfWorks.length - 1);
   }
 
   addTermPaper() {
     this.termPapers.push(this.fb.group({ termPaper: "" }));
   }
-  deleteTermPaper(index) {
-    this.termPapers.removeAt(index);
+  deleteTermPaper() {
+    this.termPapers.removeAt(this.bibliographicIndexOfWorks.length - 1);
   }
 
   addThesis() {
     this.theses.push(this.fb.group({ thesis: "" }));
   }
-  deleteThesis(index) {
-    this.theses.removeAt(index);
+  deleteThesis() {
+    this.theses.removeAt(this.bibliographicIndexOfWorks.length - 1);
   }
 
   addBibliographicIndex() {
@@ -100,7 +100,9 @@ export class AddProfessorComponent implements OnInit {
       this.fb.group({ bibliographicIndex: "" })
     );
   }
-  deleteBibliographicIndex(index) {
-    this.bibliographicIndexOfWorks.removeAt(index);
+  deleteBibliographicIndex() {
+    this.bibliographicIndexOfWorks.removeAt(
+      this.bibliographicIndexOfWorks.length - 1
+    );
   }
 }

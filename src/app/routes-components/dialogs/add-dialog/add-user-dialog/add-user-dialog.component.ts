@@ -19,8 +19,8 @@ import { AddDialogComponent } from "../../addDialogComponent";
   styleUrls: ["./add-user-dialog.component.css"]
 })
 export class AddUserDialogComponent extends AddDialogComponent<User> {
-  private persons: Observable<Person[]>;
-  private groups: Observable<Group[]>;
+  public persons: Observable<Person[]>;
+  public groups: Observable<Group[]>;
   constructor(
     private groupProvider: GroupProvider,
     private personProvider: PersonProvider,

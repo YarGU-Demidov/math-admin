@@ -8,7 +8,8 @@ import { finalize } from "rxjs/operators";
 
 @Component({
   selector: "app-dialog-login",
-  templateUrl: "app-dialog-login.html"
+  templateUrl: "app-dialog-login.html",
+  styleUrls: ["./app-dialog-login.css"]
 })
 export class DialogLogin {
   protected loadingSubject = new BehaviorSubject<boolean>(false);

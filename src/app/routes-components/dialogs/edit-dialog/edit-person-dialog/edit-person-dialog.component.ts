@@ -14,13 +14,13 @@ import { EditDialogComponent } from "../../editDialogComponent";
   styleUrls: ["./edit-person-dialog.component.css"]
 })
 export class EditPersonDialogComponent extends EditDialogComponent<Person> {
-  private phoneMask = phoneMask;
+  public phoneMask = phoneMask;
 
   constructor(
     protected dialogRef: MatDialogRef<EditPersonDialogComponent>,
     protected personService: PersonProvider,
     protected validator: PersonValidatorService,
-    @Inject(MAT_DIALOG_DATA) protected person: Person
+    @Inject(MAT_DIALOG_DATA) public person: Person
   ) {
     super(dialogRef, personService, validator, person);
   }

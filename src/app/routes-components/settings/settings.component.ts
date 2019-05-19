@@ -14,7 +14,7 @@ import { finalize } from "rxjs/operators";
 export class SettingsComponent implements OnInit {
   protected loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
-  protected isFormReady: boolean;
+  public isFormReady: boolean;
   formGroup: FormGroup;
   constructor(
     private dataProvider: SettingsDataProvider,

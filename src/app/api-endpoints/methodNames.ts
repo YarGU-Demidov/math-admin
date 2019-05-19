@@ -1,4 +1,5 @@
-export const server = "http://localhost:80";
+export const server =
+  "https://mathsiteapiserver20190519100004.azurewebsites.net";
 export enum global {
   getCount = "get-count",
   getPaged = "get-all-by-page",

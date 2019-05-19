@@ -14,7 +14,7 @@ export class DeletePersonDialogComponent extends DeleteDialogComponent<Person> {
   constructor(
     protected dialogRef: MatDialogRef<DeletePersonDialogComponent>,
     protected personDataService: PersonProvider,
-    @Inject(MAT_DIALOG_DATA) protected data: Person[]
+    @Inject(MAT_DIALOG_DATA) public data: Person[]
   ) {
     super(dialogRef, personDataService, data);
   }

@@ -10,6 +10,6 @@ import { DeleteCategoryDialogComponent } from "../delete-dialog/delete-category-
 export class ErrorDialogComponent {
   constructor(
     protected dialogRef: MatDialogRef<DeleteCategoryDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) protected data: string
+    @Inject(MAT_DIALOG_DATA) public data: string
   ) {}
 }

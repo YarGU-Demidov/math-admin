@@ -16,7 +16,7 @@ export class DeleteCategoryDialogComponent extends DeleteDialogComponent<
   constructor(
     protected dialogRef: MatDialogRef<DeleteCategoryDialogComponent>,
     protected categoryDataService: CategoryProvider,
-    @Inject(MAT_DIALOG_DATA) protected data: Category[]
+    @Inject(MAT_DIALOG_DATA) public data: Category[]
   ) {
     super(dialogRef, categoryDataService, data);
   }

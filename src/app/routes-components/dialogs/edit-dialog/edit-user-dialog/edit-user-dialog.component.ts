@@ -19,15 +19,15 @@ import { EditDialogComponent } from "../../editDialogComponent";
   styleUrls: ["./edit-user-dialog.component.css"]
 })
 export class EditUserDialogComponent extends EditDialogComponent<User> {
-  private persons: Observable<Person[]>;
-  private groups: Observable<Group[]>;
+  public persons: Observable<Person[]>;
+  public groups: Observable<Group[]>;
   constructor(
     private groupProvider: GroupProvider,
     private personProvider: PersonProvider,
     protected dialogRef: MatDialogRef<EditUserDialogComponent>,
     protected dataProvider: UserProvider,
     protected validator: UserValidatorService,
-    @Inject(MAT_DIALOG_DATA) protected user: User
+    @Inject(MAT_DIALOG_DATA) public user: User
   ) {
     super(dialogRef, dataProvider, validator, user);
     this.getInitialData();

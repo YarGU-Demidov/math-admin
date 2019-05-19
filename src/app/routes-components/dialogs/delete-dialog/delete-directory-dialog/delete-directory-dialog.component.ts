@@ -11,12 +11,12 @@ import { BehaviorSubject } from "rxjs";
   styleUrls: ["./delete-directory-dialog.component.css"]
 })
 export class DeleteDirectoryDialogComponent {
-  protected loadingSubject = new BehaviorSubject<boolean>(false);
+  public loadingSubject = new BehaviorSubject<boolean>(false);
   public loading$ = this.loadingSubject.asObservable();
   constructor(
     protected dialogRef: MatDialogRef<DeleteDirectoryDialogComponent>,
     protected directoryDataService: DirectoryDataProiver,
-    @Inject(MAT_DIALOG_DATA) protected data: Directory
+    @Inject(MAT_DIALOG_DATA) public data: Directory
   ) {}
   onCancel(): void {
     this.dialogRef.close();

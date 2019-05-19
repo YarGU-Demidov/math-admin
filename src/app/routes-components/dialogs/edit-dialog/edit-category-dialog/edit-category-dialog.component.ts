@@ -15,7 +15,7 @@ export class EditCategoryDialogComponent extends EditDialogComponent<Category> {
     protected dialogRef: MatDialogRef<EditCategoryDialogComponent>,
     protected categoryService: CategoryProvider,
     protected validator: CategoryValidator,
-    @Inject(MAT_DIALOG_DATA) protected category: Category
+    @Inject(MAT_DIALOG_DATA) public category: Category
   ) {
     super(dialogRef, categoryService, validator, category);
   }
